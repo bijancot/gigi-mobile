@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context=".LoginActivity">
+<!--    <TextView-->
+<!--        android:id="@+id/txtLoginWelcome"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:text="Selamat Datang"-->
+<!--        android:textColor="@color/text"-->
+<!--        android:textSize="30sp"-->
+<!--        android:fontFamily="@font/roboto_medium"/>-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/txtLoginWelomeDetail"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/txtLoginWelcome"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:fontFamily="@font/roboto"-->
+<!--        android:text="Senang melihat kamu kembali. Kamu bisa melanjutkan dengan cara login dibawah."-->
+<!--        android:textSize="16sp"-->
+<!--        android:textColor="#ABABB8"-->
+<!--        android:lineSpacingExtra="5dp"/>-->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true">
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/bg_darkblue_circle"
+            android:layout_centerHorizontal="true"/>
+        <LinearLayout
+            android:id="@+id/llLoginInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imgLogo"
+            android:orientation="vertical">
+            <EditText
+                android:id="@+id/etLoginHandphone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:hint="Email"
+                android:drawableStart="@drawable/custom_ic_email"
+                android:drawablePadding="15dp"
+                android:fontFamily="@font/roboto"
+                android:layout_marginTop="50dp"
+                android:inputType="phone"
+                android:selectAllOnFocus="true"
+                android:background="@drawable/custom_input">
+                <requestFocus/>
+            </EditText>
+
+            <EditText
+                android:id="@+id/etLoginPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="15dp"
+                android:background="@drawable/custom_input"
+                android:autofillHints="@string/prompt_password"
+                android:drawableStart="@drawable/custom_input_password"
+                android:drawablePadding="15dp"
+                android:hint="@string/prompt_password"
+                android:imeActionLabel="@string/action_sign_in_short"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:selectAllOnFocus="true"/>
+        </LinearLayout>
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/txtForgotPassword"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_alignParentEnd="true"-->
+    <!--        android:layout_marginTop="20dp"-->
+    <!--        android:layout_marginBottom="20dp"-->
+    <!--        android:text="Lupa Password?"-->
+    <!--        android:layout_below="@+id/llLoginInput"-->
+    <!--        android:fontFamily="@font/roboto_medium"-->
+    <!--        android:textSize="16sp"-->
+    <!--        android:textColor="@color/disable_text"/>-->
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            app:backgroundTint="@null"
+            android:fontFamily="@font/roboto_medium"
+            android:background="@drawable/bg__radius_gradient_blue_to_lightblue"
+            android:layout_below="@+id/llLoginInput"
+            android:text="Sign In"
+            android:textAllCaps="false"
+            android:textSize="16dp"
+            android:textColor="@color/white"
+            android:onClick="Login"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Belum memiliki akun?  "
+            android:textSize="16sp"
+            android:fontFamily="@font/roboto"/>
+        <TextView
+            android:id="@+id/txtSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            android:fontFamily="@font/roboto_medium"
+            android:textSize="16sp"
+            android:textColor="@color/blue"/>
+
+    </LinearLayout>
+</RelativeLayout>

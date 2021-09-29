@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:padding="20dp">
+    <VideoView
+        android:id="@+id/vvTutorial"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="40dp"/>
+    <TextView
+        android:id="@+id/txtDetailVideo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/disable_text"
+        android:textSize="16sp"
+        android:layout_below="@+id/vvTutorial"/>
+    <TextView
+        android:id="@+id/tittleTracker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Tracker"
+        android:textSize="25sp"
+        android:textColor="@color/text"
+        android:textStyle="bold"
+        android:layout_below="@+id/txtDetailVideo"/>
+    <GridView
+        android:id="@+id/gvTracker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tittleTracker"
+        android:verticalSpacing="10dp"
+        android:layout_marginTop="10dp"
+        android:numColumns="3"/>
+
+
+</RelativeLayout>

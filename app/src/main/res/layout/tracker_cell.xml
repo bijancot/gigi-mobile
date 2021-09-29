@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <Button
+        android:id="@+id/btnTracker"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/custom_tracker_button"
+        app:backgroundTint="@null"
+        android:translationZ="-1dp"/>
+    <TextView
+        android:id="@+id/txtTracker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/roboto_black"
+        android:text="01"
+        android:textColor="@color/text"
+        android:textSize="30sp"
+        android:translationZ="100dp"/>
+</RelativeLayout>
