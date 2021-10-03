@@ -1,4 +1,4 @@
-package com.outven.bmtchallange;
+package com.outven.bmtchallange.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.view.Window;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.outven.bmtchallange.helper.HidenBar;
+import com.outven.bmtchallange.R;
 
 public class LoginActivity extends AppCompatActivity {
 

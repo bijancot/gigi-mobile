@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context=".activities.UploadBeforeDoneActivity">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Sikat Gigimu"
+        android:textSize="25sp"
+        android:textColor="@color/text"
+        android:fontFamily="@font/roboto_black"/>
+    <ImageView
+        android:id="@+id/imgUploadBeforeDone"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_baseline_image_search_24"/>
+    <Button
+        android:id="@+id/btnUploadBeforeDone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="10dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Upload"
+        android:textAllCaps="false"
+        android:textSize="20sp"/>
+
+</RelativeLayout>

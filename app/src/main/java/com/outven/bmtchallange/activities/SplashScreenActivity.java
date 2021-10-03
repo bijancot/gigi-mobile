@@ -1,4 +1,4 @@
-package com.outven.bmtchallange;
+package com.outven.bmtchallange.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.ThreeBounce;
+import com.outven.bmtchallange.helper.HidenBar;
+import com.outven.bmtchallange.R;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -30,7 +32,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         Thread timer = new Thread() {
             public void run() {
                 try {
-                    sleep(4000);
+                    sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {

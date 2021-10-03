@@ -1,4 +1,4 @@
-package com.outven.bmtchallange;
+package com.outven.bmtchallange.helper;
 
 import android.app.Activity;
 import android.graphics.Color;

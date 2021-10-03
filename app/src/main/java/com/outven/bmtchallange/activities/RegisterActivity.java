@@ -1,4 +1,4 @@
-package com.outven.bmtchallange;
+package com.outven.bmtchallange.activities;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -16,6 +18,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.TextInputLayout;
+import com.outven.bmtchallange.models.ApiClient;
+import com.outven.bmtchallange.helper.HidenBar;
+import com.outven.bmtchallange.R;
+import com.outven.bmtchallange.models.UserRequest;
+import com.outven.bmtchallange.models.UserResponse;
+
 import java.util.Calendar;
 
 import retrofit2.Call;
@@ -23,15 +32,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
-
-    private TextView txtSignIn;
-    EditText etEmail,etPassword, etName, etSekolah, etPhone, etKelas;
+    TextInputLayout textInputLayout;
+    AutoCompleteTextView autoCompleteTextView,etKelas;
+    EditText etEmail,etPassword, etName, etSekolah, etPhone;
     Button btnSignUp;
     private EditText etTanggalLahir;
     int hari, bulan, tahun;
-    private final String[] arrBulan = {"Januari", "Februari", "Maret", "April",
-            "Mei", "Juni", "Juli", "Agustus", "September", "Oktober",
-            "November", "Desember"};
+    private final String[] arrBulan = {"January", "February", "March", "April",
+            "May", "June", "July", "August", "September", "October",
+            "November", "December"};
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -39,13 +48,25 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+//        Find ID
         etEmail = (EditText) findViewById(R.id.etEmail);
         etPassword = (EditText) findViewById(R.id.etPassword);
         etName = (EditText) findViewById(R.id.etName);
         etSekolah = (EditText) findViewById(R.id.etSekolah);
         etPhone = (EditText) findViewById(R.id.etPhone);
-        etKelas = (EditText) findViewById(R.id.etKelas);
+        etKelas = (AutoCompleteTextView) findViewById(R.id.etKelas);
+        textInputLayout = (TextInputLayout) findViewById(R.id.tiGender) ;
+        autoCompleteTextView = findViewById(R.id.etGender);
 
+//        Dropdown Gender
+        String[] option_gender = {"Laki - laki","Perempuan"};
+        ArrayAdapter arrayAdapter = new ArrayAdapter(RegisterActivity.this, R.layout.dropdown_gender, option_gender);
+        autoCompleteTextView.setAdapter(arrayAdapter);
+        String[] optionKelas = {"1","2","3","4","5","6","7","8","9","10","11","12"};
+        ArrayAdapter arrayAdapterKelas = new ArrayAdapter(RegisterActivity.this, R.layout.dropdown_kelas, optionKelas);
+        etKelas.setAdapter(arrayAdapterKelas);
+
+//        Kalender
         final Calendar c = Calendar.getInstance();
         hari = c.get(Calendar.DAY_OF_MONTH);
         bulan = c.get(Calendar.MONTH);
@@ -63,31 +84,59 @@ public class RegisterActivity extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveUser(createRequest());
+                if (!validationEmail(etEmail)){
+                    Toast.makeText(getApplicationContext(),"Email Address tidak valid!", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (etPassword.getText().toString().equalsIgnoreCase("") ||
+                            etName.getText().toString().equalsIgnoreCase("") ||
+                            etTanggalLahir.getText().toString().equalsIgnoreCase("") ||
+                            etSekolah.getText().toString().equalsIgnoreCase("") ||
+                            etPhone.getText().toString().equalsIgnoreCase("")||
+                            etKelas.getText().toString().equalsIgnoreCase("")){
+                            Toast.makeText(getApplicationContext(),"Semua input harus diisi!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        saveUser(createRequest());
+                    }
+                }
             }
         });
 
-        txtSignIn = (TextView) findViewById(R.id.txtSignIn);
+        TextView txtSignIn = (TextView) findViewById(R.id.txtSignIn);
         txtSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 overridePendingTransition(R.anim.from_right, R.anim.to_left);
+                startActivity(intent);
                 finish();
             }
         });
-
+//        HidenBar
         HidenBar hidenBar = new HidenBar();
         Window window = getWindow();
         hidenBar.WindowFlag(this, window);
+    }
 
+    public boolean validationEmail(EditText etEmail){
+        String email = etEmail.getText().toString().trim();
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        return email.matches(emailPattern);
     }
 
     public UserRequest createRequest(){
+        int gender;
+        String valueGender = autoCompleteTextView.getText().toString();
+        if (valueGender.equalsIgnoreCase("Perempuan")){
+            gender=2;
+        } else {
+            gender=1;
+        }
+
         UserRequest userRequest = new UserRequest();
         userRequest.setEmail(etEmail.getText().toString());
         userRequest.setName(etName.getText().toString());
-        userRequest.setGender(1);
+        userRequest.setGender(gender);
         userRequest.setBirth_date(etTanggalLahir.getText().toString());
         userRequest.setPhone_number(etPhone.getText().toString());
         userRequest.setSchool_name(etSekolah.getText().toString());
@@ -114,17 +163,16 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
-                Toast.makeText(RegisterActivity.this, "Request failed" + t.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "Request failed " + t.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
 
             }
         });
     }
 
     public Dialog onCreateDialog(int id) {
-        switch (id) {
-            case 0:
-                return new DatePickerDialog(this,
-                        mDateSetListener, tahun, bulan, hari);
+        if (id == 0) {
+            return new DatePickerDialog(this,
+                    mDateSetListener, tahun, bulan, hari);
         }
         return null;
     }
@@ -153,7 +201,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        overridePendingTransition(R.anim.from_left, R.anim.to_right);
+        overridePendingTransition(R.anim.from_right, R.anim.to_left);
         finish();
     }
 }

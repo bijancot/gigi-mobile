@@ -1,4 +1,4 @@
-package com.outven.bmtchallange;
+package com.outven.bmtchallange.models;
 
 public class UserResponse {
     private int id;

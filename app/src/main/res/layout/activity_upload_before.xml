@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:orientation="vertical"
+    tools:context=".activities.UploadBeforeActivity">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Upload Before"
+        android:textSize="25sp"
+        android:textColor="@color/text"
+        android:fontFamily="@font/roboto_black"/>
+    <ImageView
+        android:id="@+id/imgUploadBefore"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_marginTop="20dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_baseline_image_search_24"/>
+    <Button
+        android:id="@+id/btnUploadBefore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentBottom="true"
+        android:padding="10dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Next"
+        android:textAllCaps="false"
+        android:textSize="20sp"/>
+</RelativeLayout>

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".RegisterActivity">
+    tools:context=".activities.RegisterActivity">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -83,10 +83,13 @@
                     android:textSize="18sp"/>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tiGender"
                     style="@style/LoginTextInputLayoutStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:textColorHint="@color/disable_text"
+                    app:hintEnabled="false"
                     android:layout_marginTop="10dp">
 
                     <AutoCompleteTextView
@@ -101,11 +104,11 @@
                         android:drawableStart="@drawable/custom_input_gender"
                         android:drawableEnd="@drawable/custom_input_dropdown"
                         android:drawablePadding="15dp"
+                        android:hint="Jenis Kelamin"
                         android:inputType="none"
-                        android:text="Jenis Kelamin"
-                        android:textColor="@color/disable_text"
-                        android:textColorHint="@color/disable_text"
-                        android:textSize="18sp"/>
+                        android:textColor="@color/text"
+                        android:textSize="18sp">
+                    </AutoCompleteTextView>
                 </com.google.android.material.textfield.TextInputLayout>
                 <EditText
                     android:id="@+id/etSekolah"
@@ -126,7 +129,7 @@
                     android:orientation="horizontal">
                     <EditText
                         android:id="@+id/etPhone"
-                        android:layout_width="210dp"
+                        android:layout_width="195dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/custom_input"
@@ -137,20 +140,44 @@
                         android:inputType="phone"
                         android:hint="No Handphone"
                         android:textSize="18sp"/>
-                    <EditText
-                        android:id="@+id/etKelas"
+<!--                    <EditText-->
+<!--                        android:id="@+id/etKelas"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_marginStart="10dp"-->
+<!--                        android:background="@drawable/custom_input"-->
+<!--                        android:fontFamily="@font/roboto"-->
+<!--                        android:drawableStart="@drawable/custom_input_graduation"-->
+<!--                        android:drawablePadding="15dp"-->
+<!--                        android:padding="15dp"-->
+<!--                        android:inputType="number"-->
+<!--                        android:hint="Kelas"-->
+<!--                        android:textSize="18sp"/>-->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tiKelas"
+                        style="@style/LoginTextInputLayoutStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
                         android:layout_marginStart="10dp"
-                        android:background="@drawable/custom_input"
-                        android:fontFamily="@font/roboto"
-                        android:drawableStart="@drawable/custom_input_graduation"
-                        android:drawablePadding="15dp"
-                        android:padding="15dp"
-                        android:inputType="number"
-                        android:hint="Kelas"
-                        android:textSize="18sp"/>
+                        android:layout_marginTop="5dp"
+                        android:layout_gravity="center_vertical"
+                        android:textColorHint="@color/disable_text"
+                        app:hintEnabled="false">
+                        <AutoCompleteTextView
+                            android:id="@+id/etKelas"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="15dp"
+                            android:fontFamily="@font/roboto"
+                            android:background="@drawable/custom_input"
+                            app:backgroundTint="@null"
+                            android:hint="Kelas"
+                            android:inputType="none"
+                            android:textColor="@color/text"
+                            android:textSize="18sp">
+                        </AutoCompleteTextView>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
             </LinearLayout>
