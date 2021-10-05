@@ -3,6 +3,8 @@
     package="com.outven.bmtchallange">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -11,7 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.BrushMyTeethChallange">
-        <activity android:name=".activities.UploadAfterDoneActivity"></activity>
+        <activity android:name=".activities.FullScreenActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
+        <activity android:name=".activities.UploadAfterDoneActivity" />
         <activity android:name=".activities.UploadAfterActivity" />
         <activity android:name=".activities.UploadBeforeDoneActivity" />
         <activity android:name=".activities.SplashScreenActivity">

@@ -4,10 +4,12 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.outven.bmtchallange.R;
+
 public class AnimasiActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.);
+        setContentView(R.layout.activity_animasi);
     }
 }

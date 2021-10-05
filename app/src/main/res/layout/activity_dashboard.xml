@@ -2,11 +2,27 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:padding="20dp">
-    <VideoView
-        android:id="@+id/vvTutorial"
+    <FrameLayout
+        android:id="@+id/flVideoDashboard"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="40dp"/>
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="40dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <VideoView
+                android:id="@+id/vvTutorial"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+            <ImageButton
+                android:id="@+id/ibFullScreen"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/ic_fullscreen_foreground"/>
+        </RelativeLayout>
+    </FrameLayout>
     <TextView
         android:id="@+id/txtDetailVideo"
         android:layout_width="match_parent"
@@ -16,7 +32,7 @@
         android:fontFamily="@font/roboto"
         android:textColor="@color/disable_text"
         android:textSize="16sp"
-        android:layout_below="@+id/vvTutorial"/>
+        android:layout_below="@+id/flVideoDashboard"/>
     <TextView
         android:id="@+id/tittleTracker"
         android:layout_width="match_parent"
