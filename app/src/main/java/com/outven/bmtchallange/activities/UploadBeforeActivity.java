@@ -10,12 +10,12 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.view.Window;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -26,7 +26,7 @@ public class UploadBeforeActivity extends AppCompatActivity {
     private static final int IMAGE_CAPTURE_CODE = 1001;
     static Uri file;
     private TextView mTextView;
-    ImageView imgUploadBefore;
+    CardView imgUploadBefore;
     Context context;
 
     @Override

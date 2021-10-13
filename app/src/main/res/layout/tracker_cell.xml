@@ -3,25 +3,24 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <androidx.cardview.widget.CardView
+    <LinearLayout
         android:id="@+id/btnTracker"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_margin="10dp"
-        android:background="@drawable/custom_tracker_button"
-        app:backgroundTint="@null"
-        app:cardCornerRadius="100dp">
+        android:background="@drawable/custom_border_tracker"
+        android:gravity="center">
         <TextView
             android:id="@+id/txtTracker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:fontFamily="@font/roboto_black"
+            android:fontFamily="sans-serif-black"
             android:layout_gravity="center"
-            android:text="01"
-            android:textColor="@color/text"
-            android:textSize="30sp"
+            android:text="1"
+            android:textColor="@color/white"
+            android:textSize="35sp"
             android:translationZ="100dp"/>
-    </androidx.cardview.widget.CardView>
+    </LinearLayout>
 </RelativeLayout>

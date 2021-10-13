@@ -4,14 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.github.ybq.android.spinkit.sprite.Sprite;
-import com.github.ybq.android.spinkit.style.ThreeBounce;
-import com.outven.bmtchallange.helper.HidenBar;
 import com.outven.bmtchallange.R;
+import com.outven.bmtchallange.helper.HidenBar;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -26,9 +23,6 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         final ImageView imageView = (ImageView) findViewById(R.id.imgLogo);
 
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.spin_kit);
-        Sprite doubleBounce = new ThreeBounce();
-        progressBar.setIndeterminateDrawable(doubleBounce);
         Thread timer = new Thread() {
             public void run() {
                 try {

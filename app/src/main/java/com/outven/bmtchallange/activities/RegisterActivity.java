@@ -164,7 +164,6 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
                 Toast.makeText(RegisterActivity.this, "Request failed " + t.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
-
             }
         });
     }

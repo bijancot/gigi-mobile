@@ -13,6 +13,7 @@ import com.outven.bmtchallange.R;
 
 public class FullScreenActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

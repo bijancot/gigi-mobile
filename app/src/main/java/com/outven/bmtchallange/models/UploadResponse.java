@@ -1,6 +1,6 @@
 package com.outven.bmtchallange.models;
 
-public class UserResponse {
+public class UploadResponse {
     private String status;
     private String message;
 
@@ -19,4 +19,5 @@ public class UserResponse {
     public void setMessage(String message) {
         this.message = message;
     }
+
 }

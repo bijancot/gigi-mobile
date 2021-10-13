@@ -11,7 +11,19 @@
     <color name="lightblue">#02CEFD</color>
     <color name="darkblue">#3A0CA3</color>
     <color name="disable_text">#7F8296</color>
-    <color name="text">#313544</color>
+    <color name="grayTrans70">#707F8296</color>
+    <color name="text">#333333</color>
     <color name="edit_text_border">#F3F5F7</color>
     <color name="transparant">#00F3F5F7</color>
+
+    //Color Preferance
+    <color name="lightYellow">#FFFCE3</color>
+    <color name="yellow">#FFD200</color>
+    <color name="darkYellow">#FF9900</color>
+    <color name="purple">#9600FF</color>
+    <color name="pink">#FF508B</color>
+    <color name="lightBlue">#5AD2FF</color>
+    <color name="lightGreen">#16E4A4</color>
+
+
 </resources>

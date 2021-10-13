@@ -9,6 +9,7 @@ public class UserRequest {
     private  String school_name;
     private  String phone_number;
     private  String school_class;
+    private  String type;
 
     public String getEmail() {
         return email;
@@ -72,5 +73,13 @@ public class UserRequest {
 
     public void setSchool_class(String school_class) {
         this.school_class = school_class;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
