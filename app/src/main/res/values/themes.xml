@@ -24,12 +24,14 @@
 
     <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
         <item name="boxStrokeColor">@color/darkYellow</item>
+        <item name="boxStrokeErrorColor">@color/darkYellow</item>
         <item name="boxBackgroundColor">@color/white</item>
-        <item name="boxCornerRadiusBottomEnd">10dp</item>
-        <item name="boxCornerRadiusBottomStart">10dp</item>
-        <item name="boxCornerRadiusTopEnd">10dp</item>
-        <item name="boxCornerRadiusTopStart">10dp</item>
-        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxCornerRadiusBottomEnd">40dp</item>
+        <item name="boxCornerRadiusBottomStart">40dp</item>
+        <item name="boxCornerRadiusTopEnd">40dp</item>
+        <item name="boxCornerRadiusTopStart">40dp</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
     </style>
     
     <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light.NoActionBar">

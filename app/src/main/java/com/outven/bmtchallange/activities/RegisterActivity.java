@@ -19,11 +19,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.outven.bmtchallange.models.ApiClient;
-import com.outven.bmtchallange.helper.HidenBar;
 import com.outven.bmtchallange.R;
-import com.outven.bmtchallange.models.UserRequest;
-import com.outven.bmtchallange.models.UserResponse;
+import com.outven.bmtchallange.api.ApiClient;
+import com.outven.bmtchallange.helper.HidenBar;
+import com.outven.bmtchallange.models.register.Response.UserResponse;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Calendar;
 
@@ -31,16 +32,22 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RegisterActivity extends AppCompatActivity {
-    TextInputLayout textInputLayout;
-    AutoCompleteTextView autoCompleteTextView,etKelas;
-    EditText etEmail,etPassword, etName, etSekolah, etPhone;
-    Button btnSignUp;
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
+
     private EditText etTanggalLahir;
     int hari, bulan, tahun;
     private final String[] arrBulan = {"January", "February", "March", "April",
             "May", "June", "July", "August", "September", "October",
             "November", "December"};
+
+    TextInputLayout textInputLayout;
+    AutoCompleteTextView autoCompleteTextView,etKelas;
+    EditText etEmail,etPassword, etName, etSekolah, etPhone;
+    Button btnSignUp;
+    TextView txtSignIn;
+
+    String email,password,name,birth_date,school_name,phone_number,school_class,type;
+    int gender;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -57,13 +64,15 @@ public class RegisterActivity extends AppCompatActivity {
         etKelas = (AutoCompleteTextView) findViewById(R.id.etKelas);
         textInputLayout = (TextInputLayout) findViewById(R.id.tiGender) ;
         autoCompleteTextView = findViewById(R.id.etGender);
+        btnSignUp = (Button)findViewById(R.id.btnSignUp);
+        txtSignIn = (TextView) findViewById(R.id.txtSignIn);
 
 //        Dropdown Gender
         String[] option_gender = {"Laki - laki","Perempuan"};
-        ArrayAdapter arrayAdapter = new ArrayAdapter(RegisterActivity.this, R.layout.dropdown_gender, option_gender);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(RegisterActivity.this, R.layout.dropdown_gender, option_gender);
         autoCompleteTextView.setAdapter(arrayAdapter);
         String[] optionKelas = {"1","2","3","4","5","6","7","8","9","10","11","12"};
-        ArrayAdapter arrayAdapterKelas = new ArrayAdapter(RegisterActivity.this, R.layout.dropdown_kelas, optionKelas);
+        ArrayAdapter<String> arrayAdapterKelas = new ArrayAdapter<>(RegisterActivity.this, R.layout.dropdown_kelas, optionKelas);
         etKelas.setAdapter(arrayAdapterKelas);
 
 //        Kalender
@@ -80,42 +89,60 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        btnSignUp = (Button)findViewById(R.id.btnSignUp);
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!validationEmail(etEmail)){
-                    Toast.makeText(getApplicationContext(),"Email Address tidak valid!", Toast.LENGTH_SHORT).show();
-                } else {
-                    if (etPassword.getText().toString().equalsIgnoreCase("") ||
-                            etName.getText().toString().equalsIgnoreCase("") ||
-                            etTanggalLahir.getText().toString().equalsIgnoreCase("") ||
-                            etSekolah.getText().toString().equalsIgnoreCase("") ||
-                            etPhone.getText().toString().equalsIgnoreCase("")||
-                            etKelas.getText().toString().equalsIgnoreCase("")){
-                            Toast.makeText(getApplicationContext(),"Semua input harus diisi!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        saveUser(createRequest());
-                    }
-                }
-            }
-        });
+        btnSignUp.setOnClickListener(this);
+        txtSignIn.setOnClickListener(this);
 
-        TextView txtSignIn = (TextView) findViewById(R.id.txtSignIn);
-        txtSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                overridePendingTransition(R.anim.from_right, R.anim.to_left);
-                startActivity(intent);
-                finish();
-            }
-        });
-//        HidenBar
+        //Hiden bar
         HidenBar hidenBar = new HidenBar();
         Window window = getWindow();
         hidenBar.WindowFlag(this, window);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.btnSignUp:
+                createSignUp();
+                break;
+            case R.id.txtSignIn:
+                moveToLogin();
+                break;
+        }
+    }
+
+    private void createSignUp() {
+        if (!validationEmail(etEmail)){
+            Toast.makeText(getApplicationContext(),"Email Address tidak valid!", Toast.LENGTH_SHORT).show();
+        } else {
+            if (etPassword.getText().toString().equalsIgnoreCase("") ||
+                    etName.getText().toString().equalsIgnoreCase("") ||
+                    etTanggalLahir.getText().toString().equalsIgnoreCase("") ||
+                    etSekolah.getText().toString().equalsIgnoreCase("") ||
+                    etPhone.getText().toString().equalsIgnoreCase("")||
+                    etKelas.getText().toString().equalsIgnoreCase("")){
+                Toast.makeText(getApplicationContext(),"Semua input harus diisi!", Toast.LENGTH_SHORT).show();
+            } else {
+                email = etEmail.getText().toString();
+                password = etPassword.getText().toString();
+                name = etName.getText().toString();
+                gender = genderCheck(autoCompleteTextView);
+                birth_date = etTanggalLahir.getText().toString();
+                school_name = etSekolah.getText().toString();
+                phone_number = etPhone.getText().toString();
+                school_class = etKelas.getText().toString();
+
+                saveUser(email,password,name,gender,birth_date,school_name,phone_number,school_class);
+            }
+        }
+    }
+
+    private int genderCheck(AutoCompleteTextView Tgender) {
+        String valueGender = Tgender.getText().toString();
+        if (valueGender.equalsIgnoreCase("Perempuan")){
+            return 2;
+        } else {
+            return 1;
+        }
     }
 
     public boolean validationEmail(EditText etEmail){
@@ -124,48 +151,32 @@ public class RegisterActivity extends AppCompatActivity {
         return email.matches(emailPattern);
     }
 
-    public UserRequest createRequest(){
-        int gender;
-        String valueGender = autoCompleteTextView.getText().toString();
-        if (valueGender.equalsIgnoreCase("Perempuan")){
-            gender=2;
-        } else {
-            gender=1;
-        }
-
-        UserRequest userRequest = new UserRequest();
-        userRequest.setEmail(etEmail.getText().toString());
-        userRequest.setName(etName.getText().toString());
-        userRequest.setGender(gender);
-        userRequest.setBirth_date(etTanggalLahir.getText().toString());
-        userRequest.setPhone_number(etPhone.getText().toString());
-        userRequest.setSchool_name(etSekolah.getText().toString());
-        userRequest.setSchool_class(etKelas.getText().toString());
-        userRequest.setPassword(etPassword.getText().toString());
-
-        return userRequest;
-    }
-
-    public void saveUser(UserRequest userRequest){
-        Call<UserResponse> userResponseCall = ApiClient.getUserService().saveUser(userRequest);
+    public void saveUser(String email, String password, String name, int gender, String birth_date, String school_name, String phone_number, String school_class){
+        Call<UserResponse> userResponseCall = ApiClient.getUserService().saveUser(email,password,name,gender,birth_date,school_name,phone_number,school_class);
         userResponseCall.enqueue(new Callback<UserResponse>() {
             @Override
-            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                if (response.isSuccessful()){
-                    Toast.makeText(RegisterActivity.this, "Sign Up Successfully",Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                    overridePendingTransition(R.anim.from_right, R.anim.to_left);
-                    finish();
-                } else {
+            public void onResponse(@NotNull Call<UserResponse> call, @NotNull Response<UserResponse> response) {
+                if (response.body() != null && response.isSuccessful() && response.body().isStatus()){
+                    Toast.makeText(RegisterActivity.this, ""+response.body().getMessage() ,Toast.LENGTH_SHORT).show();
+                    moveToLogin();
+                } else if (response.body() != null && !response.body().isStatus()){
                     Toast.makeText(RegisterActivity.this, "Request failed",Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<UserResponse> call, Throwable t) {
-                Toast.makeText(RegisterActivity.this, "Request failed " + t.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+            public void onFailure(@NotNull Call<UserResponse> call, @NotNull Throwable t) {
+                Toast.makeText(RegisterActivity.this, "Email duplicated!" + t.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void moveToLogin() {
+        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        overridePendingTransition(R.anim.from_left, R.anim.to_right);
+        finish();
     }
 
     public Dialog onCreateDialog(int id) {
@@ -200,7 +211,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        overridePendingTransition(R.anim.from_right, R.anim.to_left);
-        finish();
+        moveToLogin();
     }
 }

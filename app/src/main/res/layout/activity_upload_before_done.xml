@@ -5,30 +5,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
+    android:background="@color/lightYellow"
     tools:context=".activities.UploadBeforeDoneActivity">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Sikat Gigimu"
-        android:textSize="25sp"
-        android:textColor="@color/text"
-        android:fontFamily="@font/roboto_black"/>
-    <ImageView
-        android:id="@+id/imgUploadBeforeDone"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="350dp"
         android:layout_centerVertical="true"
-        android:src="@drawable/ic_baseline_image_search_24"/>
+        app:cardCornerRadius="20dp">
+        <ImageView
+            android:id="@+id/imgUploadBeforeDone"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:src="@drawable/ic_baseline_image_search_24"/>
+    </androidx.cardview.widget.CardView>
     <Button
         android:id="@+id/btnUploadBeforeDone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
         android:layout_alignParentBottom="true"
-        android:padding="10dp"
-        android:fontFamily="@font/roboto_medium"
-        android:text="Upload"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:backgroundTint="@null"
+        android:fontFamily="sans-serif-medium"
+        android:background="@drawable/custom_button"
+        android:text="Selesai"
         android:textAllCaps="false"
-        android:textSize="20sp"/>
+        android:textSize="16sp"
+        android:textColor="@color/white"/>
 
 </RelativeLayout>

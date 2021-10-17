@@ -39,10 +39,10 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/custom_input"
                     android:fontFamily="sans-serif-medium"
+                    android:textColor="@color/darkYellow"
                     android:padding="15dp"
                     android:inputType="textEmailAddress"
                     android:hint="Email"
-                    android:textColor="@color/darkYellow"
                     android:textSize="18sp">
                     <requestFocus/>
                 </EditText>
@@ -91,8 +91,13 @@
                     android:layout_gravity="center_vertical"
                     android:textColorHint="@color/disable_text"
                     app:hintEnabled="false"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:focusedByDefault="true"
+                    android:touchscreenBlocksFocus="true"
+                    android:screenReaderFocusable="true"
+                    android:defaultFocusHighlightEnabled="true"
                     android:layout_marginTop="10dp">
-
                     <AutoCompleteTextView
                         android:id="@+id/etGender"
                         android:layout_width="match_parent"
@@ -100,14 +105,20 @@
                         android:layout_weight="1"
                         android:padding="15dp"
                         android:fontFamily="sans-serif-medium"
-                        android:background="@drawable/custom_input"
-                        app:backgroundTint="@null"
+                        android:background="@null"
                         android:drawableEnd="@drawable/custom_input_dropdown"
-                        android:drawablePadding="15dp"
+                        android:drawablePadding="5dp"
                         android:hint="Jenis Kelamin"
                         android:inputType="none"
                         android:textColor="@color/darkYellow"
-                        android:textSize="18sp">
+                        android:textSize="18sp"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:focusedByDefault="true"
+                        android:touchscreenBlocksFocus="true"
+                        android:screenReaderFocusable="true"
+                        android:defaultFocusHighlightEnabled="true">
+                        <requestFocus/>
                     </AutoCompleteTextView>
                 </com.google.android.material.textfield.TextInputLayout>
                 <EditText
@@ -122,46 +133,51 @@
                     android:hint="Sekolah"
                     android:textColor="@color/darkYellow"
                     android:textSize="18sp"/>
+                <EditText
+                    android:id="@+id/etPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/custom_input"
+                    android:fontFamily="sans-serif-medium"
+                    android:padding="15dp"
+                    android:inputType="phone"
+                    android:textColor="@color/darkYellow"
+                    android:hint="No Handphone"
+                    android:textSize="18sp"/>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tiKelas"
+                    style="@style/LoginTextInputLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_gravity="center_vertical"
+                    android:textColorHint="@color/disable_text"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    app:hintEnabled="false">
+                    <AutoCompleteTextView
+                        android:id="@+id/etKelas"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="15dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:background="@null"
+                        android:drawableEnd="@drawable/custom_input_dropdown"
+                        android:drawablePadding="0dp"
+                        app:backgroundTint="@null"
+                        android:hint="Kelas"
+                        android:inputType="none"
+                        android:textColor="@color/darkYellow"
+                        android:textSize="18sp">
+                        <requestFocus/>
+                    </AutoCompleteTextView>
+                </com.google.android.material.textfield.TextInputLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-                    <EditText
-                        android:id="@+id/etPhone"
-                        android:layout_width="195dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/custom_input"
-                        android:fontFamily="sans-serif-medium"
-                        android:padding="15dp"
-                        android:inputType="phone"
-                        android:textColor="@color/darkYellow"
-                        android:hint="No Handphone"
-                        android:textSize="18sp"/>
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/tiKelas"
-                        style="@style/LoginTextInputLayoutStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_gravity="center_vertical"
-                        android:textColorHint="@color/disable_text"
-                        app:hintEnabled="false">
-                        <AutoCompleteTextView
-                            android:id="@+id/etKelas"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:padding="15dp"
-                            android:fontFamily="sans-serif-medium"
-                            android:background="@drawable/custom_input"
-                            app:backgroundTint="@null"
-                            android:hint="Kelas"
-                            android:inputType="none"
-                            android:textColor="@color/darkYellow"
-                            android:textSize="18sp">
-                        </AutoCompleteTextView>
-                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
             </LinearLayout>
@@ -169,16 +185,18 @@
                 android:id="@+id/btnSignUp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
-                android:text="Sign Up"
-                android:textSize="25sp"
-                android:fontFamily="sans-serif-medium"
-                android:textAllCaps="false"
                 android:layout_marginTop="10dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                app:backgroundTint="@null"
+                android:fontFamily="sans-serif-medium"
                 android:background="@drawable/custom_button"
-                app:backgroundTint="@null"/>
+                android:text="Sign Up"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:textColor="@color/white"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -199,32 +217,11 @@
                     android:text="Sign In"
                     android:fontFamily="@font/roboto_medium"
                     android:textSize="16sp"
-                    android:textColor="@color/blue"/>
+                    android:textColor="@color/darkYellow"/>
             </LinearLayout>
 
         </LinearLayout>
 
     </ScrollView>
-<!--    <TextView-->
-<!--        android:id="@+id/txtRegisterWelcome"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="10dp"-->
-<!--        android:text="Selamat datang di\nBMT Challange"-->
-<!--        android:textColor="@color/text"-->
-<!--        android:textSize="30sp"-->
-<!--        android:fontFamily="@font/roboto_medium"/>-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/welcomeRegisterDetail"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@id/txtRegisterWelcome"-->
-<!--        android:layout_marginTop="10dp"-->
-<!--        android:fontFamily="@font/roboto"-->
-<!--        android:text="Hello, kamu masih baru menggunakan aplikasi ini?\nSilahkan mendaftar terlebih dahulu dibawah."-->
-<!--        android:textSize="16sp"-->
-<!--        android:textColor="#ABABB8"-->
-<!--        android:lineSpacingExtra="5dp"/>-->
 
 </RelativeLayout>

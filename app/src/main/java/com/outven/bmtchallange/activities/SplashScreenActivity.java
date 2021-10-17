@@ -30,10 +30,10 @@ public class SplashScreenActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
-                    Intent m = new Intent(SplashScreenActivity.this, LoginActivity.class);
-                    finish();
-                    overridePendingTransition(R.anim.from_right, R.anim.to_left);
+                    Intent m = new Intent(SplashScreenActivity.this, DashboardActivity.class);
                     startActivityForResult(m,0);
+                    overridePendingTransition(R.anim.from_right, R.anim.to_left);
+                    finish();
                 }
             }
         };

@@ -11,6 +11,7 @@
     <color name="lightblue">#02CEFD</color>
     <color name="darkblue">#3A0CA3</color>
     <color name="disable_text">#7F8296</color>
+    <color name="disable_text_dark">#535660</color>
     <color name="grayTrans70">#707F8296</color>
     <color name="text">#333333</color>
     <color name="edit_text_border">#F3F5F7</color>
@@ -24,6 +25,8 @@
     <color name="pink">#FF508B</color>
     <color name="lightBlue">#5AD2FF</color>
     <color name="lightGreen">#16E4A4</color>
+    <color name="darkGreen">#0E976C</color>
+    <color name="nightColor">#9297C8</color>
 
 
 </resources>
