@@ -20,7 +20,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/imguserprofile"/>
+                android:src="@drawable/logo_user"/>
         </androidx.cardview.widget.CardView>
         <LinearLayout
             android:id="@+id/llBorderName"
@@ -37,7 +37,7 @@
                 android:gravity="start"
                 android:text="Rafi Fitra Alamsyah"
                 android:textColor="@color/darkYellow"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="@font/nunito_black"
                 android:textSize="13sp"/>
         </LinearLayout>
         <RelativeLayout
@@ -105,20 +105,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:fontFamily="sans-serif-medium"
+        android:fontFamily="@font/nunito_black"
         android:text="Tracker"
-        android:textSize="25sp"
+        android:textSize="30sp"
         android:textColor="@color/darkYellow"
         android:textStyle="bold"
         android:layout_below="@+id/flVideoDashboard"/>
-    <GridView
-        android:id="@+id/gvTracker"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTracker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tittleTracker"
-        android:verticalSpacing="10dp"
-        android:layout_marginTop="10dp"
-        android:numColumns="4"/>
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="4"/>
+
+<!--    <GridView-->
+<!--        android:id="@+id/gvTracker"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@+id/tittleTracker"-->
+<!--        android:verticalSpacing="10dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:numColumns="4"/>-->
 
 
 </RelativeLayout>

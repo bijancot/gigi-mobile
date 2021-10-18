@@ -103,7 +103,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     overridePendingTransition(R.anim.from_right, R.anim.to_left);
                     finish();
                     Toast.makeText(getApplicationContext(), ""+loginDataResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                } else if (response.body()!=null && !response.body().isStatus()) {
+                } else if (response.body()!=null && !response.body().isStatus() && response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }

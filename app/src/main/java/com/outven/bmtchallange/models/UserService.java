@@ -1,8 +1,12 @@
 package com.outven.bmtchallange.models;
 
-import com.outven.bmtchallange.models.Forgot.ForgotResponse;
+import com.outven.bmtchallange.models.forgot.ForgotResponse;
 import com.outven.bmtchallange.models.login.Response.LoginDataResponse;
 import com.outven.bmtchallange.models.register.Response.UserResponse;
+import com.outven.bmtchallange.models.report.ReportRequest;
+import com.outven.bmtchallange.models.report.ReportResponse;
+import com.outven.bmtchallange.models.upload.UploadRequest;
+import com.outven.bmtchallange.models.upload.UploadResponse;
 
 import java.util.List;
 

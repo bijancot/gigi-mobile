@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+        android:id="@+id/btnTracker"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@drawable/custom_border_tracker_disabled"
+        android:gravity="center">
+        <ImageView
+            android:id="@+id/ivTrackerDone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="15dp"
+            android:src="@drawable/tracker_soon_logo"/>
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/txtTrackerSoon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/nunito_black"
+        android:gravity="center"
+        android:layout_below="@+id/btnTracker"
+        android:layout_centerHorizontal="true"
+        android:text="Hari 1"
+        android:textColor="@color/text"
+        android:textSize="12sp"/>
+</RelativeLayout>

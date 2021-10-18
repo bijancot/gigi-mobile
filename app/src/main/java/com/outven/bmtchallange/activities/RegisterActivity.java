@@ -160,7 +160,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     Toast.makeText(RegisterActivity.this, ""+response.body().getMessage() ,Toast.LENGTH_SHORT).show();
                     moveToLogin();
                 } else if (response.body() != null && !response.body().isStatus()){
-                    Toast.makeText(RegisterActivity.this, "Request failed",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, ""+response.body().getMessage(),Toast.LENGTH_SHORT).show();
                 }
             }
 

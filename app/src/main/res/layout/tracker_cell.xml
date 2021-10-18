@@ -2,25 +2,31 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/btnTracker"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_margin="10dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:background="@drawable/custom_border_tracker"
         android:gravity="center">
-        <TextView
-            android:id="@+id/txtTracker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:fontFamily="sans-serif-black"
-            android:layout_gravity="center"
-            android:text="1"
-            android:textColor="@color/white"
-            android:textSize="35sp"
-            android:translationZ="100dp"/>
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/ivTrackerDone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="15dp"
+            android:src="@drawable/tracker_now_logo"/>
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/txtTrackerNow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/nunito_black"
+        android:gravity="center"
+        android:layout_below="@+id/btnTracker"
+        android:layout_centerHorizontal="true"
+        android:text="Hari 1"
+        android:textColor="@color/text"
+        android:textSize="12sp"/>
 </RelativeLayout>

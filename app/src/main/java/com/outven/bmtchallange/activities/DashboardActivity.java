@@ -1,16 +1,11 @@
 package com.outven.bmtchallange.activities;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -18,14 +13,15 @@ import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.VideoView;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.outven.bmtchallange.R;
+import com.outven.bmtchallange.activities.adapter.MyAdapter;
+import com.outven.bmtchallange.helper.Config;
 import com.outven.bmtchallange.helper.HidenBar;
 import com.outven.bmtchallange.helper.SessionManager;
 
@@ -33,7 +29,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DashboardActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class DashboardActivity extends AppCompatActivity implements View.OnClickListener {
 
     static final String[] trackerDay = {
             "1","2","3","4","5","6","7",
@@ -43,16 +39,20 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     String name,tier;
     Date batas;
     Date curTime;
+    int userTrackerDay;
 
     TextView txtUsername, txtTier, txtTracker, tittleTracker;
-    LinearLayout btnTracker, llBorderName, llBorderTier;
+    LinearLayout llBorderName, llBorderTier;
     GridView gvTracker;
     CardView cvProfile;
-    RelativeLayout rlDashboard;
-    ImageView ivTheme;
-
+    RelativeLayout rlDashboard, btnTracker;
+    ImageView ivTheme,ivTrackerDone;
+    ImageButton ibFullScreen;
+    VideoView vvTutorial;
+    RecyclerView rvTracker;
 
     SessionManager sessionManager;
+    Config config = new Config();
 
     @Override
     protected void onCreate( Bundle savedInstanceState) {
@@ -66,9 +66,10 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         txtUsername = findViewById(R.id.txtUsername);
         tittleTracker = findViewById(R.id.tittleTracker);
         ivTheme = findViewById(R.id.ivTheme);
-        gvTracker = (GridView) findViewById(R.id.gvTracker);
-        VideoView vvTutorial = findViewById(R.id.vvTutorial);
-        ImageButton ibFullScreen = findViewById(R.id.ibFullScreen);
+        vvTutorial = findViewById(R.id.vvTutorial);
+        ibFullScreen = findViewById(R.id.ibFullScreen);
+        rvTracker = findViewById(R.id.rvTracker);
+//        gvTracker = findViewById(R.id.gvTracker);
 
         //cek curtime
         try {
@@ -83,61 +84,33 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             moveToLogin();
         }
 
-
         //get sharedPreference values into string
         name = sessionManager.getUserDetail().get("name");
         tier = sessionManager.getUserDetail().get("tier");
+        userTrackerDay = Integer.parseInt(sessionManager.getUserDetail().get("tier"))-1;
 
         //set User detail Dashboard
         txtUsername.setText(name);
         txtTier.setText(tier);
 
-        cvProfile.setOnClickListener(this);
-        gvTracker.setAdapter(new TrackerAdapter());
-        gvTracker.setOnItemClickListener(this);
-//        gvTracker.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-//                AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(DashboardActivity.this);
-//                alertDialog2.setMessage("Apakah sudah melihat video tutorial cara sikat gigi?");
-//                alertDialog2.setPositiveButton("Sudah",
-//                        new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                startActivity(new Intent(DashboardActivity.this, UploadBeforeActivity.class));
-//                            }
-//                        });
-//                alertDialog2.setNegativeButton("Belum",
-//                        new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                Intent intent = new Intent(DashboardActivity.this, FullScreenActivity.class);
-//                                intent.putExtra("videoPath", videoPath);
-//                                startActivity(intent);
-//                            }
-//                        });
-//                alertDialog2.show();
-//            }
-//        });
-
+        //Video setter
+        MediaController mediaController = new MediaController(this);
         videoPath = "android.resource://" + getPackageName() + "/" + R.raw.videodashboard;
         Uri uri = Uri.parse(videoPath);
         vvTutorial.setVideoURI(uri);
-        vvTutorial.seekTo(1000);
-        MediaController mediaController = new MediaController(this);
         vvTutorial.setMediaController(mediaController);
+        vvTutorial.seekTo(10000);
         mediaController.setAnchorView(vvTutorial);
-
+        config.setVidePath(videoPath);
         ibFullScreen.setOnClickListener(this);
-//        ibFullScreen.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(DashboardActivity.this, FullScreenActivity.class);
-//                intent.putExtra("videoPath", videoPath);
-//                startActivity(intent);
-//            }
-//        });
 
+        //Grid Adapter and clickLIstener
+        MyAdapter myAdapter = new MyAdapter(DashboardActivity.this,getResources().getStringArray(R.array.dayListTracker),userTrackerDay,videoPath);
+        rvTracker.setAdapter(myAdapter);
+        cvProfile.setOnClickListener(this);
+
+
+        //Hiden Bar
         HidenBar hidenBar = new HidenBar();
         Window window = getWindow();
         hidenBar.WindowFlag(this, window);
@@ -149,10 +122,10 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         llBorderName = findViewById(R.id.llBorderName);
         llBorderTier = findViewById(R.id.llBorderTier);
 
-        String yourTime = "06:30 PM";
+        String yourTime = "06:00 PM";
         String today = (String) android.text.format.DateFormat.format(
                 "h:mm a", new java.util.Date());
-        SimpleDateFormat localtime = new SimpleDateFormat("h:mm a");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat localtime = new SimpleDateFormat("h:mm a");
         batas = localtime.parse(yourTime);
         curTime = localtime.parse(today);
         if (curTime.after(batas)) {
@@ -160,6 +133,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
+    //Night Theme
     private void nightTheme() {
         rlDashboard.setBackgroundColor(getResources().getColor(R.color.nightColor));
         llBorderName.setBackgroundResource(R.drawable.custom_border_night);
@@ -168,9 +142,6 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         txtTier.setTextColor(getResources().getColor(R.color.purple));
         tittleTracker.setTextColor(getResources().getColor(R.color.white));
         ivTheme.setImageResource(R.drawable.tiernight);
-
-        System.out.println("SEKARANG : "+curTime);
-        System.out.println("BATAS : "+batas);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -186,68 +157,9 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
                 startActivity(intent);
                 break;
         }
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(DashboardActivity.this);
-        Toast.makeText(DashboardActivity.this, "Day "+ (i+1),Toast.LENGTH_SHORT).show();
-        alertDialog2.setMessage("Apakah sudah melihat video tutorial cara sikat gigi?");
-        alertDialog2.setPositiveButton("Sudah",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(DashboardActivity.this, UploadBeforeActivity.class));
-                    }
-                });
-        alertDialog2.setNegativeButton("Belum",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(DashboardActivity.this, FullScreenActivity.class);
-                        intent.putExtra("videoPath", videoPath);
-                        startActivity(intent);
-                    }
-                });
-        alertDialog2.show();
-    }
-
-    private class TrackerAdapter extends ArrayAdapter<String> {
-        public TrackerAdapter() {
-            super(DashboardActivity.this, R.layout.tracker_cell, trackerDay);
-        }
-
-        @Override
-        public boolean areAllItemsEnabled() {
-            return false;
-        }
-
-        @Override
-        public boolean isEnabled(int position) {
-            return position == Integer.parseInt(sessionManager.getUserDetail().get("tier")) - 1;
-        }
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View row = convertView;
-            if (row == null) {
-                LayoutInflater inflater = getLayoutInflater();
-                row = inflater.inflate(R.layout.tracker_cell, parent, false);
-            }
-            btnTracker = (LinearLayout) row.findViewById(R.id.btnTracker);
-            txtTracker = (TextView) row.findViewById(R.id.txtTracker);
-
-            if (position > Integer.parseInt(sessionManager.getUserDetail().get("tier"))-1){
-                btnTracker.setBackgroundResource(R.drawable.custom_border_tracker_disabled);
-            } else {
-                if (position < Integer.parseInt(sessionManager.getUserDetail().get("tier")) - 1){
-                    btnTracker.setBackgroundResource(R.drawable.custom_border_tracker_done);
-                } else {
-                    btnTracker.setBackgroundResource(R.drawable.custom_border_tracker);
-                }
-            }
-            txtTracker.setText(trackerDay[position]);
-            return row;
-        }
+//        if (view.getId() == R.id.cvProfile) {
+//            startActivity(new Intent(DashboardActivity.this, ProfilActivity.class));
+//        }
     }
 
     private void moveToLogin() {

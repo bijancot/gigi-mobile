@@ -43,6 +43,7 @@
                     android:padding="15dp"
                     android:inputType="textEmailAddress"
                     android:hint="Email"
+                    android:textColorHint="@color/disable_text"
                     android:textSize="18sp">
                     <requestFocus/>
                 </EditText>
@@ -56,6 +57,7 @@
                     android:padding="15dp"
                     android:inputType="textPassword"
                     android:hint="Password"
+                    android:textColorHint="@color/disable_text"
                     android:textColor="@color/darkYellow"
                     android:textSize="18sp"/>
                 <EditText
@@ -68,6 +70,7 @@
                     android:padding="15dp"
                     android:inputType="textPersonName"
                     android:hint="Nama Lengkap"
+                    android:textColorHint="@color/disable_text"
                     android:textColor="@color/darkYellow"
                     android:textSize="18sp"/>
                 <EditText
@@ -80,6 +83,7 @@
                     android:padding="15dp"
                     android:inputType="none"
                     android:hint="Tanggal Lahir"
+                    android:textColorHint="@color/disable_text"
                     android:textColor="@color/darkYellow"
                     android:textSize="18sp"/>
 
@@ -109,6 +113,7 @@
                         android:drawableEnd="@drawable/custom_input_dropdown"
                         android:drawablePadding="5dp"
                         android:hint="Jenis Kelamin"
+                        android:textColorHint="@color/disable_text"
                         android:inputType="none"
                         android:textColor="@color/darkYellow"
                         android:textSize="18sp"
@@ -131,6 +136,7 @@
                     android:padding="15dp"
                     android:inputType="text"
                     android:hint="Sekolah"
+                    android:textColorHint="@color/disable_text"
                     android:textColor="@color/darkYellow"
                     android:textSize="18sp"/>
                 <EditText
@@ -144,6 +150,7 @@
                     android:inputType="phone"
                     android:textColor="@color/darkYellow"
                     android:hint="No Handphone"
+                    android:textColorHint="@color/disable_text"
                     android:textSize="18sp"/>
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tiKelas"

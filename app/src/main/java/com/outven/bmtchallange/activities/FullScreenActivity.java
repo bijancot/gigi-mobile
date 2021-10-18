@@ -36,7 +36,7 @@ public class FullScreenActivity extends AppCompatActivity {
         vvTutorial.setVideoURI(uri);
         MediaController mediaController = new MediaController(this);
         vvTutorial.setMediaController(mediaController);
-        vvTutorial.seekTo(1000);
+        vvTutorial.seekTo(1);
         vvTutorial.start();
 
 

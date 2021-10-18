@@ -19,14 +19,20 @@
 
     //Color Preferance
     <color name="lightYellow">#FFFCE3</color>
+    <color name="nowYellow">#FEE74C</color>
     <color name="yellow">#FFD200</color>
     <color name="darkYellow">#FF9900</color>
     <color name="purple">#9600FF</color>
     <color name="pink">#FF508B</color>
     <color name="lightBlue">#5AD2FF</color>
+    <color name="seaBlue">#86BBD8</color>
     <color name="lightGreen">#16E4A4</color>
     <color name="darkGreen">#0E976C</color>
+    <color name="doneGreen">#88D886</color>
     <color name="nightColor">#9297C8</color>
+    <color name="lightGray">#C7C7C7</color>
+    <color name="gray">#73787A</color>
+    <color name="textPrimary">#190E4F</color>
 
 
 </resources>

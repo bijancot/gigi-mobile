@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.outven.bmtchallange.R;
 import com.outven.bmtchallange.api.ApiClient;
 import com.outven.bmtchallange.helper.HidenBar;
-import com.outven.bmtchallange.models.Forgot.ForgotResponse;
+import com.outven.bmtchallange.models.forgot.ForgotResponse;
 
 import org.jetbrains.annotations.NotNull;
 
