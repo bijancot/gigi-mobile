@@ -6,11 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lightYellow"
-    android:padding="20dp"
+    android:paddingTop="40dp"
     tools:context=".activities.LoginActivity">
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="20dp"
         android:layout_centerVertical="true">
         <TextView
             android:id="@+id/tittleLogin"
@@ -18,23 +19,23 @@
             android:layout_height="wrap_content"
             android:text="Log In"
             android:textSize="35sp"
-            android:fontFamily="sans-serif-black"
-            android:textColor="@color/text"
+            android:fontFamily="@font/nunito_black"
+            android:textColor="@color/textPrimary"
             android:layout_centerHorizontal="true"/>
         <ImageView
             android:id="@+id/imgLogo"
             android:layout_width="250dp"
             android:layout_height="250dp"
             android:layout_marginTop="40dp"
-            android:src="@drawable/logoapp"
+            android:src="@drawable/logosplash"
             android:layout_below="@+id/tittleLogin"
             android:layout_centerHorizontal="true"/>
         <LinearLayout
             android:id="@+id/llLoginInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:layout_below="@+id/imgLogo"
             android:orientation="vertical">
             <EditText
@@ -44,8 +45,8 @@
                 android:padding="15dp"
                 android:hint="Email"
                 android:textColorHint="@color/disable_text"
-                android:textColor="@color/darkYellow"
-                android:fontFamily="sans-serif"
+                android:textColor="@color/text"
+                android:fontFamily="@font/nunito_bold"
                 android:layout_marginTop="50dp"
                 android:inputType="textEmailAddress"
                 android:selectAllOnFocus="true"
@@ -62,7 +63,8 @@
                 android:background="@drawable/custom_input"
                 android:autofillHints="@string/prompt_password"
                 android:hint="@string/prompt_password"
-                android:textColor="@color/darkYellow"
+                android:textColor="@color/text"
+                android:fontFamily="@font/nunito_bold"
                 android:textColorHint="@color/disable_text"
                 android:imeActionLabel="@string/action_sign_in_short"
                 android:imeOptions="actionDone"
@@ -70,23 +72,23 @@
                 android:selectAllOnFocus="true"/>
         </LinearLayout>
 
+
         <Button
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             app:backgroundTint="@null"
-            android:fontFamily="sans-serif-medium"
-            android:background="@drawable/custom_button"
             android:layout_below="@+id/llLoginInput"
-            android:text="Log In"
+            android:fontFamily="@font/nunito_bold"
+            android:background="@drawable/custom_button"
+            android:text="Login"
             android:textAllCaps="false"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textColor="@color/white"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -102,23 +104,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="lupa kata sandi?"
-                android:layout_below="@+id/btnLogin"
-                android:layout_centerHorizontal="true"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="@font/nunito_semibold"
                 android:textSize="15sp"
-                android:textColor="@color/darkYellow"/>
+                android:textColor="@color/blueButton"/>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:layout_below="@+id/txtForget"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="belum punya akun?"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="@font/nunito_semibold"
                     android:textSize="15sp"
                     android:textColor="@color/disable_text"/>
                 <TextView
@@ -127,11 +125,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:text="Daftar"
-                    android:layout_below="@+id/txtForget"
-                    android:layout_centerHorizontal="true"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="@font/nunito_semibold"
                     android:textSize="15sp"
-                    android:textColor="@color/darkYellow"/>
+                    android:textColor="@color/blueButton"/>
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

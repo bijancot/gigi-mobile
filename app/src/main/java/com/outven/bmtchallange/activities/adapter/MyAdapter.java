@@ -2,8 +2,8 @@ package com.outven.bmtchallange.activities.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +16,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.outven.bmtchallange.R;
-import com.outven.bmtchallange.activities.FullScreenActivity;
 import com.outven.bmtchallange.activities.UploadBeforeActivity;
 import com.outven.bmtchallange.helper.Config;
 
@@ -29,16 +28,15 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> imp
     Context _context;
     String[] listDayTracker;
     int userTrackerDay;
-    String videoPath;
     Date tDayFirstTime, tDayLastTime,tNightFirstTime, tNightLastTime, tDayTime, tNightTime, tfirstDayTime;
     Date curTime;
-    Config config = new Config();
+    String reportStatus;
 
-    public MyAdapter(Context context, String[] listDayTracker, int userTrackerDay, String videoPath){
+    public MyAdapter(Context context, String[] listDayTracker, int userTrackerDay, String reportStatus){
         this._context = context;
         this.listDayTracker = listDayTracker;
         this.userTrackerDay = userTrackerDay;
-        this.videoPath = videoPath;
+        this.reportStatus = reportStatus;
     }
 
     @NonNull
@@ -85,8 +83,8 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> imp
         @SuppressLint("SimpleDateFormat") SimpleDateFormat localtime = new SimpleDateFormat("h:mm a");
 
         // Pagi
-        String mfirstTime = "06:00 AM";
-        String mlasTime = "08:00 AM";
+        String mfirstTime = "00:00 AM"; //awal upload pagi
+        String mlasTime = "11:59 AM"; //akhir upload pagi
         String mdayTime = "11:59 AM";
         String mfirstDayTime = "00:00 AM";
         tDayFirstTime = localtime.parse(mfirstTime);
@@ -95,12 +93,11 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> imp
         tfirstDayTime = localtime.parse(mfirstDayTime);
 
         // Malam
-        String nfirstTime = "06:00 PM";
-        String nlasTime = "09:00 PM";
+        String nfirstTime = "12:00 PM"; //awal upload malam
+        String nlasTime = "11:59 PM"; //awal upload malam
         String nnightTime = "11:59 PM";
         tNightFirstTime = localtime.parse(nfirstTime);
         tNightLastTime = localtime.parse(nlasTime);
-        curTime = localtime.parse(today);
         tNightTime = localtime.parse(nnightTime);
 
         //Now
@@ -114,10 +111,10 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> imp
             if (curTime.after(tDayFirstTime) && curTime.before(tDayLastTime)) {
                 return 0;
             } else if (curTime.after(tDayLastTime) && curTime.before(tNightFirstTime)){
-                config.setmTimeTracker("Kamu sudah mengupload foto sikat gigi pagi! Upload foto lagi setelah jam 06.00 malam");
+                Config.setmTimeTracker("Kamu sudah mengupload foto sikat gigi pagi! Upload foto lagi setelah jam 06.00 malam");
                 return 1;
             } else if (curTime.after(tfirstDayTime) && curTime.before(tDayFirstTime)){
-                config.setmTimeTracker("Kamu belum bisa mengupload foto sikat gigi! Upload foto sikat gigimu setelah jam 06.00 pagi");
+                Config.setmTimeTracker("Kamu belum bisa mengupload foto sikat gigi! Upload foto sikat gigimu setelah jam 06.00 pagi");
                 return 1;
             }
         } catch (ParseException e) {
@@ -132,16 +129,20 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> imp
             if (curTime.after(tNightFirstTime) && curTime.before(tNightLastTime)) {
                 return 0;
             } else if (curTime.after(tNightLastTime) && curTime.before(tNightTime)){
-                config.setmTimeTracker("Kamu sudah menyelesaikan chellenge hari ini");
+                Config.setmTimeTracker("Kamu sudah menyelesaikan chellenge hari ini");
                 return 1;
             } else {
-                config.setmTimeTracker("Kamu sudah mengupload foto sikat gigi!");
+                Config.setmTimeTracker("Kamu sudah mengupload foto sikat gigi!");
                 return 2;
             }
         } catch (ParseException e) {
-            config.setmTimeTracker(e.getLocalizedMessage().toString());
+            Config.setmTimeTracker(e.getLocalizedMessage());
             return 2;
         }
+    }
+
+    public Boolean isOnGoing(){
+        return reportStatus.equalsIgnoreCase("ongoing");
     }
 
     @Override
@@ -151,15 +152,16 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> imp
         } else if (isEnable(position)){
             return 1;
         }
+//        Log.e("failure ----", reportStatus+" - "+isOnGoing());
         return 2;
     }
 
     public boolean isDone(int position){
-        return position < userTrackerDay;
+        return position < userTrackerDay-1;
     }
 
     public boolean isEnable(int position){
-        return position == userTrackerDay;
+        return position == userTrackerDay-1;
     }
 
     @Override
@@ -171,16 +173,22 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> imp
     public void onClick(View view) {
         if (view.getId() == R.id.btnTracker){
             if (isMorning() == 0 || isNight() == 0){
+                //just do Oneclick
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 1000){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
+
                 showAlert();
             } else {
                 if (isMorning() == 1 || isNight() == 1 ||isMorning() == 2 || isNight() == 2){
-                    Toast.makeText(_context, config.getmTimeTracker(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(_context, Config.getmTimeTracker(),Toast.LENGTH_SHORT).show();
                 }
             }
         }
     }
 
-    private void showAlert() {
+    private void showAlert()  {
         AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(_context);
         if (isMorning() == 0){
             alertDialog2.setMessage("Apakah kamu sudah sarapan pagi atau belum?");
@@ -188,21 +196,10 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> imp
             alertDialog2.setMessage("Apakah kamu sudah makan malam atau belum?");
         }
         alertDialog2.setPositiveButton("Sudah",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        _context.startActivity(new Intent(_context, UploadBeforeActivity.class));
-                    }
-                });
+                (dialog, which) -> _context.startActivity(new Intent(_context, UploadBeforeActivity.class)));
+
         alertDialog2.setNegativeButton("Belum",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(_context, FullScreenActivity.class);
-                        intent.putExtra("videoPath", videoPath);
-                        _context.startActivity(intent);
-                    }
-                });
+                (dialog, which) -> dialog.dismiss());
         alertDialog2.show();
     }
 
@@ -210,7 +207,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> imp
         TextView txtTrackerDone;
         public MyViewHolderDone(@NonNull View itemView) {
             super(itemView);
-            txtTrackerDone = (TextView) itemView.findViewById(R.id.txtTrackerDone);
+            txtTrackerDone = itemView.findViewById(R.id.txtTrackerDone);
         }
     }
 
@@ -220,8 +217,8 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> imp
 
         public MyViewHolderNow(@NonNull View itemView) {
             super(itemView);
-            txtTrackerNow = (TextView) itemView.findViewById(R.id.txtTrackerNow);
-            btnTracker = (RelativeLayout) itemView.findViewById(R.id.btnTracker);
+            txtTrackerNow = itemView.findViewById(R.id.txtTrackerNow);
+            btnTracker = itemView.findViewById(R.id.btnTracker);
         }
     }
 
@@ -229,7 +226,9 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> imp
         TextView txtTrackerSoon;
         public MyViewHolderSoon(@NonNull View itemView) {
             super(itemView);
-            txtTrackerSoon = (TextView) itemView.findViewById(R.id.txtTrackerSoon);
+            txtTrackerSoon = itemView.findViewById(R.id.txtTrackerSoon);
         }
     }
+
+    private long mLastClickTime = 0;
 }

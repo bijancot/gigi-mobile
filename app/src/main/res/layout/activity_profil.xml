@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="40dp"
-    android:background="@color/lightYellow"
+    android:background="@color/white"
     tools:context=".activities.ProfilActivity">
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/nunito_black"
             android:text="User Profile"
             android:textColor="@color/text"
             android:textSize="23sp"/>
@@ -23,16 +23,16 @@
             android:id="@+id/imgUser"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:src="@drawable/imguserprofile"
+            android:src="@drawable/logo_user"
             android:layout_marginTop="60dp"/>
         <TextView
             android:id="@+id/txtName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/nunito_black"
             android:text="Rafi Fitra Alamsyah"
-            android:textColor="@color/darkYellow"
+            android:textColor="@color/textPrimary"
             android:textSize="23sp"/>
 
     </LinearLayout>
@@ -46,7 +46,7 @@
         android:text="Logout"
         android:textSize="18sp"
         android:textColor="@color/pink"
-        android:fontFamily="sans-serif-black"
+        android:fontFamily="@font/nunito_black"
         android:drawablePadding="10dp"
         app:drawableStartCompat="@drawable/ic_logout"
         />

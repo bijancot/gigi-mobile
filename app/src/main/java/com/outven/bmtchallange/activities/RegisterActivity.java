@@ -5,9 +5,8 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MotionEvent;
+import android.os.SystemClock;
 import android.view.View;
-import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -21,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputLayout;
 import com.outven.bmtchallange.R;
 import com.outven.bmtchallange.api.ApiClient;
+import com.outven.bmtchallange.helper.Config;
 import com.outven.bmtchallange.helper.HidenBar;
 import com.outven.bmtchallange.models.register.Response.UserResponse;
 
@@ -34,20 +34,15 @@ import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private EditText etTanggalLahir;
     int hari, bulan, tahun;
-    private final String[] arrBulan = {"January", "February", "March", "April",
-            "May", "June", "July", "August", "September", "October",
-            "November", "December"};
+    int gender;
+    String email,password,name,birth_date,school_name,phone_number,school_class;
 
     TextInputLayout textInputLayout;
     AutoCompleteTextView autoCompleteTextView,etKelas;
-    EditText etEmail,etPassword, etName, etSekolah, etPhone;
+    EditText etEmail,etPassword, etName, etSekolah, etPhone, etTanggalLahir;
     Button btnSignUp;
     TextView txtSignIn;
-
-    String email,password,name,birth_date,school_name,phone_number,school_class,type;
-    int gender;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -56,16 +51,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_register);
 
 //        Find ID
-        etEmail = (EditText) findViewById(R.id.etEmail);
-        etPassword = (EditText) findViewById(R.id.etPassword);
-        etName = (EditText) findViewById(R.id.etName);
-        etSekolah = (EditText) findViewById(R.id.etSekolah);
-        etPhone = (EditText) findViewById(R.id.etPhone);
-        etKelas = (AutoCompleteTextView) findViewById(R.id.etKelas);
-        textInputLayout = (TextInputLayout) findViewById(R.id.tiGender) ;
+        etEmail =findViewById(R.id.etEmail);
+        etPassword = findViewById(R.id.etPassword);
+        etName = findViewById(R.id.etName);
+        etTanggalLahir = findViewById(R.id.etTanggalLahir);
+        etSekolah = findViewById(R.id.etSekolah);
+        etPhone = findViewById(R.id.etPhone);
+        etKelas = findViewById(R.id.etKelas);
+        textInputLayout = findViewById(R.id.tiGender) ;
         autoCompleteTextView = findViewById(R.id.etGender);
-        btnSignUp = (Button)findViewById(R.id.btnSignUp);
-        txtSignIn = (TextView) findViewById(R.id.txtSignIn);
+        btnSignUp = findViewById(R.id.btnSignUp);
+        txtSignIn = findViewById(R.id.txtSignIn);
 
 //        Dropdown Gender
         String[] option_gender = {"Laki - laki","Perempuan"};
@@ -80,32 +76,35 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         hari = c.get(Calendar.DAY_OF_MONTH);
         bulan = c.get(Calendar.MONTH);
         tahun = c.get(Calendar.YEAR);
-        etTanggalLahir = (EditText) findViewById(R.id.etTanggalLahir);
-        etTanggalLahir.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                showDialog(0);
-                return true;
-            }
+        etTanggalLahir.setOnTouchListener((view, motionEvent) -> {
+            showDialog(0);
+            return true;
         });
 
         btnSignUp.setOnClickListener(this);
         txtSignIn.setOnClickListener(this);
 
         //Hiden bar
-        HidenBar hidenBar = new HidenBar();
-        Window window = getWindow();
-        hidenBar.WindowFlag(this, window);
+        HidenBar.WindowFlag(this, getWindow());
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btnSignUp:
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 1000){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 createSignUp();
                 break;
             case R.id.txtSignIn:
-                moveToLogin();
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 1000){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
+                moveToLogin(false);
                 break;
         }
     }
@@ -114,12 +113,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         if (!validationEmail(etEmail)){
             Toast.makeText(getApplicationContext(),"Email Address tidak valid!", Toast.LENGTH_SHORT).show();
         } else {
-            if (etPassword.getText().toString().equalsIgnoreCase("") ||
-                    etName.getText().toString().equalsIgnoreCase("") ||
-                    etTanggalLahir.getText().toString().equalsIgnoreCase("") ||
-                    etSekolah.getText().toString().equalsIgnoreCase("") ||
-                    etPhone.getText().toString().equalsIgnoreCase("")||
-                    etKelas.getText().toString().equalsIgnoreCase("")){
+            if (!isRegisterFieldEmpety()){
                 Toast.makeText(getApplicationContext(),"Semua input harus diisi!", Toast.LENGTH_SHORT).show();
             } else {
                 email = etEmail.getText().toString();
@@ -134,6 +128,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 saveUser(email,password,name,gender,birth_date,school_name,phone_number,school_class);
             }
         }
+    }
+
+    private boolean isRegisterFieldEmpety(){
+        return !etPassword.getText().toString().isEmpty() ||
+                !etName.getText().toString().isEmpty() ||
+                !etTanggalLahir.getText().toString().isEmpty() ||
+                !etSekolah.getText().toString().isEmpty() ||
+                !etPhone.getText().toString().isEmpty() ||
+                !etKelas.getText().toString().isEmpty();
     }
 
     private int genderCheck(AutoCompleteTextView Tgender) {
@@ -158,7 +161,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             public void onResponse(@NotNull Call<UserResponse> call, @NotNull Response<UserResponse> response) {
                 if (response.body() != null && response.isSuccessful() && response.body().isStatus()){
                     Toast.makeText(RegisterActivity.this, ""+response.body().getMessage() ,Toast.LENGTH_SHORT).show();
-                    moveToLogin();
+                    moveToLogin(true);
                 } else if (response.body() != null && !response.body().isStatus()){
                     Toast.makeText(RegisterActivity.this, ""+response.body().getMessage(),Toast.LENGTH_SHORT).show();
                 }
@@ -171,9 +174,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         });
     }
 
-    private void moveToLogin() {
+    private void moveToLogin(boolean setFlag) {
         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        if (setFlag){
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        }
         startActivity(intent);
         overridePendingTransition(R.anim.from_left, R.anim.to_right);
         finish();
@@ -196,21 +201,23 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     bulan = monthOfYear;
                     hari = dayOfMonth;
                     String sdate = LPad(hari + "", "0", 2)
-                            + " " + arrBulan[bulan] + " " + tahun;
+                            + " " + Config.arrBulan[bulan] + " " + tahun;
                     etTanggalLahir.setText(sdate);
                 }
             };
 
     public static String LPad(String schar, String spad, int len) {
-        String sret = schar;
+        StringBuilder sret = new StringBuilder(schar);
         for (int i = sret.length(); i < len; i++) {
-            sret = spad + sret;
+            sret.insert(0, spad);
         }
-        return new String(sret);
+        return sret.toString();
     }
 
     @Override
     public void onBackPressed() {
-        moveToLogin();
+        moveToLogin(false);
     }
+
+    private long mLastClickTime = 0;
 }

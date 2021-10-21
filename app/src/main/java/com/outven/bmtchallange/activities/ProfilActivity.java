@@ -3,9 +3,7 @@ package com.outven.bmtchallange.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,16 +29,13 @@ public class ProfilActivity extends AppCompatActivity implements View.OnClickLis
 
         txtLogout.setOnClickListener(this);
 
-        HidenBar hidenBar = new HidenBar();
-        Window window = getWindow();
-        hidenBar.WindowFlag(this, window);
+        HidenBar.WindowFlag(this, getWindow());
     }
 
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.txtLogout){
             sessionManager.loggoutSession();
-            Toast.makeText(ProfilActivity.this,sessionManager.isLoggedIn().toString(),Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(ProfilActivity.this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);

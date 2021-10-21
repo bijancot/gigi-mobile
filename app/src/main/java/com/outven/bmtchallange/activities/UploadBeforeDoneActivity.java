@@ -2,18 +2,15 @@ package com.outven.bmtchallange.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.view.Window;
+import android.os.SystemClock;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.outven.bmtchallange.R;
+import com.outven.bmtchallange.helper.Config;
 import com.outven.bmtchallange.helper.HidenBar;
-
-import static com.outven.bmtchallange.activities.UploadBeforeActivity.file;
 
 public class UploadBeforeDoneActivity extends AppCompatActivity {
     ImageView imgUploadBeforeDone;
@@ -26,22 +23,22 @@ public class UploadBeforeDoneActivity extends AppCompatActivity {
         imgUploadBeforeDone = findViewById(R.id.imgUploadBeforeDone);
         btnUploadBeforeDone = findViewById(R.id.btnUploadBeforeDone);
 
-        imgUploadBeforeDone.setImageURI(file);
+        imgUploadBeforeDone.setImageURI(Config.getFileBefore());
 
-        btnUploadBeforeDone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"Image Uploaded!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(UploadBeforeDoneActivity.this, DashboardActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                overridePendingTransition(R.anim.from_right, R.anim.to_left);
-                startActivity(intent);
-                finish();
-            }
-        });
+        btnUploadBeforeDone.setOnClickListener(view -> moveToPage());
 
-        HidenBar hidenBar = new HidenBar();
-        Window window = getWindow();
-        hidenBar.WindowFlag(this, window);
+        HidenBar.WindowFlag(this, getWindow());
     }
+    public void moveToPage(){
+        if (SystemClock.elapsedRealtime() - mLastClickTime < 1000){
+            return;
+        }
+        mLastClickTime = SystemClock.elapsedRealtime();
+
+        Intent intent = new Intent(UploadBeforeDoneActivity.this, AnimasiActivity.class);
+        overridePendingTransition(R.anim.from_right, R.anim.to_left);
+        startActivity(intent);
+    }
+
+    private long mLastClickTime = 0;
 }

@@ -26,6 +26,7 @@
         android:src="@drawable/logosplash"
         android:transitionName="example_transition"/>
     <Button
+        android:id="@+id/btnSplashMulai"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"

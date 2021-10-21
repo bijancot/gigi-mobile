@@ -3,8 +3,7 @@ package com.outven.bmtchallange.models;
 import com.outven.bmtchallange.models.forgot.ForgotResponse;
 import com.outven.bmtchallange.models.login.Response.LoginDataResponse;
 import com.outven.bmtchallange.models.register.Response.UserResponse;
-import com.outven.bmtchallange.models.report.ReportRequest;
-import com.outven.bmtchallange.models.report.ReportResponse;
+import com.outven.bmtchallange.models.report.response.ReportResponse;
 import com.outven.bmtchallange.models.upload.UploadRequest;
 import com.outven.bmtchallange.models.upload.UploadResponse;
 
@@ -38,12 +37,6 @@ public interface UserService {
             @Field("password") String password
     );
 
-    @POST("api/report/")
-    Call<ReportResponse> userReport(@Body ReportRequest reportRequest);
-
-    @POST("api/report/add/")
-    Call<UploadResponse> userUpload(@Body UploadRequest uploadRequest);
-
     @FormUrlEncoded
     @POST("api/user/forgot/")
     Call<ForgotResponse> userChangePassword(
@@ -52,6 +45,15 @@ public interface UserService {
             @Field("newpassword") String newpassword
     );
 
+    @FormUrlEncoded
+    @POST("api/report/")
+    Call<ReportResponse> userReport(@Field("email") String email);
+
+    @POST("api/report/add/")
+    Call<UploadResponse> userUpload(@Body UploadRequest uploadRequest);
+
+
+    // GET Code
     @GET("api/user/forgot")
     Call<List<ForgotResponse>> getForgotResult();
 

@@ -2,17 +2,18 @@
     <!-- Base application theme. -->
     <style name="Theme.BrushMyTeethChallange" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/yellow</item>
-        <item name="colorPrimaryVariant">@color/darkYellow</item>
+        <item name="colorPrimary">@color/blueButton</item>
+        <item name="colorPrimaryVariant">@color/blueDarkButton</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/yellow</item>
-        <item name="colorSecondaryVariant">@color/darkYellow</item>
+        <item name="colorSecondary">@color/blueButton</item>
+        <item name="colorSecondaryVariant">@color/blueDarkButton</item>
         <item name="colorOnSecondary">@color/text</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
 
     <style name="CustomActivityAnimation" parent="@android:style/Animation.Activity">
@@ -23,8 +24,8 @@
     </style>
 
     <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
-        <item name="boxStrokeColor">@color/darkYellow</item>
-        <item name="boxStrokeErrorColor">@color/darkYellow</item>
+        <item name="boxStrokeColor">@color/blueDarkButton</item>
+        <item name="boxStrokeErrorColor">@color/blueDarkButton</item>
         <item name="boxBackgroundColor">@color/white</item>
         <item name="boxCornerRadiusBottomEnd">40dp</item>
         <item name="boxCornerRadiusBottomStart">40dp</item>

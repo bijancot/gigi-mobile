@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.BrushMyTeethChallange">
-        <activity android:name=".activities.ProfilActivity"></activity>
+        <activity android:name=".activities.AnimasiActivity"></activity>
+        <activity android:name=".activities.ProfilActivity" />
         <activity android:name=".activities.LupaPasswordActivity" />
         <activity android:name=".activities.UploadAfterDoneActivity" />
         <activity android:name=".activities.UploadAfterActivity" />
