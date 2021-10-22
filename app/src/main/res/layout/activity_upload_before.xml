@@ -12,19 +12,21 @@
         android:id="@+id/txtUploadFoto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:layout_marginTop="50dp"
         android:text="Upload Foto"
         android:textSize="30sp"
-        android:textColor="@color/textPrimary"
+        android:textColor="@color/blueButton"
         android:fontFamily="@font/nunito_black"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="Upload foto sebelum kamu sikat gigi"
         android:layout_below="@+id/txtUploadFoto"
         android:textSize="15sp"
         android:textColor="@color/textPrimary"
-        android:fontFamily="@font/nunito"/>
+        android:fontFamily="@font/nunito_bold"/>
     <androidx.cardview.widget.CardView
         android:id="@+id/imgUploadBefore"
         android:layout_width="match_parent"

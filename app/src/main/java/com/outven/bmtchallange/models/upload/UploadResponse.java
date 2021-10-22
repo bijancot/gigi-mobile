@@ -1,16 +1,14 @@
 package com.outven.bmtchallange.models.upload;
 
+import com.google.gson.annotations.SerializedName;
+
 public class UploadResponse {
-    private String status;
+
+    @SerializedName("status")
+    private boolean status;
+    @SerializedName("message")
     private String message;
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
     public String getMessage() {
         return message;
@@ -20,4 +18,11 @@ public class UploadResponse {
         this.message = message;
     }
 
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 }

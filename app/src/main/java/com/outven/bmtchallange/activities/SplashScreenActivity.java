@@ -43,6 +43,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
 //            sessionManager.ReportedToday(false);
 //            sessionManager.changeDateLastDay("");
+//            sessionManager.changeStatusLoggedIn(false);
 
             if (sessionManager.isLoggedIn()){
                 if (!sessionManager.haveOpenAppToday(today) && !sessionManager.haveReportToday()){
@@ -80,8 +81,12 @@ public class SplashScreenActivity extends AppCompatActivity {
             public void onResponse(@NotNull Call<ReportResponse> call, @NotNull Response<ReportResponse> response) {
                 if (response.body() != null && response.isSuccessful() && response.body().isStatus()){
 //                    sessionManager.ReportSession(response.body());
-                    sessionManager.ReportedToday(true);
-                    Toast.makeText(SplashScreenActivity.this,""+ response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    try {
+                        sessionManager.ReportedToday(true);
+                        Toast.makeText(SplashScreenActivity.this,""+ response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    } catch (Exception e){
+                        Toast.makeText(SplashScreenActivity.this,""+ e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 

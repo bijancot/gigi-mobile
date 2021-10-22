@@ -87,4 +87,9 @@ public class SessionManager {
         editor.putString(Config.USER_OPEN_APP_DATE, result);
         editor.commit();
     }
+
+    public void changeStatusLoggedIn(boolean result){
+        editor.putBoolean(Config.IS_LOGGIN_IN,result);
+        editor.commit();
+    }
 }

@@ -191,8 +191,10 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> imp
     private void showAlert()  {
         AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(_context);
         if (isMorning() == 0){
+            Config.setCategoryUpload("day");
             alertDialog2.setMessage("Apakah kamu sudah sarapan pagi atau belum?");
         } else if (isNight() == 0){
+            Config.setCategoryUpload("night");
             alertDialog2.setMessage("Apakah kamu sudah makan malam atau belum?");
         }
         alertDialog2.setPositiveButton("Sudah",

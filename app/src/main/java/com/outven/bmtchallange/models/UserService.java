@@ -4,17 +4,19 @@ import com.outven.bmtchallange.models.forgot.ForgotResponse;
 import com.outven.bmtchallange.models.login.Response.LoginDataResponse;
 import com.outven.bmtchallange.models.register.Response.UserResponse;
 import com.outven.bmtchallange.models.report.response.ReportResponse;
-import com.outven.bmtchallange.models.upload.UploadRequest;
 import com.outven.bmtchallange.models.upload.UploadResponse;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 public interface UserService {
     @FormUrlEncoded
@@ -49,9 +51,14 @@ public interface UserService {
     @POST("api/report/")
     Call<ReportResponse> userReport(@Field("email") String email);
 
+    @Multipart
     @POST("api/report/add/")
-    Call<UploadResponse> userUpload(@Body UploadRequest uploadRequest);
-
+    Call<UploadResponse> userUpload(
+            @Part("report_id") RequestBody report_id,
+            @Part MultipartBody.Part image,
+            @Part("category") RequestBody category,
+            @Part("status") RequestBody status
+    );
 
     // GET Code
     @GET("api/user/forgot")

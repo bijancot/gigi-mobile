@@ -17,12 +17,12 @@ public class ApiClient {
         OkHttpClient okHttpClient = new OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor).build();
         if (retrofit == null){
             retrofit = new Retrofit.Builder()
-                    .baseUrl("https://surveygigi.kristomoyo.com/")
+                    .baseUrl("http://192.168.1.11/gigi/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(okHttpClient)
                     .build();
-        }
 
+        }
         return retrofit;
     }
 

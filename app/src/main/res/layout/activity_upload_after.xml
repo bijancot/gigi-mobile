@@ -14,18 +14,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
+        android:gravity="center_horizontal"
         android:text="Upload Foto"
         android:textSize="30sp"
-        android:textColor="@color/textPrimary"
+        android:textColor="@color/blueButton"
         android:fontFamily="@font/nunito_black"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="Upload foto sesudah kamu sikat gigi"
         android:layout_below="@+id/txtUploadFoto"
         android:textSize="15sp"
         android:textColor="@color/textPrimary"
-        android:fontFamily="@font/nunito"/>
+        android:fontFamily="@font/nunito_bold"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/imgUploadAfter"

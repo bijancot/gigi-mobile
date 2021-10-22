@@ -9,7 +9,10 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.MediaController;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -23,20 +26,25 @@ import com.outven.bmtchallange.helper.Config;
 import com.outven.bmtchallange.helper.HidenBar;
 import com.outven.bmtchallange.helper.SessionManager;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class DashboardActivity extends AppCompatActivity implements View.OnClickListener {
 
     String videoPath, userReportStatus;
     int userTrackerDay;
 
-//    Date batas, curTime;
-//    LinearLayout llBorderName, llBorderTier;
-//    RelativeLayout rlDashboard;
+    Date batas, curTime;
+    LinearLayout llBorderName, llBorderTier;
+    RelativeLayout rlDashboard;
 
     TextView txtUsername, txtTier, tittleTracker;
     CardView cvProfile;
     ImageButton ibFullScreen;
     VideoView vvTutorial;
     RecyclerView rvTracker;
+    ImageView ivLogoUser;
 
     SessionManager sessionManager;
 
@@ -46,15 +54,22 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
+
         //Find id
+        ivLogoUser = findViewById(R.id.ivLogoUser);
         cvProfile = findViewById(R.id.cvProfile);
-        txtUsername = findViewById(R.id.txtUsername);
         txtTier = findViewById(R.id.txtTier);
         txtUsername = findViewById(R.id.txtUsername);
         tittleTracker = findViewById(R.id.tittleTracker);
         vvTutorial = findViewById(R.id.vvTutorial);
         ibFullScreen = findViewById(R.id.ibFullScreen);
         rvTracker = findViewById(R.id.rvTracker);
+
+        try {
+            curTimeCheck();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         //Cek user login
         sessionManager = new SessionManager(DashboardActivity.this);
@@ -93,33 +108,29 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     }
 
     //Check timer day or night
-//    private void curTimeCheck() throws ParseException {
-//
-//        rlDashboard = findViewById(R.id.rlDashboard);
-//        llBorderName = findViewById(R.id.llBorderName);
-//        llBorderTier = findViewById(R.id.llBorderTier);
-//
-//        String yourTime = "06:00 PM";
-//        String today = (String) android.text.format.DateFormat.format(
-//                "h:mm a", new java.util.Date());
-//        @SuppressLint("SimpleDateFormat") SimpleDateFormat localtime = new SimpleDateFormat("h:mm a");
-//        batas = localtime.parse(yourTime);
-//        curTime = localtime.parse(today);
-//        if (curTime.after(batas)) {
-//            nightTheme();
-//        }
-//    }
+    private void curTimeCheck() throws ParseException {
+
+        rlDashboard = findViewById(R.id.rlDashboard);
+
+        String yourTime = "06:00 PM";
+        String today = (String) android.text.format.DateFormat.format(
+                "h:mm a", new java.util.Date());
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat localtime = new SimpleDateFormat("h:mm a");
+        batas = localtime.parse(yourTime);
+        curTime = localtime.parse(today);
+        if (curTime.after(batas)) {
+            nightTheme();
+        }
+    }
 
     //Night Theme
-//    private void nightTheme() {
-//        rlDashboard.setBackgroundColor(getResources().getColor(R.color.nightColor));
-//        llBorderName.setBackgroundResource(R.drawable.custom_border_night);
-//        llBorderTier.setBackgroundResource(R.drawable.custom_border_night);
-//        txtUsername.setTextColor(getResources().getColor(R.color.purple));
-//        txtTier.setTextColor(getResources().getColor(R.color.purple));
-//        tittleTracker.setTextColor(getResources().getColor(R.color.white));
-//        ivTheme.setImageResource(R.drawable.tiernight);
-//    }
+    private void nightTheme() {
+        rlDashboard.setBackgroundColor(getResources().getColor(R.color.textPrimary));
+        txtUsername.setTextColor(getResources().getColor(R.color.white));
+        txtTier.setTextColor(getResources().getColor(R.color.white));
+    }
+
+
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {

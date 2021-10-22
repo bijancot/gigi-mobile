@@ -2,13 +2,11 @@ package com.outven.bmtchallange.activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -20,9 +18,12 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.outven.bmtchallange.R;
 import com.outven.bmtchallange.helper.Config;
 import com.outven.bmtchallange.helper.HidenBar;
+
+import java.io.File;
 
 public class UploadAfterActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -65,13 +66,19 @@ public class UploadAfterActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void ambilPoto() {
-        ContentValues values = new ContentValues();
-        values.put(MediaStore.Images.Media.TITLE, "New Pict");
-        values.put(MediaStore.Images.Media.DESCRIPTION, "From the camera");
-        file = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, file);
-        startActivityForResult(intent, IMAGE_CAPTURE_CODE);
+//        ContentValues values = new ContentValues();
+//        values.put(MediaStore.Images.Media.TITLE, "New Pict");
+//        values.put(MediaStore.Images.Media.DESCRIPTION, "From the camera");
+//        file = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+//        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        intent.putExtra(MediaStore.EXTRA_OUTPUT, file);
+//        startActivityForResult(intent, IMAGE_CAPTURE_CODE);
+
+        ImagePicker.with(this)
+                .crop()	    			//Crop image(Optional), Check Customization for more option
+                .compress(1024)			//Final image size will be less than 1 MB(Optional)
+                .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                .start();
     }
 
     public void permissionCheck(){
@@ -93,7 +100,14 @@ public class UploadAfterActivity extends AppCompatActivity implements View.OnCli
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            Config.setFileAfter(file);
+            Uri uri = data.getData();
+
+            File imageFile = new File(uri.getPath());
+            Config.files[1] = imageFile;
+            Config.listUpload[1][0] = Config.getCategoryUpload();
+            Config.listUpload[1][1] = "after";
+
+            Config.setFileAfter(uri);
             startActivity(new Intent(UploadAfterActivity.this,UploadAfterDoneActivity.class));
         }
     }
