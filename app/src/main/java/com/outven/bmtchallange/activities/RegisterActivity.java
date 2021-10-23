@@ -12,6 +12,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +45,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     EditText etEmail,etPassword, etName, etSekolah, etPhone, etTanggalLahir;
     Button btnSignUp;
     TextView txtSignIn;
+    RadioGroup rgGender;
+    RadioButton selectGender;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -58,15 +62,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         etSekolah = findViewById(R.id.etSekolah);
         etPhone = findViewById(R.id.etPhone);
         etKelas = findViewById(R.id.etKelas);
-        textInputLayout = findViewById(R.id.tiGender) ;
-        autoCompleteTextView = findViewById(R.id.etGender);
+//        textInputLayout = findViewById(R.id.tiGender) ;
+//        autoCompleteTextView = findViewById(R.id.etGender);
+        rgGender = findViewById(R.id.rgGender);
         btnSignUp = findViewById(R.id.btnSignUp);
         txtSignIn = findViewById(R.id.txtSignIn);
 
 //        Dropdown Gender
-        String[] option_gender = {"Laki - laki","Perempuan"};
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(RegisterActivity.this, R.layout.dropdown_gender, option_gender);
-        autoCompleteTextView.setAdapter(arrayAdapter);
+//        String[] option_gender = {"Laki - laki","Perempuan"};
+//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(RegisterActivity.this, R.layout.dropdown_gender, option_gender);
+//        autoCompleteTextView.setAdapter(arrayAdapter);
+
         String[] optionKelas = {"1","2","3","4","5","6","7","8","9","10","11","12"};
         ArrayAdapter<String> arrayAdapterKelas = new ArrayAdapter<>(RegisterActivity.this, R.layout.dropdown_kelas, optionKelas);
         etKelas.setAdapter(arrayAdapterKelas);
@@ -119,7 +125,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 email = etEmail.getText().toString();
                 password = etPassword.getText().toString();
                 name = etName.getText().toString();
-                gender = genderCheck(autoCompleteTextView);
+
+//                gender = genderCheck(autoCompleteTextView);
+                int checkId = rgGender.getCheckedRadioButtonId();
+                selectGender = rgGender.findViewById(checkId);
+                String tgender =selectGender.getText().toString();
+                if (tgender.equalsIgnoreCase("Laki - laki")){
+                    gender = 1;
+                } else {
+                    gender = 2;
+                }
+
                 birth_date = etTanggalLahir.getText().toString();
                 school_name = etSekolah.getText().toString();
                 phone_number = etPhone.getText().toString();

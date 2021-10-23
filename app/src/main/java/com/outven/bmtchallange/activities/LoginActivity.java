@@ -17,9 +17,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.outven.bmtchallange.R;
 import com.outven.bmtchallange.api.ApiClient;
+import com.outven.bmtchallange.helper.Config;
 import com.outven.bmtchallange.helper.HidenBar;
 import com.outven.bmtchallange.helper.SessionManager;
 import com.outven.bmtchallange.models.login.Response.LoginDataResponse;
+import com.outven.bmtchallange.models.report.response.Report;
+import com.outven.bmtchallange.models.report.response.ReportResponse;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -33,9 +36,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Button btnLogin;
     EditText etEmail,etPassword;
 
-    String username, password;
+    String email, password;
+
     SessionManager sessionManager;
-    LoginDataResponse loginDataResponse;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -88,9 +91,68 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void createLoginRequest(){
-        username = etEmail.getText().toString();
+        email = etEmail.getText().toString();
         password = etPassword.getText().toString();
-        userLogin(username, password, true);
+        userReport(email);
+        userLogin(email, password);
+    }
+
+    private void userLogin(String email, String password) {
+        Call<LoginDataResponse> userList = ApiClient.getUserService().userLogin(email, password);
+        userList.enqueue(new Callback<LoginDataResponse>() {
+            @Override
+            public void onResponse(@NotNull Call<LoginDataResponse> call, @NotNull Response<LoginDataResponse> response) {
+                try {
+                    if (response.body() != null && response.isSuccessful() && response.body().isStatus()){
+                        LoginDataResponse loginDataResponse = response.body();
+                        sessionManager.LoginSession(loginDataResponse.getLoginData(), password);
+                        moveToNextPage(LoginActivity.this, DashboardActivity.class);
+                        Toast.makeText(getApplicationContext(), ""+loginDataResponse.getMessage() , Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), ""+response.body().getMessage() , Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    Log.e("onResponse", "Error : "+ e.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<LoginDataResponse> call, @NotNull Throwable t) {
+                try {
+                    Toast.makeText(getApplicationContext(), "Server sedang bermasalah, coba login nanti!" , Toast.LENGTH_SHORT).show();
+                } catch (Exception e){
+                    Log.e("Error " , "Error : " + t.getLocalizedMessage());
+                }
+            }
+        });
+    }
+
+    private void userReport(String email) {
+        Call<ReportResponse> userReport = ApiClient.getUserService().userReport(email);
+        userReport.enqueue(new Callback<ReportResponse>() {
+            @Override
+            public void onResponse(@NotNull Call<ReportResponse> call, @NotNull Response<ReportResponse> response) {
+                try {
+                    if (response.body() != null && response.isSuccessful() && response.body().isStatus()){
+                        Report report = response.body().getData().getReport();
+                        sessionManager.ReportSession(report);
+                    } else {
+                        Log.e("onResponse", "Report Trouble : " + response.body().getMessage());
+                    }
+                } catch (Exception e){
+                    Log.e("onResponse", "Error : "+ e.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<ReportResponse> call, @NotNull Throwable t) {
+                try {
+                    Log.e("failure " , "Failure : " + t.getMessage());
+                } catch (Exception e){
+                    Log.e("Error " , "Error : " + t.getMessage());
+                }
+            }
+        });
     }
 
     private void moveToNextPage(Context context, Class<? extends Activity> activityClass){
@@ -100,51 +162,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         finish();
     }
 
-    private void userLogin(String username, String password, boolean intent) {
-        Call<LoginDataResponse> userList = ApiClient.getUserService().userLogin(username, password);
-        userList.enqueue(new Callback<LoginDataResponse>() {
-
-            @Override
-            public void onResponse(@NotNull Call<LoginDataResponse> call, @NotNull Response<LoginDataResponse> response) {
-                if (response.body() != null && response.isSuccessful() && response.body().isStatus()){
-                    try {
-                        loginDataResponse = response.body();
-                        sessionManager.LoginSession(loginDataResponse.getLoginData(), password);
-                        if (intent){
-                            moveToNextPage(LoginActivity.this, DashboardActivity.class);
-                            Toast.makeText(getApplicationContext(), ""+loginDataResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }catch (Exception e){
-                        Toast.makeText(getApplicationContext(), ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    try {
-                        Toast.makeText(getApplicationContext(), ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    }catch (Exception e){
-                        Toast.makeText(getApplicationContext(), ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<LoginDataResponse> call, @NotNull Throwable t) {
-                try {
-                    Toast.makeText(getApplicationContext(), t.getLocalizedMessage()+ " Login Trouble", Toast.LENGTH_SHORT).show();
-                    Log.e("failure " , t.getLocalizedMessage());
-                } catch (Exception e){
-                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-
     @Override
     protected void onResume() {
         if (sessionManager.isLoggedIn()){
             Log.e("----", ""+sessionManager.isLoggedIn());
-            userLogin(sessionManager.getUserDetail().put("email",""), sessionManager.getUserDetail().put("password",""), false);
-            moveToNextPage(LoginActivity.this, DashboardActivity.class);
-            finish();
+            userReport(sessionManager.getUserDetail().get(Config.USER_EMAIL));
+            moveToNextPage(LoginActivity.this,DashboardActivity.class);
         }
         super.onResume();
     }

@@ -25,17 +25,5 @@
         android:layout_centerVertical="true"
         android:src="@drawable/logosplash"
         android:transitionName="example_transition"/>
-    <Button
-        android:id="@+id/btnSplashMulai"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:fontFamily="@font/nunito_black"
-        android:background="@drawable/custom_button"
-        app:backgroundTint="@null"
-        android:text="Ayo Mulai"
-        android:textAllCaps="false"
-        android:textSize="20sp"
-        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

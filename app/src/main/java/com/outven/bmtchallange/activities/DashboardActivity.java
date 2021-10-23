@@ -27,13 +27,13 @@ import com.outven.bmtchallange.helper.HidenBar;
 import com.outven.bmtchallange.helper.SessionManager;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 public class DashboardActivity extends AppCompatActivity implements View.OnClickListener {
 
-    String videoPath, userReportStatus;
-    int userTrackerDay;
+    String videoPath, userReportStatus, userTime;
+    String userTrackerDay, userEntry;
 
     Date batas, curTime;
     LinearLayout llBorderName, llBorderTier;
@@ -54,6 +54,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
+        sessionManager = new SessionManager(DashboardActivity.this);
 
         //Find id
         ivLogoUser = findViewById(R.id.ivLogoUser);
@@ -64,6 +65,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         vvTutorial = findViewById(R.id.vvTutorial);
         ibFullScreen = findViewById(R.id.ibFullScreen);
         rvTracker = findViewById(R.id.rvTracker);
+        rlDashboard = findViewById(R.id.rlDashboard);
 
         try {
             curTimeCheck();
@@ -72,13 +74,24 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         }
 
         //Cek user login
-        sessionManager = new SessionManager(DashboardActivity.this);
 
         //set User detail Dashboard
-        txtUsername.setText("Halo "+sessionManager.getUserDetail().get("name")+"!");
-        txtTier.setText(sessionManager.getUserDetail().get("tier") + " Poin");
+        txtUsername.setText("Halo "+sessionManager.getUserDetail().get(Config.USER_NAME)+"!");
+        txtTier.setText(sessionManager.getUserDetail().get(Config.USER_DAY) );
 
-        userTrackerDay = Integer.parseInt(sessionManager.getUserDetail().get("tier"));
+        userTrackerDay = sessionManager.getUserDetail().get(Config.USER_DAY);
+        userEntry = sessionManager.getUserDetail().get(Config.USER_REPORT_ENTRY);
+//        Log.e("day", "day : "+ sessionManager.getUserDetail().get(Config.USER_REPORT_ID));
+//        Log.e("day", "day : "+ userTrackerDay);
+//        Log.e("time", "entry : "+ userEntry);
+        int trackerDay = Integer.parseInt(userTrackerDay);
+        int entry = Integer.parseInt(userEntry);
+        userTime = sessionManager.getUserDetail().get("report_time");
+
+//        int trackerDay = 21;
+//        int entry = 4;
+//        userTime = "night";
+
         userReportStatus = sessionManager.getUserDetail().get("report_status");
 
         //Video setter
@@ -95,8 +108,11 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         MyAdapter myAdapter = new MyAdapter(
                 DashboardActivity.this,
                 getResources().getStringArray(R.array.dayListTracker),
-                userTrackerDay,
-                userReportStatus
+                trackerDay,
+                userReportStatus,
+                userTime,
+                entry
+
         );
         rvTracker.setAdapter(myAdapter);
 
@@ -107,20 +123,22 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         HidenBar.WindowFlag(this, getWindow());
     }
 
-    //Check timer day or night
+//    Check timer day or night
     private void curTimeCheck() throws ParseException {
 
-        rlDashboard = findViewById(R.id.rlDashboard);
-
-        String yourTime = "06:00 PM";
-        String today = (String) android.text.format.DateFormat.format(
-                "h:mm a", new java.util.Date());
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat localtime = new SimpleDateFormat("h:mm a");
-        batas = localtime.parse(yourTime);
-        curTime = localtime.parse(today);
-        if (curTime.after(batas)) {
+        if (Objects.equals(sessionManager.getUserDetail().get(Config.USER_REPORT_TIME), Config.TIME_NIGHT)){
             nightTheme();
         }
+//
+//        String yourTime = "06:00 PM";
+//        String today = (String) android.text.format.DateFormat.format(
+//                "h:mm a", new java.util.Date());
+//        @SuppressLint("SimpleDateFormat") SimpleDateFormat localtime = new SimpleDateFormat("h:mm a");
+//        batas = localtime.parse(yourTime);
+//        curTime = localtime.parse(today);
+//        if (curTime.after(batas)) {
+//            nightTheme();
+//        }
     }
 
     //Night Theme

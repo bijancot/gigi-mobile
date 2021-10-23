@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -44,7 +45,16 @@ public class UploadAfterDoneActivity extends AppCompatActivity {
 
         imgUploadAfterDone.setImageURI(Config.getFileAfter());
 
-        btnUploadAfterDone.setOnClickListener(view -> doUpload());
+        btnUploadAfterDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 1000){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
+                doUpload();
+            }
+        });
 
         HidenBar.WindowFlag(this, getWindow());
     }
@@ -106,11 +116,6 @@ public class UploadAfterDoneActivity extends AppCompatActivity {
 
 
     public void moveToDashboard(){
-        if (SystemClock.elapsedRealtime() - mLastClickTime < 1000){
-            return;
-        }
-        mLastClickTime = SystemClock.elapsedRealtime();
-
         Intent intent = new Intent(UploadAfterDoneActivity.this, DashboardActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

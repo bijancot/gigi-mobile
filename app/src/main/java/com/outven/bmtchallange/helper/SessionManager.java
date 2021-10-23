@@ -6,18 +6,23 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.outven.bmtchallange.models.login.Response.LoginData;
+import com.outven.bmtchallange.models.report.response.Report;
 
 import java.util.HashMap;
 
 public class SessionManager {
 
     private final SharedPreferences sharedPreferences;
+    private final SharedPreferences sharedPreferencesAppStart;
     private final SharedPreferences.Editor editor;
+    private final SharedPreferences.Editor editorAppStart;
 
     @SuppressLint("CommitPrefEdits")
     public SessionManager (Context context){
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        sharedPreferencesAppStart = PreferenceManager.getDefaultSharedPreferences(context);
         editor = sharedPreferences.edit();
+        editorAppStart = sharedPreferencesAppStart.edit();
     }
 
     public void LoginSession(LoginData loginData, String password){
@@ -25,10 +30,22 @@ public class SessionManager {
         editor.putString(Config.USER_EMAIL, loginData.getUser().getEmail());
         editor.putString(Config.USER_PASSWORD, password);
         editor.putString(Config.USER_NAME, loginData.getUser().getName());
-        editor.putString(Config.USER_TIER, loginData.getReport().getDay());
-        editor.putString(Config.USER_REPORT_ID, loginData.getReport().getReportId());
-        editor.putString(Config.USER_REPORT_STATUS, loginData.getReport().getStatus());
+
         editor.commit();
+    }
+
+    public void ReportSession(Report report){
+        editor.putString(Config.USER_REPORT_ID, report.getReportId());
+        editor.putString(Config.USER_REPORT_ENTRY, report.getEntry());
+        editor.putString(Config.USER_REPORT_TIME, report.getTime());
+        editor.putString(Config.USER_DAY, report.getDay());
+        editor.putString(Config.USER_REPORT_STATUS, report.getStatus());
+        editor.commit();
+    }
+
+    public void StartAppSession(){
+        editorAppStart.putBoolean(Config.IS_START, true);
+        editorAppStart.commit();
     }
 
     public HashMap<String, String> getUserDetail(){
@@ -37,20 +54,17 @@ public class SessionManager {
         user.put(Config.USER_EMAIL,sharedPreferences.getString(Config.USER_EMAIL,""));
         user.put(Config.USER_NAME,sharedPreferences.getString(Config.USER_NAME,""));
         user.put(Config.USER_PASSWORD,sharedPreferences.getString(Config.USER_PASSWORD,""));
-        user.put(Config.USER_TIER,sharedPreferences.getString(Config.USER_TIER,""));
+
         user.put(Config.USER_REPORT_ID,sharedPreferences.getString(Config.USER_REPORT_ID,""));
+        user.put(Config.USER_REPORT_ENTRY,sharedPreferences.getString(Config.USER_REPORT_ENTRY,""));
+        user.put(Config.USER_REPORT_TIME,sharedPreferences.getString(Config.USER_REPORT_TIME,""));
+        user.put(Config.USER_DAY,sharedPreferences.getString(Config.USER_DAY,""));
         user.put(Config.USER_REPORT_STATUS,sharedPreferences.getString(Config.USER_REPORT_STATUS,""));
         return user;
     }
 
-//    public HashMap<String, Integer> getUserDay(){
-//        HashMap<String,Integer> user = new HashMap<>();
-//        user.put(Config.USER_TIER,sharedPreferences.getInt(Config.USER_TIER,0));
-//        return user;
-//    }
-
     public void loggoutSession(){
-        editor.clear();
+        editor.putBoolean(Config.IS_LOGGIN_IN,false);
         editor.commit();
     }
 
@@ -58,38 +72,45 @@ public class SessionManager {
         return sharedPreferences.getBoolean(Config.IS_LOGGIN_IN,false);
     }
 
-//    public String thisDay(String athisDay){
-//        return athisDay;
+    public Boolean isStartApp(){
+        return sharedPreferencesAppStart.getBoolean(Config.IS_START,false);
+    }
+
+
+//    public String lastDay(){
+//        return sharedPreferences.getString(Config.USER_OPEN_APP_DATE,"");
 //    }
-    public String lastDay(){
-        return sharedPreferences.getString(Config.USER_OPEN_APP_DATE,"");
-    }
-
-    public Boolean haveOpenAppToday(String thisDay){
-        if (!thisDay.equals(lastDay())){
-            editor.putString(Config.USER_OPEN_APP_DATE,thisDay);
-            editor.putBoolean(Config.HAVE_REPORT_TODAY, false);
-            return false;
-        }
-        return true;
-    }
-
-    public Boolean haveReportToday(){
-        return sharedPreferences.getBoolean(Config.HAVE_REPORT_TODAY,false);
-    }
-
-    public void ReportedToday(boolean result){
-        editor.putBoolean(Config.HAVE_REPORT_TODAY,result);
-        editor.commit();
-    }
-
-    public void changeDateLastDay(String result){
-        editor.putString(Config.USER_OPEN_APP_DATE, result);
-        editor.commit();
-    }
-
+//
+//    public Boolean haveOpenAppToday(String thisDay){
+//        if (!thisDay.equals(lastDay())){
+//            editor.putString(Config.USER_OPEN_APP_DATE,thisDay);
+//            editor.putBoolean(Config.HAVE_REPORT_TODAY, false);
+//            return false;
+//        }
+//        return true;
+//    }
+//
+//    public Boolean haveReportToday(){
+//        return sharedPreferences.getBoolean(Config.HAVE_REPORT_TODAY,false);
+//    }
+//
+//    public void ReportedToday(boolean result){
+//        editor.putBoolean(Config.HAVE_REPORT_TODAY,result);
+//        editor.commit();
+//    }
+//
+//    public void changeDateLastDay(String result){
+//        editor.putString(Config.USER_OPEN_APP_DATE, result);
+//        editor.commit();
+//    }
+//
     public void changeStatusLoggedIn(boolean result){
         editor.putBoolean(Config.IS_LOGGIN_IN,result);
+        editor.commit();
+    }
+
+    public void clearCommit(){
+        editor.clear();
         editor.commit();
     }
 }
