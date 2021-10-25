@@ -34,7 +34,6 @@ public class UploadBeforeDoneActivity extends AppCompatActivity {
             return;
         }
         mLastClickTime = SystemClock.elapsedRealtime();
-
         Intent intent = new Intent(UploadBeforeDoneActivity.this, AnimasiActivity.class);
         overridePendingTransition(R.anim.from_right, R.anim.to_left);
         startActivity(intent);

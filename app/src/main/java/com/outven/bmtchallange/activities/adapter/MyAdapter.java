@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -147,12 +148,24 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> imp
     public void onClick(View view) {
         if (view.getId() == R.id.btnTracker){
             if (checkTracker() == 1) {
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 1000){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 showAlert();
             } else {
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 1000){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 String text = Config.getMessageTracker();
                 showMessageAlert(text,R.drawable.custom_border_tracker,R.drawable.tracker_now_logo);
             }
         } else if (view.getId() == R.id.btnTrackerDanger){
+            if (SystemClock.elapsedRealtime() - mLastClickTime < 1000){
+                return;
+            }
+            mLastClickTime = SystemClock.elapsedRealtime();
             String text = "Kamu tidak bisa upload karena pagi hari kamu belum upload sikat gigimu!";
             showMessageAlert(text,R.drawable.custom_border_tracker_danger,R.drawable.tracker_soon_logo);
         }

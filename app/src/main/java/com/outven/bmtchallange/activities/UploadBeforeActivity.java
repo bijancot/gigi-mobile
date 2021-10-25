@@ -57,6 +57,10 @@ public class UploadBeforeActivity extends AppCompatActivity implements View.OnCl
                 ambilPoto();
                 break;
             case R.id.btnUploadBefore:
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 1000){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 Toast.makeText(UploadBeforeActivity.this, "Kamu belum mengupload foto sebelum kamu sikat gigi!", Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -85,7 +89,6 @@ public class UploadBeforeActivity extends AppCompatActivity implements View.OnCl
                 .compress(1024)			//Final image size will be less than 1 MB(Optional)
                 .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
                 .start();
-
     }
 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

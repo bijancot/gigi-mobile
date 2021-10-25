@@ -122,7 +122,6 @@ public class UploadAfterDoneActivity extends AppCompatActivity {
         });
     }
 
-
     public void moveToDashboard(){
         Intent intent = new Intent(UploadAfterDoneActivity.this, DashboardActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

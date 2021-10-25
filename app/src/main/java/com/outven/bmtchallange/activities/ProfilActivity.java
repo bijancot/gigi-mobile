@@ -2,6 +2,7 @@ package com.outven.bmtchallange.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.TextView;
 
@@ -35,6 +36,12 @@ public class ProfilActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.txtLogout){
+
+            if (SystemClock.elapsedRealtime() - mLastClickTime < 1000){
+                return;
+            }
+            mLastClickTime = SystemClock.elapsedRealtime();
+
             sessionManager.loggoutSession();
             Intent intent = new Intent(ProfilActivity.this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -43,4 +50,5 @@ public class ProfilActivity extends AppCompatActivity implements View.OnClickLis
             finish();
         }
     }
+    private long mLastClickTime = 0;
 }

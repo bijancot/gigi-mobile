@@ -57,6 +57,10 @@ public class UploadAfterActivity extends AppCompatActivity implements View.OnCli
                 ambilPoto();
                 break;
             case R.id.btnUploadAfterDone:
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 1000){
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 Toast.makeText(UploadAfterActivity.this, "Kamu belum mengupload foto sesudah kamu sikat gigi!", Toast.LENGTH_SHORT).show();
                 break;
         }
