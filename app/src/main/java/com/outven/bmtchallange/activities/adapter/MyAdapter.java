@@ -1,17 +1,21 @@
 package com.outven.bmtchallange.activities.adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.outven.bmtchallange.R;
@@ -23,8 +27,6 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> imp
     Context _context;
     String[] listDayTracker;
     int userTrackerDay;
-//    Date tDayFirstTime, tDayLastTime,tNightFirstTime, tNightLastTime, tDayTime, tNightTime, tfirstDayTime;
-//    Date curTime;
     String reportStatus;
     String time;
     int entry;
@@ -84,98 +86,26 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> imp
         }
     }
 
-//    public void timeTrackerManager() throws ParseException {
-//        String today = (String) android.text.format.DateFormat.format(
-//                "h:mm a", new java.util.Date());
-//        @SuppressLint("SimpleDateFormat") SimpleDateFormat localtime = new SimpleDateFormat("h:mm a");
-//
-//        // Pagi
-//        String mfirstTime = "00:00 AM"; //awal upload pagi
-//        String mlasTime = "11:59 AM"; //akhir upload pagi
-//        String mdayTime = "11:59 AM";
-//        String mfirstDayTime = "00:00 AM";
-//        tDayFirstTime = localtime.parse(mfirstTime);
-//        tDayLastTime = localtime.parse(mlasTime);
-//        tDayTime = localtime.parse(mdayTime);
-//        tfirstDayTime = localtime.parse(mfirstDayTime);
-//
-//        // Malam
-//        String nfirstTime = "12:00 PM"; //awal upload malam
-//        String nlasTime = "11:59 PM"; //awal upload malam
-//        String nnightTime = "11:59 PM";
-//        tNightFirstTime = localtime.parse(nfirstTime);
-//        tNightLastTime = localtime.parse(nlasTime);
-//        tNightTime = localtime.parse(nnightTime);
-//
-//        //Now
-//        curTime = localtime.parse(today);
-//    }
     public int checkTracker(){
-        if (time.equals(Config.TIME_DAY) && entry == 0 ){
-            return 1;
-        } else if (time.equals(Config.TIME_DAY) && entry == 2){
-            Config.setMessageTracker("Kamu sudah mengupload foto sikat gigi pagi!");
-            return 3;
-        } else {
-            if (time.equals(Config.TIME_NIGHT) && entry == 2) {
+        if (isOnGoing()){
+            if (time.equals(Config.TIME_DAY) && entry == 0 ){
                 return 1;
-            } else if (time.equals(Config.TIME_NIGHT) && entry == 0) {
-                return 2;
-            } else {
+            } else if (time.equals(Config.TIME_DAY) && entry == 2){
                 Config.setMessageTracker("Kamu sudah mengupload foto sikat gigi pagi!");
-                return 4;
+                return 3;
+            } else {
+                if (time.equals(Config.TIME_NIGHT) && entry == 2) {
+                    return 1;
+                } else if (time.equals(Config.TIME_NIGHT) && entry == 0) {
+                    return 2;
+                } else {
+                    Config.setMessageTracker("Kamu sudah mengupload foto sikat gigi pagi!");
+                    return 4;
+                }
             }
-        }
-    }
-    public int isMorning() {
-        if (time.equalsIgnoreCase(Config.TIME_DAY) && entry == 0 ){
-            return 1;
         } else {
-            Config.setMessageTracker("Kamu sudah mengupload foto sikat gigi pagi!");
-            return 0;
+            return 4;
         }
-//        try {
-//            timeTrackerManager();
-//            if (curTime.after(tDayFirstTime) && curTime.before(tDayLastTime)) {
-//                return 0;
-//            } else if (curTime.after(tDayLastTime) && curTime.before(tNightFirstTime)){
-//                Config.setmTimeTracker("Kamu sudah mengupload foto sikat gigi pagi! Upload foto lagi setelah jam 06.00 malam");
-//                return 1;
-//            } else if (curTime.after(tfirstDayTime) && curTime.before(tDayFirstTime)){
-//                Config.setmTimeTracker("Kamu belum bisa mengupload foto sikat gigi! Upload foto sikat gigimu setelah jam 06.00 pagi");
-//                return 1;
-//            }
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        return 2;
-    }
-
-    public int isNight(){
-//        try {
-//            timeTrackerManager();
-//            if (curTime.after(tNightFirstTime) && curTime.before(tNightLastTime)) {
-//                return 0;
-//            } else if (curTime.after(tNightLastTime) && curTime.before(tNightTime)){
-//                Config.setmTimeTracker("Kamu sudah menyelesaikan chellenge hari ini");
-//                return 1;
-//            } else {
-//                Config.setmTimeTracker("Kamu sudah mengupload foto sikat gigi!");
-//                return 2;
-//            }
-//        } catch (ParseException e) {
-//            Config.setmTimeTracker(e.getLocalizedMessage());
-//            return 2;
-//        }
-
-        if (time.equalsIgnoreCase(Config.TIME_NIGHT) && entry == 2) {
-            return 0;
-        } else if (time.equalsIgnoreCase(Config.TIME_NIGHT) && entry == 0) {
-            return 1;
-        } else if (time.equalsIgnoreCase(Config.TIME_NIGHT) && entry == 4) {
-            return 2;
-        }
-        return 2;
     }
 
     public Boolean isOnGoing(){
@@ -190,8 +120,6 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> imp
 
     @Override
     public int getItemViewType(int position) {
-//        Log.e("time", time);
-//        Log.e("entry", String.valueOf(entry));
         if (isDone(position)){
             return 0;
         } else if (isEnable(position)){
@@ -217,42 +145,105 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> imp
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.btnTracker || view.getId() == R.id.btnTrackerDanger){
-            if (checkTracker() == 1 || checkTracker() == 2) {
+        if (view.getId() == R.id.btnTracker){
+            if (checkTracker() == 1) {
                 showAlert();
             } else {
-                Toast.makeText(_context, Config.getMessageTracker(), Toast.LENGTH_SHORT).show();
+                String text = Config.getMessageTracker();
+                showMessageAlert(text,R.drawable.custom_border_tracker,R.drawable.tracker_now_logo);
             }
-//            if ( time.equals(Config.TIME_DAY) || time.equals(Config.TIME_NIGHT)){
-//                //just do Oneclick
-//                if (SystemClock.elapsedRealtime() - mLastClickTime < 1000){
-//                    return;
-//                }
-//                mLastClickTime = SystemClock.elapsedRealtime();
-//
-//            } else {
-//                if (isMorning() == 1 || isNight() == 1 || isNight() == 2){
-//                    Toast.makeText(_context, Config.getMessageTracker(),Toast.LENGTH_SHORT).show();
-//                }
-//            }
+        } else if (view.getId() == R.id.btnTrackerDanger){
+            String text = "Kamu tidak bisa upload karena pagi hari kamu belum upload sikat gigimu!";
+            showMessageAlert(text,R.drawable.custom_border_tracker_danger,R.drawable.tracker_soon_logo);
         }
     }
 
+    @SuppressLint("SetTextI18n")
+    private void showMessageAlert(String message, int bgLogo, int imgLogo) {
+        Dialog dialog = new Dialog(_context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.custom_message_dialog);
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        TextView txtDialogMessage = dialog.findViewById(R.id.txtDialogMessage);
+        Button btnDialogMessage = dialog.findViewById(R.id.btnDialogMessage);
+        RelativeLayout rlLogo = dialog.findViewById(R.id.rlLogo);
+        ImageView ivLogoMessageDialog = dialog.findViewById(R.id.ivLogoMessageDialog);
+
+        rlLogo.setBackgroundResource(bgLogo);
+        ivLogoMessageDialog.setImageResource(imgLogo);
+        txtDialogMessage.setText(message);
+        btnDialogMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    @SuppressLint("SetTextI18n")
     private void showAlert()  {
-        AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(_context);
+        Dialog dialog = new Dialog(_context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.custom_upload_dialog);
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        TextView txtUploadDialogMessage = dialog.findViewById(R.id.txtUploadDialogMessage);
+        Button btnUploadDialogBelum = dialog.findViewById(R.id.btnUploadDialogBelum);
+        Button btnUploadDialogSudah = dialog.findViewById(R.id.btnUploadDialogSudah);
+
         if (time.equals(Config.TIME_DAY)){
             Config.setCategoryUpload("day");
-            alertDialog2.setMessage("Apakah kamu sudah sarapan pagi atau belum?");
+            txtUploadDialogMessage.setText("Apakah kamu sudah sarapan pagi atau belum?");
         } else if (time.equals(Config.TIME_NIGHT)){
             Config.setCategoryUpload("night");
-            alertDialog2.setMessage("Apakah kamu sudah makan malam atau belum?");
+            txtUploadDialogMessage.setText("Apakah kamu sudah makan malam atau belum?");
         }
-        alertDialog2.setPositiveButton("Sudah",
-                (dialog, which) -> _context.startActivity(new Intent(_context, UploadBeforeActivity.class)));
 
-        alertDialog2.setNegativeButton("Belum",
-                (dialog, which) -> dialog.dismiss());
-        alertDialog2.show();
+        btnUploadDialogBelum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showAlertIfHaveEat();
+                dialog.dismiss();
+            }
+        });
+        btnUploadDialogSudah.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                _context.startActivity(new Intent(_context, UploadBeforeActivity.class));
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void showAlertIfHaveEat() {
+        Dialog dialog = new Dialog(_context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.custom_message_dialog);
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        TextView txtDialogMessage = dialog.findViewById(R.id.txtDialogMessage);
+        Button btnDialogMessage = dialog.findViewById(R.id.btnDialogMessage);
+        RelativeLayout rlLogo = dialog.findViewById(R.id.rlLogo);
+        ImageView ivLogoMessageDialog = dialog.findViewById(R.id.ivLogoMessageDialog);
+
+        rlLogo.setBackgroundResource(R.drawable.custom_border_tracker_danger);
+        ivLogoMessageDialog.setImageResource(R.drawable.tracker_soon_logo);
+        txtDialogMessage.setText("Silahkan makan terlebih dahulu");
+
+        btnDialogMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     public static class MyViewHolderDone extends RecyclerView.ViewHolder {

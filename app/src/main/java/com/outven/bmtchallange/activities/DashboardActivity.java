@@ -10,43 +10,53 @@ import android.os.SystemClock;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.outven.bmtchallange.R;
 import com.outven.bmtchallange.activities.adapter.MyAdapter;
+import com.outven.bmtchallange.api.ApiClient;
 import com.outven.bmtchallange.helper.Config;
 import com.outven.bmtchallange.helper.HidenBar;
+import com.outven.bmtchallange.helper.LoadingDialog;
 import com.outven.bmtchallange.helper.SessionManager;
+import com.outven.bmtchallange.models.report.response.Report;
+import com.outven.bmtchallange.models.report.response.ReportResponse;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.text.ParseException;
-import java.util.Date;
 import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DashboardActivity extends AppCompatActivity implements View.OnClickListener {
 
     String videoPath, userReportStatus, userTime;
     String userTrackerDay, userEntry;
 
-    Date batas, curTime;
-    LinearLayout llBorderName, llBorderTier;
     RelativeLayout rlDashboard;
+    SwipeRefreshLayout refreshLayout;
 
     TextView txtUsername, txtTier, tittleTracker;
     CardView cvProfile;
     ImageButton ibFullScreen;
     VideoView vvTutorial;
     RecyclerView rvTracker;
-    ImageView ivLogoUser;
+    ImageView ivLogoUser, btnOption;
 
     SessionManager sessionManager;
+    LoadingDialog loadingDialog;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -54,10 +64,31 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        sessionManager = new SessionManager(DashboardActivity.this);
 
+        loadingDialog = new LoadingDialog(DashboardActivity.this, "Tunggu sebentar...");
+        loadingDialog.startLoadingDialog();
+        sessionManager = new SessionManager(DashboardActivity.this);
+        userReport(sessionManager.getUserDetail().get(Config.USER_EMAIL));
+
+        refreshLayout = findViewById(R.id.refreshLayout);
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                moveToNextPage(DashboardActivity.this,DashboardActivity.class,true);
+                refreshLayout.setRefreshing(false);
+            }
+        });
+
+        //Hiden Bar
+        HidenBar.WindowFlag(this, getWindow());
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void refreshDashboard(){
         //Find id
         ivLogoUser = findViewById(R.id.ivLogoUser);
+        btnOption = findViewById(R.id.btnOption);
         cvProfile = findViewById(R.id.cvProfile);
         txtTier = findViewById(R.id.txtTier);
         txtUsername = findViewById(R.id.txtUsername);
@@ -73,26 +104,22 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             e.printStackTrace();
         }
 
-        //Cek user login
-
         //set User detail Dashboard
+        int Tier = Integer.parseInt(sessionManager.getUserDetail().get(Config.USER_DAY))*100;
         txtUsername.setText("Halo "+sessionManager.getUserDetail().get(Config.USER_NAME)+"!");
-        txtTier.setText(sessionManager.getUserDetail().get(Config.USER_DAY) );
+        txtTier.setText(String.valueOf(Tier));
 
         userTrackerDay = sessionManager.getUserDetail().get(Config.USER_DAY);
         userEntry = sessionManager.getUserDetail().get(Config.USER_REPORT_ENTRY);
-//        Log.e("day", "day : "+ sessionManager.getUserDetail().get(Config.USER_REPORT_ID));
-//        Log.e("day", "day : "+ userTrackerDay);
-//        Log.e("time", "entry : "+ userEntry);
+
         int trackerDay = Integer.parseInt(userTrackerDay);
         int entry = Integer.parseInt(userEntry);
         userTime = sessionManager.getUserDetail().get("report_time");
+        userReportStatus = sessionManager.getUserDetail().get("report_status");
 
 //        int trackerDay = 21;
 //        int entry = 4;
 //        userTime = "night";
-
-        userReportStatus = sessionManager.getUserDetail().get("report_status");
 
         //Video setter
         MediaController mediaController = new MediaController(this);
@@ -116,29 +143,17 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         );
         rvTracker.setAdapter(myAdapter);
 
-        cvProfile.setOnClickListener(this);
+        btnOption.setOnClickListener(this);
         ibFullScreen.setOnClickListener(this);
-
-        //Hiden Bar
-        HidenBar.WindowFlag(this, getWindow());
     }
 
 //    Check timer day or night
     private void curTimeCheck() throws ParseException {
-
         if (Objects.equals(sessionManager.getUserDetail().get(Config.USER_REPORT_TIME), Config.TIME_NIGHT)){
             nightTheme();
+        } else {
+            dayTheme();
         }
-//
-//        String yourTime = "06:00 PM";
-//        String today = (String) android.text.format.DateFormat.format(
-//                "h:mm a", new java.util.Date());
-//        @SuppressLint("SimpleDateFormat") SimpleDateFormat localtime = new SimpleDateFormat("h:mm a");
-//        batas = localtime.parse(yourTime);
-//        curTime = localtime.parse(today);
-//        if (curTime.after(batas)) {
-//            nightTheme();
-//        }
     }
 
     //Night Theme
@@ -147,13 +162,18 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         txtUsername.setTextColor(getResources().getColor(R.color.white));
         txtTier.setTextColor(getResources().getColor(R.color.white));
     }
-
+    //Day Theme
+    private void dayTheme() {
+        rlDashboard.setBackgroundColor(getResources().getColor(R.color.nowYellow));
+        txtUsername.setTextColor(getResources().getColor(R.color.text));
+        txtTier.setTextColor(getResources().getColor(R.color.text));
+    }
 
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.cvProfile:
+            case R.id.btnOption:
                 //just do onlclick
                 if (SystemClock.elapsedRealtime() - mLastClickTime < 1000){
                     return;
@@ -174,6 +194,35 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
+    private void userReport(String email) {
+        Call<ReportResponse> userReport = ApiClient.getUserService().userReport(email);
+        userReport.enqueue(new Callback<ReportResponse>() {
+            @Override
+            public void onResponse(@NotNull Call<ReportResponse> call, @NotNull Response<ReportResponse> response) {
+                try {
+                    if (response.body() != null && response.isSuccessful() && response.body().isStatus()){
+                        Report report = response.body().getData().getReport();
+                        sessionManager.ReportSession(report);
+                        refreshDashboard();
+                        loadingDialog.dismissDialog();
+                    } else {
+                        Toast.makeText(DashboardActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e){
+                    Toast.makeText(DashboardActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<ReportResponse> call, @NotNull Throwable t) {
+                try {
+                    Toast.makeText(DashboardActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
+                } catch (Exception e){
+                    Toast.makeText(DashboardActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
 
     private void moveToNextPage(Context context, Class<? extends Activity> activityClass, boolean setFlags){
         Intent intent = new Intent(context, activityClass);
@@ -181,6 +230,13 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         }
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        moveTaskToBack(true);
+        finish();
     }
 
     private long mLastClickTime = 0;

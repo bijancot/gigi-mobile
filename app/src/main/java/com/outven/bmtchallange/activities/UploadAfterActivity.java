@@ -26,9 +26,6 @@ import com.outven.bmtchallange.helper.HidenBar;
 import java.io.File;
 
 public class UploadAfterActivity extends AppCompatActivity implements View.OnClickListener {
-
-    private static final int IMAGE_CAPTURE_CODE = 1001;
-    Uri file;
     CardView imgUploadAfter;
     Button btnUploadAfterDone;
 
@@ -66,13 +63,6 @@ public class UploadAfterActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void ambilPoto() {
-//        ContentValues values = new ContentValues();
-//        values.put(MediaStore.Images.Media.TITLE, "New Pict");
-//        values.put(MediaStore.Images.Media.DESCRIPTION, "From the camera");
-//        file = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-//        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        intent.putExtra(MediaStore.EXTRA_OUTPUT, file);
-//        startActivityForResult(intent, IMAGE_CAPTURE_CODE);
 
         ImagePicker.with(this)
                 .crop()	    			//Crop image(Optional), Check Customization for more option

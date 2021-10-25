@@ -30,7 +30,6 @@ public class SessionManager {
         editor.putString(Config.USER_EMAIL, loginData.getUser().getEmail());
         editor.putString(Config.USER_PASSWORD, password);
         editor.putString(Config.USER_NAME, loginData.getUser().getName());
-
         editor.commit();
     }
 
@@ -64,7 +63,7 @@ public class SessionManager {
     }
 
     public void loggoutSession(){
-        editor.putBoolean(Config.IS_LOGGIN_IN,false);
+        editor.clear();
         editor.commit();
     }
 
@@ -76,34 +75,6 @@ public class SessionManager {
         return sharedPreferencesAppStart.getBoolean(Config.IS_START,false);
     }
 
-
-//    public String lastDay(){
-//        return sharedPreferences.getString(Config.USER_OPEN_APP_DATE,"");
-//    }
-//
-//    public Boolean haveOpenAppToday(String thisDay){
-//        if (!thisDay.equals(lastDay())){
-//            editor.putString(Config.USER_OPEN_APP_DATE,thisDay);
-//            editor.putBoolean(Config.HAVE_REPORT_TODAY, false);
-//            return false;
-//        }
-//        return true;
-//    }
-//
-//    public Boolean haveReportToday(){
-//        return sharedPreferences.getBoolean(Config.HAVE_REPORT_TODAY,false);
-//    }
-//
-//    public void ReportedToday(boolean result){
-//        editor.putBoolean(Config.HAVE_REPORT_TODAY,result);
-//        editor.commit();
-//    }
-//
-//    public void changeDateLastDay(String result){
-//        editor.putString(Config.USER_OPEN_APP_DATE, result);
-//        editor.commit();
-//    }
-//
     public void changeStatusLoggedIn(boolean result){
         editor.putBoolean(Config.IS_LOGGIN_IN,result);
         editor.commit();

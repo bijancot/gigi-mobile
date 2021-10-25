@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.outven.bmtchallange.R;
 import com.outven.bmtchallange.helper.HidenBar;
-import com.outven.bmtchallange.helper.SessionManager;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -15,8 +14,6 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        SessionManager sessionManager = new SessionManager(this);
-//        sessionManager.clearCommit();
         Thread timer = new Thread() {
             public void run() {
                 try {
@@ -24,14 +21,14 @@ public class SplashScreenActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
-                    finish();
                     Intent m = new Intent(SplashScreenActivity.this, MulaiActivity.class);
                     startActivityForResult(m, 0);
+                    overridePendingTransition(R.anim.from_right, R.anim.to_left);
+                    finish();
                 }
             }
         };
         timer.start();
-
         HidenBar.WindowFlag(SplashScreenActivity.this, getWindow());
     }
 }

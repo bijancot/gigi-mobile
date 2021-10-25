@@ -2,8 +2,8 @@ package com.outven.bmtchallange.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,6 +15,7 @@ import com.outven.bmtchallange.R;
 import com.outven.bmtchallange.api.ApiClient;
 import com.outven.bmtchallange.helper.Config;
 import com.outven.bmtchallange.helper.HidenBar;
+import com.outven.bmtchallange.helper.LoadingDialog;
 import com.outven.bmtchallange.helper.SessionManager;
 import com.outven.bmtchallange.models.upload.UploadResponse;
 
@@ -33,6 +34,7 @@ public class UploadAfterDoneActivity extends AppCompatActivity {
     ImageView imgUploadAfterDone;
     SessionManager sessionManager;
 
+    int doneUploadTracker = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +50,7 @@ public class UploadAfterDoneActivity extends AppCompatActivity {
         btnUploadAfterDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (SystemClock.elapsedRealtime() - mLastClickTime < 1000){
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 2000){
                     return;
                 }
                 mLastClickTime = SystemClock.elapsedRealtime();
@@ -60,9 +62,7 @@ public class UploadAfterDoneActivity extends AppCompatActivity {
     }
 
     private void doUpload() {
-
         String id, category, status;
-
         for (int i=0;i<Config.files.length;i++){
             RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), Config.files[i]);
             MultipartBody.Part partImage = MultipartBody.Part.createFormData("image", Config.files[i].getName(), requestBody);
@@ -77,18 +77,22 @@ public class UploadAfterDoneActivity extends AppCompatActivity {
 
             userUpload(rid, partImage, rcategory, rstatus);
         }
+        loadingToUpload();
+    }
 
-//        RequestBody requestBodyBefore = RequestBody.create(MediaType.parse("image/*"), imageFileBefore);
-//        RequestBody requestBodyAfter = RequestBody.create(MediaType.parse("image/*"), imageFileAfter);
-//
-//        MultipartBody.Part partImageBefore = MultipartBody.Part.createFormData("image", imageFileBefore.getName(), requestBodyBefore);
-//        MultipartBody.Part partImageAfter = MultipartBody.Part.createFormData("image", imageFileBefore.getName(), requestBodyAfter);
-//
-//        RequestBody report_id = RequestBody.create(MediaType.parse("text/plain"),sessionManager.getUserDetail().get("report_id"));
-//        RequestBody category = RequestBody.create(MediaType.parse("text/plain"),"day");
-//        RequestBody status = RequestBody.create(MediaType.parse("text/plain"),"before");
-//
-//        userUpload(report_id, partImageBefore, category, status);
+    private void loadingToUpload(){
+        LoadingDialog loadingDialog = new LoadingDialog(UploadAfterDoneActivity.this, "Sedang mengupload...");
+        loadingDialog.startLoadingDialog();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (doneUploadTracker == 2) {
+                    loadingDialog.dismissDialog();
+                    moveToDashboard();
+                }
+            }
+        },10000);
     }
 
     private void userUpload(RequestBody report_id, MultipartBody.Part partImageBefore, RequestBody category, RequestBody status) {
@@ -96,20 +100,24 @@ public class UploadAfterDoneActivity extends AppCompatActivity {
         userUpload.enqueue(new Callback<UploadResponse>() {
             @Override
             public void onResponse(@NotNull Call<UploadResponse> call, @NotNull Response<UploadResponse> response) {
-                if (response.body() != null && response.isSuccessful() && response.body().isStatus()){
-                    try {
-                        moveToDashboard();
+                try {
+                    if (response.body() != null && response.isSuccessful() && response.body().isStatus()){
                         Toast.makeText(getApplicationContext(),""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    } catch (Exception e){
-                        Toast.makeText(getApplicationContext(), ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Terjadi kesalahan pada server!", Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    Toast.makeText(getApplicationContext(), "Terjadi kesalahan pada server", Toast.LENGTH_SHORT).show();
+                    doneUploadTracker++;
+                } catch (Exception e){
+                    Toast.makeText(UploadAfterDoneActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
             public void onFailure(@NotNull Call<UploadResponse> call, @NotNull Throwable t) {
-                Log.d("RETRO","onTrouble : "+t.getMessage());
+                try {
+                    Toast.makeText(UploadAfterDoneActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
+                } catch (Exception e){
+                    Toast.makeText(UploadAfterDoneActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -120,6 +128,7 @@ public class UploadAfterDoneActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         overridePendingTransition(R.anim.from_left, R.anim.to_right);
+        doneUploadTracker = 0;
         finish();
     }
     private long mLastClickTime = 0;

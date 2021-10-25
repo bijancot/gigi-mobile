@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.textfield.TextInputLayout;
 import com.outven.bmtchallange.R;
 import com.outven.bmtchallange.api.ApiClient;
 import com.outven.bmtchallange.helper.Config;
@@ -40,8 +39,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     int gender;
     String email,password,name,birth_date,school_name,phone_number,school_class;
 
-    TextInputLayout textInputLayout;
-    AutoCompleteTextView autoCompleteTextView,etKelas;
+    AutoCompleteTextView etKelas;
     EditText etEmail,etPassword, etName, etSekolah, etPhone, etTanggalLahir;
     Button btnSignUp;
     TextView txtSignIn;
@@ -62,16 +60,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         etSekolah = findViewById(R.id.etSekolah);
         etPhone = findViewById(R.id.etPhone);
         etKelas = findViewById(R.id.etKelas);
-//        textInputLayout = findViewById(R.id.tiGender) ;
-//        autoCompleteTextView = findViewById(R.id.etGender);
         rgGender = findViewById(R.id.rgGender);
         btnSignUp = findViewById(R.id.btnSignUp);
         txtSignIn = findViewById(R.id.txtSignIn);
-
-//        Dropdown Gender
-//        String[] option_gender = {"Laki - laki","Perempuan"};
-//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(RegisterActivity.this, R.layout.dropdown_gender, option_gender);
-//        autoCompleteTextView.setAdapter(arrayAdapter);
 
         String[] optionKelas = {"1","2","3","4","5","6","7","8","9","10","11","12"};
         ArrayAdapter<String> arrayAdapterKelas = new ArrayAdapter<>(RegisterActivity.this, R.layout.dropdown_kelas, optionKelas);
@@ -175,17 +166,25 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         userResponseCall.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(@NotNull Call<UserResponse> call, @NotNull Response<UserResponse> response) {
-                if (response.body() != null && response.isSuccessful() && response.body().isStatus()){
-                    Toast.makeText(RegisterActivity.this, ""+response.body().getMessage() ,Toast.LENGTH_SHORT).show();
-                    moveToLogin(true);
-                } else if (response.body() != null && !response.body().isStatus()){
-                    Toast.makeText(RegisterActivity.this, ""+response.body().getMessage(),Toast.LENGTH_SHORT).show();
+                try {
+                    if (response.body() != null && response.isSuccessful() && response.body().isStatus()){
+                        Toast.makeText(RegisterActivity.this, ""+response.body().getMessage() ,Toast.LENGTH_SHORT).show();
+                        moveToLogin(true);
+                    } else {
+                        Toast.makeText(RegisterActivity.this, ""+response.body().getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e){
+                    Toast.makeText(RegisterActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(@NotNull Call<UserResponse> call, @NotNull Throwable t) {
-                Toast.makeText(RegisterActivity.this, "Email duplicated!" + t.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+                try {
+                    Toast.makeText(RegisterActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
+                } catch (Exception e){
+                    Toast.makeText(RegisterActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

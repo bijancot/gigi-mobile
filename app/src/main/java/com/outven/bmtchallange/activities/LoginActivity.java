@@ -17,12 +17,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.outven.bmtchallange.R;
 import com.outven.bmtchallange.api.ApiClient;
-import com.outven.bmtchallange.helper.Config;
 import com.outven.bmtchallange.helper.HidenBar;
 import com.outven.bmtchallange.helper.SessionManager;
 import com.outven.bmtchallange.models.login.Response.LoginDataResponse;
-import com.outven.bmtchallange.models.report.response.Report;
-import com.outven.bmtchallange.models.report.response.ReportResponse;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -93,7 +90,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void createLoginRequest(){
         email = etEmail.getText().toString();
         password = etPassword.getText().toString();
-        userReport(email);
         userLogin(email, password);
     }
 
@@ -106,13 +102,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (response.body() != null && response.isSuccessful() && response.body().isStatus()){
                         LoginDataResponse loginDataResponse = response.body();
                         sessionManager.LoginSession(loginDataResponse.getLoginData(), password);
-                        moveToNextPage(LoginActivity.this, DashboardActivity.class);
                         Toast.makeText(getApplicationContext(), ""+loginDataResponse.getMessage() , Toast.LENGTH_SHORT).show();
+                        moveToNextPage(LoginActivity.this, DashboardActivity.class);
                     } else {
-                        Toast.makeText(getApplicationContext(), ""+response.body().getMessage() , Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), response.body().getMessage() , Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){
-                    Log.e("onResponse", "Error : "+ e.getMessage());
+                    Toast.makeText(getApplicationContext(), "Server sedang bermasalah, coba beberapa saat lagi!" , Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -121,35 +117,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 try {
                     Toast.makeText(getApplicationContext(), "Server sedang bermasalah, coba login nanti!" , Toast.LENGTH_SHORT).show();
                 } catch (Exception e){
-                    Log.e("Error " , "Error : " + t.getLocalizedMessage());
-                }
-            }
-        });
-    }
-
-    private void userReport(String email) {
-        Call<ReportResponse> userReport = ApiClient.getUserService().userReport(email);
-        userReport.enqueue(new Callback<ReportResponse>() {
-            @Override
-            public void onResponse(@NotNull Call<ReportResponse> call, @NotNull Response<ReportResponse> response) {
-                try {
-                    if (response.body() != null && response.isSuccessful() && response.body().isStatus()){
-                        Report report = response.body().getData().getReport();
-                        sessionManager.ReportSession(report);
-                    } else {
-                        Log.e("onResponse", "Report Trouble : " + response.body().getMessage());
-                    }
-                } catch (Exception e){
-                    Log.e("onResponse", "Error : "+ e.getMessage());
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<ReportResponse> call, @NotNull Throwable t) {
-                try {
-                    Log.e("failure " , "Failure : " + t.getMessage());
-                } catch (Exception e){
-                    Log.e("Error " , "Error : " + t.getMessage());
+                    Toast.makeText(getApplicationContext(), "Server sedang bermasalah, coba login nanti!" , Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -164,12 +132,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onResume() {
+        super.onResume();
         if (sessionManager.isLoggedIn()){
             Log.e("----", ""+sessionManager.isLoggedIn());
-            userReport(sessionManager.getUserDetail().get(Config.USER_EMAIL));
-            moveToNextPage(LoginActivity.this,DashboardActivity.class);
+            startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
         }
-        super.onResume();
     }
     private long mLastClickTime = 0;
 }

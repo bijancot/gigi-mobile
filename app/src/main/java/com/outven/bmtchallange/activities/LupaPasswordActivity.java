@@ -61,17 +61,25 @@ public class LupaPasswordActivity extends AppCompatActivity implements View.OnCl
         forgetResponseCall.enqueue(new Callback<ForgotResponse>() {
             @Override
             public void onResponse(@NotNull Call<ForgotResponse> call, @NotNull Response<ForgotResponse> response) {
-                if (response.body() != null && response.isSuccessful() && response.body().isStatus()){
-                    moveToLogin();
-                    Toast.makeText(getApplicationContext(), ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                } else if (response.body()!=null){
-                    Toast.makeText(getApplicationContext(), ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                try {
+                    if (response.body() != null && response.isSuccessful() && response.body().isStatus()){
+                        moveToLogin();
+                        Toast.makeText(getApplicationContext(), ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e){
+                    Toast.makeText(LupaPasswordActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(@NotNull Call<ForgotResponse> call, @NotNull Throwable t) {
-                Toast.makeText(getApplicationContext(), ""+t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                try {
+                    Toast.makeText(LupaPasswordActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
+                } catch (Exception e){
+                    Toast.makeText(LupaPasswordActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

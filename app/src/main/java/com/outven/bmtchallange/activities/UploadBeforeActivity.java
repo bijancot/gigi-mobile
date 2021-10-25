@@ -79,13 +79,6 @@ public class UploadBeforeActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void ambilPoto() {
-//        ContentValues values = new ContentValues();
-//        values.put(MediaStore.Images.Media.TITLE, "New Pict");
-//        values.put(MediaStore.Images.Media.DESCRIPTION, "From the camera");
-//        file = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-//        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        intent.putExtra(MediaStore.EXTRA_OUTPUT, file);
-//        startActivityForResult(intent, IMAGE_CAPTURE_CODE);
 
         ImagePicker.with(this)
                 .crop()	    			//Crop image(Optional), Check Customization for more option
@@ -100,16 +93,6 @@ public class UploadBeforeActivity extends AppCompatActivity implements View.OnCl
         if (resultCode == RESULT_OK) {
             Uri uri = data.getData();
 
-//            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-//
-//            Cursor cursor = getContentResolver().query(uri, filePathColumn, null, null, null);
-//            assert cursor != null;
-//            cursor.moveToFirst();
-//
-//            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//            Config.setMediaPath(cursor.getString(columnIndex));
-//            cursor.close();
-//            postPath = mediaPath;
             File imageFileBefore = new File(uri.getPath());
             Config.files[0] = imageFileBefore;
             Config.listUpload[0][0] = Config.getCategoryUpload();

@@ -38,7 +38,9 @@
         <activity
             android:name=".activities.RegisterActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activities.DashboardActivity" />
+        <activity
+            android:name=".activities.DashboardActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".activities.UploadBeforeActivity" />
 
         <meta-data
