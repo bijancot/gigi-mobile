@@ -13,17 +13,22 @@ public class User{
 	@SerializedName("name")
 	private String name;
 
-	@SerializedName("school_name")
-	private String schoolName;
-
 	@SerializedName("phone_number")
 	private String phoneNumber;
 
 	@SerializedName("school_class")
 	private String schoolClass;
 
-	@SerializedName("email")
-	private String email;
+	@SerializedName("nisn")
+	private String nisn;
+
+	public String getNisn() {
+		return nisn;
+	}
+
+	public void setNisn(String nisn) {
+		this.nisn = nisn;
+	}
 
 	public void setGender(String gender){
 		this.gender = gender;
@@ -49,14 +54,6 @@ public class User{
 		return name;
 	}
 
-	public void setSchoolName(String schoolName){
-		this.schoolName = schoolName;
-	}
-
-	public String getSchoolName(){
-		return schoolName;
-	}
-
 	public void setPhoneNumber(String phoneNumber){
 		this.phoneNumber = phoneNumber;
 	}
@@ -71,13 +68,5 @@ public class User{
 
 	public String getSchoolClass(){
 		return schoolClass;
-	}
-
-	public void setEmail(String email){
-		this.email = email;
-	}
-
-	public String getEmail(){
-		return email;
 	}
 }

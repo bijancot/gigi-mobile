@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="20dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:layout_centerInParent="true"
+        android:paddingBottom="20dp"
+        android:background="@drawable/custom_border_dialog">
+        <TextView
+            android:id="@+id/txtUploadDialogMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Silahkan makan terlebih dahulu sebelum uplaod!"
+            android:gravity="center_horizontal"
+            android:textSize="18sp"
+            android:textColor="@color/text"
+            android:fontFamily="@font/nunito_bold"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/txtUploadDialogMessage">
+            <Button
+                android:id="@+id/btnUplaodMakanOk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/custom_button"
+                app:backgroundTint="@null"
+                android:text="OK"
+                android:textAllCaps="false"
+                android:fontFamily="@font/nunito_bold"
+                android:textSize="18sp"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

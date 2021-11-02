@@ -27,7 +27,7 @@
             android:layout_width="250dp"
             android:layout_height="250dp"
             android:layout_marginTop="40dp"
-            android:src="@drawable/logosplash"
+            android:src="@drawable/logoapp"
             android:layout_below="@+id/tittleLogin"
             android:layout_centerHorizontal="true"/>
         <LinearLayout
@@ -43,12 +43,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="15dp"
-                android:hint="Email"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                android:hint="NISN"
                 android:textColorHint="@color/disable_text"
                 android:textColor="@color/text"
                 android:fontFamily="@font/nunito_bold"
                 android:layout_marginTop="50dp"
-                android:inputType="textEmailAddress"
+                android:inputType="number"
                 android:selectAllOnFocus="true"
                 android:background="@drawable/custom_input">
                 <requestFocus/>
@@ -60,6 +62,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:padding="15dp"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
                 android:background="@drawable/custom_input"
                 android:autofillHints="@string/prompt_password"
                 android:hint="@string/prompt_password"
@@ -106,7 +110,7 @@
                 android:text="lupa kata sandi?"
                 android:fontFamily="@font/nunito_semibold"
                 android:textSize="15sp"
-                android:textColor="@color/blueButton"/>
+                android:textColor="@color/purpleButton"/>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -118,7 +122,7 @@
                     android:text="belum punya akun?"
                     android:fontFamily="@font/nunito_semibold"
                     android:textSize="15sp"
-                    android:textColor="@color/disable_text"/>
+                    android:textColor="@color/text"/>
                 <TextView
                     android:id="@+id/txtSignUp"
                     android:layout_width="wrap_content"
@@ -127,7 +131,7 @@
                     android:text="Daftar"
                     android:fontFamily="@font/nunito_semibold"
                     android:textSize="15sp"
-                    android:textColor="@color/blueButton"/>
+                    android:textColor="@color/purpleButton"/>
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

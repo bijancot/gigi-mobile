@@ -10,9 +10,13 @@ public class Config {
     public static final String TIME_DAY = "day";
     public static final String TIME_NIGHT = "night";
 
-    public static final String USER_EMAIL = "email";
+    public static final String USER_NISN = "email";
     public static final String USER_PASSWORD = "password";
     public static final String USER_NAME = "name";
+    public static final String USER_GENDER = "gender";
+    public static final String USER_LAHIR = "lahir";
+    public static final String USER_PHONE = "phone";
+    public static final String USER_CLASS = "class";
 
     public static final String USER_REPORT_ID = "report_id";
     public static final String USER_REPORT_ENTRY = "report_entry";

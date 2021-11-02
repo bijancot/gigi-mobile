@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.BrushMyTeethChallange">
+        <activity android:name=".activities.EditProfileActivity"></activity>
         <activity android:name=".activities.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,8 +27,7 @@
         <activity android:name=".activities.UploadAfterDoneActivity" />
         <activity android:name=".activities.UploadAfterActivity" />
         <activity android:name=".activities.UploadBeforeDoneActivity" />
-        <activity android:name=".activities.MulaiActivity"/>
-
+        <activity android:name=".activities.MulaiActivity" />
         <activity
             android:name=".activities.FullScreenActivity"
             android:screenOrientation="landscape"
@@ -40,7 +40,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activities.DashboardActivity"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activities.UploadBeforeActivity" />
 
         <meta-data

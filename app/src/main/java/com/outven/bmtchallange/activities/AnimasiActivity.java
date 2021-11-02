@@ -16,13 +16,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.outven.bmtchallange.R;
 import com.outven.bmtchallange.helper.Config;
 import com.outven.bmtchallange.helper.HidenBar;
+import com.outven.bmtchallange.helper.SessionManager;
 
 public class AnimasiActivity extends AppCompatActivity implements View.OnClickListener {
+
+    String videoPathAnimasi;
+
+    SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animasi);
+
+        sessionManager = new SessionManager(AnimasiActivity.this);
+        videoAnimasiSetter();
 
         VideoView vvTutorial = findViewById(R.id.vvTutorial);
         Button btnSelesaiAnimasi = findViewById(R.id.btnSelesaiAnimasi);
@@ -61,5 +69,37 @@ public class AnimasiActivity extends AppCompatActivity implements View.OnClickLi
                 break;
         }
     }
+
+
+    private Boolean isMale(String gender){
+        return gender.equalsIgnoreCase("1");
+    }
+
+    private void videoAnimasiSetter() {
+        int dayTracker = Integer.parseInt(String.valueOf(sessionManager.getUserDetail().get(Config.USER_DAY)));
+        if (isMale(sessionManager.getUserDetail().get(Config.USER_GENDER))){
+            if (dayTracker <= 1){
+                videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.co_lvl1;
+            } else if (dayTracker >= 2 && dayTracker <= 10){
+                videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.co_lvl210;
+            } else if (dayTracker >= 11 && dayTracker <= 20){
+                videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.co_lvl1120;
+            } else {
+                videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.cwk_lvl1120;
+            }
+        } else {
+            if (dayTracker <= 1){
+                videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.cwk_lvl1;
+            } else if (dayTracker >= 2 && dayTracker <= 10){
+                videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.cwk_lvl210;
+            } else if (dayTracker >= 11 && dayTracker <= 20){
+                videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.cwk_lvl1120;
+            } else {
+                videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.cwk_lvl1120;
+            }
+        }
+        Config.setVidePath(videoPathAnimasi);
+    }
+
     private long mLastClickTime = 0;
 }

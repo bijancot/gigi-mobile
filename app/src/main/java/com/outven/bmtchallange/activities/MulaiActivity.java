@@ -45,6 +45,7 @@ public class MulaiActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         if (sessionManager.isStartApp()){
+//            sessionManager.changeStatusLoggedIn(false);
             moveToNextPage();
         }
         super.onResume();

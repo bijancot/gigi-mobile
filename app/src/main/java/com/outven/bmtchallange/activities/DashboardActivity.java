@@ -64,11 +64,10 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-
         loadingDialog = new LoadingDialog(DashboardActivity.this, "Tunggu sebentar...");
         loadingDialog.startLoadingDialog();
         sessionManager = new SessionManager(DashboardActivity.this);
-        userReport(sessionManager.getUserDetail().get(Config.USER_EMAIL));
+        userReport(sessionManager.getUserDetail().get(Config.USER_NISN));
 
         refreshLayout = findViewById(R.id.refreshLayout);
 
@@ -105,9 +104,11 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         }
 
         //set User detail Dashboard
-        int Tier = Integer.parseInt(sessionManager.getUserDetail().get(Config.USER_DAY))*100;
+        PointTracker(
+            Integer.parseInt(sessionManager.getUserDetail().get(Config.USER_REPORT_ENTRY)),
+            Integer.parseInt(sessionManager.getUserDetail().get(Config.USER_DAY))
+        );
         txtUsername.setText("Halo "+sessionManager.getUserDetail().get(Config.USER_NAME)+"!");
-        txtTier.setText(String.valueOf(Tier));
 
         userTrackerDay = sessionManager.getUserDetail().get(Config.USER_DAY);
         userEntry = sessionManager.getUserDetail().get(Config.USER_REPORT_ENTRY);
@@ -123,13 +124,13 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
         //Video setter
         MediaController mediaController = new MediaController(this);
+
         videoPath = "android.resource://" + getPackageName() + "/" + R.raw.videodashboard;
         Uri uri = Uri.parse(videoPath);
         vvTutorial.setVideoURI(uri);
         vvTutorial.setMediaController(mediaController);
         vvTutorial.seekTo(10000);
         mediaController.setAnchorView(vvTutorial);
-        Config.setVidePath(videoPath);
 
         //Grid Adapter and clickLIstener
         MyAdapter myAdapter = new MyAdapter(
@@ -141,13 +142,26 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
                 entry
 
         );
+
         rvTracker.setAdapter(myAdapter);
 
         btnOption.setOnClickListener(this);
         ibFullScreen.setOnClickListener(this);
     }
 
-//    Check timer day or night
+    @SuppressLint("SetTextI18n")
+    private void PointTracker(int Entry, int Day) {
+        int Tier;
+        if (Entry == 4){
+            Tier = Day*100;
+        } else {
+            Tier = 0;
+        }
+        txtTier.setText(Tier + " Poin");
+    }
+
+
+    //    Check timer day or night
     private void curTimeCheck() throws ParseException {
         if (Objects.equals(sessionManager.getUserDetail().get(Config.USER_REPORT_TIME), Config.TIME_NIGHT)){
             nightTheme();
@@ -188,7 +202,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
                     return;
                 }
                 mLastClickTime = SystemClock.elapsedRealtime();
-
+                Config.setVidePath(videoPath);
                 moveToNextPage(DashboardActivity.this, FullScreenActivity.class,false);
                 break;
         }

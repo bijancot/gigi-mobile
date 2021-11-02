@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -181,11 +180,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> imp
 
         TextView txtDialogMessage = dialog.findViewById(R.id.txtDialogMessage);
         Button btnDialogMessage = dialog.findViewById(R.id.btnDialogMessage);
-        RelativeLayout rlLogo = dialog.findViewById(R.id.rlLogo);
-        ImageView ivLogoMessageDialog = dialog.findViewById(R.id.ivLogoMessageDialog);
 
-        rlLogo.setBackgroundResource(bgLogo);
-        ivLogoMessageDialog.setImageResource(imgLogo);
         txtDialogMessage.setText(message);
         btnDialogMessage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -237,20 +232,12 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> imp
     private void showAlertIfHaveEat() {
         Dialog dialog = new Dialog(_context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.custom_message_dialog);
+        dialog.setContentView(R.layout.custom_upload_makan);
         dialog.setCancelable(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Button btnUplaodMakanOk = dialog.findViewById(R.id.btnUplaodMakanOk);
 
-        TextView txtDialogMessage = dialog.findViewById(R.id.txtDialogMessage);
-        Button btnDialogMessage = dialog.findViewById(R.id.btnDialogMessage);
-        RelativeLayout rlLogo = dialog.findViewById(R.id.rlLogo);
-        ImageView ivLogoMessageDialog = dialog.findViewById(R.id.ivLogoMessageDialog);
-
-        rlLogo.setBackgroundResource(R.drawable.custom_border_tracker_danger);
-        ivLogoMessageDialog.setImageResource(R.drawable.tracker_soon_logo);
-        txtDialogMessage.setText("Silahkan makan terlebih dahulu");
-
-        btnDialogMessage.setOnClickListener(new View.OnClickListener() {
+        btnUplaodMakanOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();

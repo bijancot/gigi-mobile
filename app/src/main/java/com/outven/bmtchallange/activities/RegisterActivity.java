@@ -37,10 +37,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     int hari, bulan, tahun;
     int gender;
-    String email,password,name,birth_date,school_name,phone_number,school_class;
+    String email,password,name,birth_date,phone_number,school_class;
 
     AutoCompleteTextView etKelas;
-    EditText etEmail,etPassword, etName, etSekolah, etPhone, etTanggalLahir;
+    EditText etEmail,etPassword, etName, etPhone, etTanggalLahir;
     Button btnSignUp;
     TextView txtSignIn;
     RadioGroup rgGender;
@@ -57,7 +57,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         etPassword = findViewById(R.id.etPassword);
         etName = findViewById(R.id.etName);
         etTanggalLahir = findViewById(R.id.etTanggalLahir);
-        etSekolah = findViewById(R.id.etSekolah);
         etPhone = findViewById(R.id.etPhone);
         etKelas = findViewById(R.id.etKelas);
         rgGender = findViewById(R.id.rgGender);
@@ -107,41 +106,36 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void createSignUp() {
-        if (!validationEmail(etEmail)){
-            Toast.makeText(getApplicationContext(),"Email Address tidak valid!", Toast.LENGTH_SHORT).show();
+        if (!isRegisterFieldEmpety()){
+            Toast.makeText(getApplicationContext(),"Semua input harus diisi!", Toast.LENGTH_SHORT).show();
         } else {
-            if (!isRegisterFieldEmpety()){
-                Toast.makeText(getApplicationContext(),"Semua input harus diisi!", Toast.LENGTH_SHORT).show();
-            } else {
-                email = etEmail.getText().toString();
-                password = etPassword.getText().toString();
-                name = etName.getText().toString();
+            email = etEmail.getText().toString();
+            password = etPassword.getText().toString();
+            name = etName.getText().toString();
 
 //                gender = genderCheck(autoCompleteTextView);
-                int checkId = rgGender.getCheckedRadioButtonId();
-                selectGender = rgGender.findViewById(checkId);
-                String tgender =selectGender.getText().toString();
-                if (tgender.equalsIgnoreCase("Laki - laki")){
-                    gender = 1;
-                } else {
-                    gender = 2;
-                }
-
-                birth_date = etTanggalLahir.getText().toString();
-                school_name = etSekolah.getText().toString();
-                phone_number = etPhone.getText().toString();
-                school_class = etKelas.getText().toString();
-
-                saveUser(email,password,name,gender,birth_date,school_name,phone_number,school_class);
+            int checkId = rgGender.getCheckedRadioButtonId();
+            selectGender = rgGender.findViewById(checkId);
+            String tgender =selectGender.getText().toString();
+            if (tgender.equalsIgnoreCase("Laki - laki")){
+                gender = 1;
+            } else {
+                gender = 2;
             }
+
+            birth_date = etTanggalLahir.getText().toString();
+            phone_number = etPhone.getText().toString();
+            school_class = etKelas.getText().toString();
+
+            saveUser(email,password,name,gender,birth_date,phone_number,school_class);
         }
     }
 
     private boolean isRegisterFieldEmpety(){
-        return !etPassword.getText().toString().isEmpty() ||
+        return !etEmail.getText().toString().isEmpty() ||
+            !etPassword.getText().toString().isEmpty() ||
                 !etName.getText().toString().isEmpty() ||
                 !etTanggalLahir.getText().toString().isEmpty() ||
-                !etSekolah.getText().toString().isEmpty() ||
                 !etPhone.getText().toString().isEmpty() ||
                 !etKelas.getText().toString().isEmpty();
     }
@@ -155,14 +149,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    public boolean validationEmail(EditText etEmail){
-        String email = etEmail.getText().toString().trim();
-        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-        return email.matches(emailPattern);
-    }
+//    public boolean validationEmail(EditText etEmail){
+//        String email = etEmail.getText().toString().trim();
+//        return email.matches(emailPattern);
+//    }
 
-    public void saveUser(String email, String password, String name, int gender, String birth_date, String school_name, String phone_number, String school_class){
-        Call<UserResponse> userResponseCall = ApiClient.getUserService().saveUser(email,password,name,gender,birth_date,school_name,phone_number,school_class);
+    public void saveUser(String email, String password, String name, int gender, String birth_date, String phone_number, String school_class){
+        Call<UserResponse> userResponseCall = ApiClient.getUserService().saveUser(email,password,name,gender,birth_date,phone_number,school_class);
         userResponseCall.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(@NotNull Call<UserResponse> call, @NotNull Response<UserResponse> response) {

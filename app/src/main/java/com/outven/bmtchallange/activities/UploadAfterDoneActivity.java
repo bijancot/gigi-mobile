@@ -104,7 +104,7 @@ public class UploadAfterDoneActivity extends AppCompatActivity {
                     if (response.body() != null && response.isSuccessful() && response.body().isStatus()){
                         Toast.makeText(getApplicationContext(),""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getApplicationContext(), "Terjadi kesalahan pada server!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Gagal upload, "+response.body().getMessage(), Toast.LENGTH_LONG).show();
                     }
                     doneUploadTracker++;
                 } catch (Exception e){

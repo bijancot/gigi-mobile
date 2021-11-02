@@ -27,9 +27,13 @@ public class SessionManager {
 
     public void LoginSession(LoginData loginData, String password){
         editor.putBoolean(Config.IS_LOGGIN_IN,true);
-        editor.putString(Config.USER_EMAIL, loginData.getUser().getEmail());
+        editor.putString(Config.USER_NISN, loginData.getUser().getNisn());
         editor.putString(Config.USER_PASSWORD, password);
         editor.putString(Config.USER_NAME, loginData.getUser().getName());
+        editor.putString(Config.USER_GENDER, loginData.getUser().getGender());
+        editor.putString(Config.USER_LAHIR, loginData.getUser().getBirthDate());
+        editor.putString(Config.USER_PHONE, loginData.getUser().getPhoneNumber());
+        editor.putString(Config.USER_CLASS, loginData.getUser().getSchoolClass());
         editor.commit();
     }
 
@@ -42,6 +46,16 @@ public class SessionManager {
         editor.commit();
     }
 
+    public void UpdateProfileSession(String email, String nama, String gender, String lahir, String phone, String kelas){
+        editor.putString(Config.USER_NISN, email);
+        editor.putString(Config.USER_NAME, nama);
+        editor.putString(Config.USER_GENDER, gender);
+        editor.putString(Config.USER_LAHIR, lahir);
+        editor.putString(Config.USER_PHONE, phone);
+        editor.putString(Config.USER_CLASS, kelas);
+        editor.commit();
+    }
+
     public void StartAppSession(){
         editorAppStart.putBoolean(Config.IS_START, true);
         editorAppStart.commit();
@@ -50,9 +64,13 @@ public class SessionManager {
     public HashMap<String, String> getUserDetail(){
         HashMap<String,String> user = new HashMap<>();
 
-        user.put(Config.USER_EMAIL,sharedPreferences.getString(Config.USER_EMAIL,""));
+        user.put(Config.USER_NISN,sharedPreferences.getString(Config.USER_NISN,""));
         user.put(Config.USER_NAME,sharedPreferences.getString(Config.USER_NAME,""));
         user.put(Config.USER_PASSWORD,sharedPreferences.getString(Config.USER_PASSWORD,""));
+        user.put(Config.USER_GENDER,sharedPreferences.getString(Config.USER_GENDER,""));
+        user.put(Config.USER_LAHIR,sharedPreferences.getString(Config.USER_LAHIR,""));
+        user.put(Config.USER_PHONE,sharedPreferences.getString(Config.USER_PHONE,""));
+        user.put(Config.USER_CLASS,sharedPreferences.getString(Config.USER_CLASS,""));
 
         user.put(Config.USER_REPORT_ID,sharedPreferences.getString(Config.USER_REPORT_ID,""));
         user.put(Config.USER_REPORT_ENTRY,sharedPreferences.getString(Config.USER_REPORT_ENTRY,""));

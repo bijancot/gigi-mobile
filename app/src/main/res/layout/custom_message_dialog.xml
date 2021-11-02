@@ -4,52 +4,43 @@
     android:layout_height="match_parent"
     android:padding="20dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <androidx.cardview.widget.CardView
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/fail"
+        android:translationZ="100dp"/>
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="20dp"
-        android:layout_centerInParent="true">
-        <RelativeLayout
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/custom_border_fail"
+        android:layout_marginTop="100dp"
+        android:paddingTop="100dp"
+        android:paddingBottom="20dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/txtDialogMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:orientation="vertical">
-            <RelativeLayout
-                android:id="@+id/rlLogo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/custom_border_tracker_danger"
-                android:padding="20dp">
-                <ImageView
-                    android:id="@+id/ivLogoMessageDialog"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/tracker_soon_logo"/>
-            </RelativeLayout>
-            <TextView
-                android:id="@+id/txtDialogMessage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_below="@+id/rlLogo"
-                android:text="message"
-                android:textSize="18sp"
-                android:fontFamily="@font/nunito_bold"/>
-            <Button
-                android:id="@+id/btnDialogMessage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/custom_button"
-                app:backgroundTint="@null"
-                android:layout_below="@id/txtDialogMessage"
-                android:text="Ok"
-                android:fontFamily="@font/nunito_bold"
-                android:textSize="18sp"/>
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:text="message"
+            android:textSize="18sp"
+            android:textColor="@color/text2"
+            android:fontFamily="@font/nunito_bold"/>
+        <Button
+            android:id="@+id/btnDialogMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/custom_button"
+            app:backgroundTint="@null"
+            android:layout_below="@id/txtDialogMessage"
+            android:text="Ok"
+            android:fontFamily="@font/nunito_bold"
+            android:textSize="18sp"/>
+    </RelativeLayout>
 </RelativeLayout>

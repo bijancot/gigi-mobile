@@ -28,11 +28,6 @@
                 android:textSize="35sp"
                 android:fontFamily="@font/nunito_black"
                 android:textColor="@color/textPrimary"/>
-            <ImageView
-                android:id="@+id/imgLogo"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:src="@drawable/logosplash"/>
             <LinearLayout
                 android:id="@+id/llInputText"
                 android:layout_width="match_parent"
@@ -50,8 +45,9 @@
                     android:fontFamily="@font/nunito_bold"
                     android:textColor="@color/text"
                     android:padding="15dp"
-                    android:inputType="textEmailAddress"
-                    android:hint="Email"
+                    android:digits="0,1,2,3,4,5,6,7,8,9"
+                    android:inputType="phone"
+                    android:hint="NISN"
                     android:textColorHint="@color/disable_text"
                     android:textSize="18sp">
                     <requestFocus/>
@@ -96,34 +92,6 @@
                     android:textColor="@color/text"
                     android:textSize="18sp"/>
 
-<!--                <com.google.android.material.textfield.TextInputLayout-->
-<!--                    android:id="@+id/tiGender"-->
-<!--                    style="@style/LoginTextInputLayoutStyle"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="center_vertical"-->
-<!--                    android:textColorHint="@color/disable_text"-->
-<!--                    app:hintEnabled="false"-->
-<!--                    android:layout_marginTop="10dp">-->
-<!--                    <AutoCompleteTextView-->
-<!--                        android:id="@+id/etGender"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:padding="15dp"-->
-<!--                        android:fontFamily="@font/nunito_bold"-->
-<!--                        android:background="@null"-->
-<!--                        android:drawableEnd="@drawable/custom_input_dropdown"-->
-<!--                        android:drawablePadding="5dp"-->
-<!--                        android:hint="Jenis Kelamin"-->
-<!--                        android:textColorHint="@color/disable_text"-->
-<!--                        android:inputType="none"-->
-<!--                        android:textColor="@color/text"-->
-<!--                        android:textSize="18sp">-->
-<!--                        <requestFocus/>-->
-<!--                    </AutoCompleteTextView>-->
-<!--                </com.google.android.material.textfield.TextInputLayout>-->
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_marginTop="10dp"
@@ -153,19 +121,6 @@
                             android:fontFamily="@font/nunito_bold"/>
                     </RadioGroup>
                 </RelativeLayout>
-                <EditText
-                    android:id="@+id/etSekolah"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/custom_input"
-                    android:fontFamily="@font/nunito_bold"
-                    android:padding="15dp"
-                    android:inputType="text"
-                    android:hint="Sekolah"
-                    android:textColorHint="@color/disable_text"
-                    android:textColor="@color/text"
-                    android:textSize="18sp"/>
                 <EditText
                     android:id="@+id/etPhone"
                     android:layout_width="match_parent"
@@ -243,15 +198,16 @@
                     android:layout_height="wrap_content"
                     android:text="Sudah punya akun?  "
                     android:textSize="16sp"
+                    android:textColor="@color/text"
                     android:fontFamily="@font/nunito_bold"/>
                 <TextView
                     android:id="@+id/txtSignIn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sign In"
+                    android:text="Log In"
                     android:fontFamily="@font/nunito_semibold"
                     android:textSize="16sp"
-                    android:textColor="@color/blueButton"/>
+                    android:textColor="@color/purpleButton"/>
             </LinearLayout>
 
         </LinearLayout>

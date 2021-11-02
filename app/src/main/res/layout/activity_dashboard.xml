@@ -18,6 +18,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
+                android:gravity="center_vertical"
                 android:layout_marginTop="40dp"
                 android:orientation="horizontal">
                 <androidx.cardview.widget.CardView
@@ -45,15 +46,21 @@
                         android:text="Halo Noname!"
                         android:textColor="@color/textPrimary"
                         android:fontFamily="@font/nunito_black"
-                        android:textSize="13sp"/>
+                        android:textSize="15sp"/>
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_border"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="15dp"
                         android:orientation="horizontal">
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:layout_marginStart="15dp"
                             android:layout_marginEnd="5dp"
                             android:src="@drawable/point_logo"/>
                         <TextView
@@ -71,7 +78,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="end">
+                    android:gravity="center|end">
                     <ImageView
                         android:id="@+id/btnOption"
                         android:layout_width="40dp"
@@ -84,7 +91,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/custom_background_dashboard"
                 android:layout_marginTop="20dp"
-                android:paddingTop="40dp"
+                android:paddingTop="25dp"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:layout_below="@+id/llProfileHeader"

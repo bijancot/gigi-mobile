@@ -2,12 +2,12 @@
     <!-- Base application theme. -->
     <style name="Theme.BrushMyTeethChallange" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/blueButton</item>
-        <item name="colorPrimaryVariant">@color/blueDarkButton</item>
+        <item name="colorPrimary">@color/purpleButton</item>
+        <item name="colorPrimaryVariant">@color/purpleLightButton</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/blueButton</item>
-        <item name="colorSecondaryVariant">@color/blueDarkButton</item>
+        <item name="colorSecondary">@color/textPrimary</item>
+        <item name="colorSecondaryVariant">@color/purpleLightButton</item>
         <item name="colorOnSecondary">@color/text</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>

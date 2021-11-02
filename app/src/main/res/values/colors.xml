@@ -10,10 +10,11 @@
     <color name="blue">#0155FD</color>
     <color name="lightblue">#02CEFD</color>
     <color name="darkblue">#3A0CA3</color>
-    <color name="disable_text">#7F8296</color>
+    <color name="disable_text">#C6C6C6</color>
     <color name="disable_text_dark">#535660</color>
     <color name="grayTrans70">#707F8296</color>
-    <color name="text">#333333</color>
+    <color name="text">#190E4F</color>
+    <color name="text2">#333333</color>
     <color name="edit_text_border">#F3F5F7</color>
     <color name="transparant">#00F3F5F7</color>
 
@@ -26,6 +27,8 @@
     <color name="pink">#FF508B</color>
     <color name="lightBlue">#5AD2FF</color>
     <color name="blueButton">#86BBD8</color>
+    <color name="purpleButton">#8661C1</color>
+    <color name="purpleLightButton">#A074E7</color>
     <color name="blueDarkButton">#668EA4</color>
     <color name="seaBlue">#86BBD8</color>
     <color name="lightGreen">#16E4A4</color>
