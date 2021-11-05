@@ -1,11 +1,14 @@
 package com.outven.bmtchallange.activities;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -24,6 +27,8 @@ import com.outven.bmtchallange.helper.Config;
 import com.outven.bmtchallange.helper.HidenBar;
 import com.outven.bmtchallange.helper.SessionManager;
 import com.outven.bmtchallange.models.profile.UpdateProfileResponse;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Calendar;
 
@@ -55,6 +60,22 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
         sessionManager = new SessionManager(EditProfileActivity.this);
 
+        try {
+            refreshEditProfile();
+        } catch (Exception e){
+            Log.e("Error, ", e.getLocalizedMessage());
+            sessionManager.loggoutSession();
+            Toast.makeText(EditProfileActivity.this,"Terjadi kesalahan pada server", Toast.LENGTH_LONG).show();
+            moveToNextPage(EditProfileActivity.this,LoginActivity.class,true);
+        }
+
+
+        //Hiden bar
+        HidenBar.WindowFlag(this, getWindow());
+    }
+
+    @SuppressLint({"ClickableViewAccessibility", "CutPasteId"})
+    private void refreshEditProfile() {
         etEmail = findViewById(R.id.etEmail);
         etName = findViewById(R.id.etName);
         etTanggalLahir = findViewById(R.id.etTanggalLahir);
@@ -93,9 +114,14 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         });
 
         btnSimpan.setOnClickListener(this);
+    }
 
-        //Hiden bar
-        HidenBar.WindowFlag(this, getWindow());
+    private void moveToNextPage(Context context, Class<? extends Activity> activityClass, boolean setFlags){
+        Intent intent = new Intent(context, activityClass);
+        if (setFlags){
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        }
+        startActivity(intent);
     }
 
     private void radioGenderChecked(String gender) {
@@ -146,7 +172,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         Call<UpdateProfileResponse> updateProfileResponseCall = ApiClient.getUserService().userUpdateProfile(email,name,gender,birth_date,phone_number,school_class);
         updateProfileResponseCall.enqueue(new Callback<UpdateProfileResponse>() {
             @Override
-            public void onResponse(Call<UpdateProfileResponse> call, Response<UpdateProfileResponse> response) {
+            public void onResponse(@NotNull Call<UpdateProfileResponse> call, @NotNull Response<UpdateProfileResponse> response) {
                 try {
                     if (response.body() != null && response.isSuccessful() && response.body().isStatus()){
                         Toast.makeText(EditProfileActivity.this, ""+response.body().getMessage() ,Toast.LENGTH_SHORT).show();
@@ -161,7 +187,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             }
 
             @Override
-            public void onFailure(Call<UpdateProfileResponse> call, Throwable t) {
+            public void onFailure(@NotNull Call<UpdateProfileResponse> call, Throwable t) {
                 try {
                     Toast.makeText(EditProfileActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
                 } catch (Exception e){

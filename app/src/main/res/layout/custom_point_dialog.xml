@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView
+        android:id="@+id/imgLogoDialog"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/get_point"
+        android:translationZ="100dp"
+        android:layout_centerHorizontal="true"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="130dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="20dp"
+        android:background="@drawable/custom_border_dialog"
+        android:layout_marginTop="100dp">
+        <TextView
+            android:id="@+id/txtUploadDialogMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Selamat!\nKamu mendapatkan"
+            android:gravity="center_horizontal"
+            android:textSize="18sp"
+            android:textColor="@color/text"
+            android:fontFamily="@font/nunito_bold"/>
+        <LinearLayout
+            android:id="@+id/llPoint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtUploadDialogMessage"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/point_logo"
+                android:layout_marginEnd="10dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_bold"
+                android:text="100"
+                android:textSize="20sp"
+                android:textColor="@color/text"/>
+
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/llPoint">
+            <Button
+                android:id="@+id/btnOk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                android:background="@drawable/custom_button"
+                app:backgroundTint="@null"
+                android:text="OK"
+                android:textAllCaps="false"
+                android:fontFamily="@font/nunito_bold"
+                android:textSize="18sp"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

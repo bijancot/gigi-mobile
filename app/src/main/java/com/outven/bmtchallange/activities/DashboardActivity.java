@@ -2,12 +2,18 @@ package com.outven.bmtchallange.activities;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.MediaController;
@@ -63,21 +69,26 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
-        loadingDialog = new LoadingDialog(DashboardActivity.this, "Tunggu sebentar...");
-        loadingDialog.startLoadingDialog();
         sessionManager = new SessionManager(DashboardActivity.this);
-        userReport(sessionManager.getUserDetail().get(Config.USER_NISN));
+        try {
+            loadingDialog = new LoadingDialog(DashboardActivity.this, "Tunggu sebentar...");
+            loadingDialog.startLoadingDialog();
+            userReport(sessionManager.getUserDetail().get(Config.USER_NISN));
 
-        refreshLayout = findViewById(R.id.refreshLayout);
-
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                moveToNextPage(DashboardActivity.this,DashboardActivity.class,true);
-                refreshLayout.setRefreshing(false);
-            }
-        });
+            refreshLayout = findViewById(R.id.refreshLayout);
+            refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    moveToNextPage(DashboardActivity.this,DashboardActivity.class,true);
+                    refreshLayout.setRefreshing(false);
+                }
+            });
+        } catch (Exception e){
+            Log.e("Error, ", e.getLocalizedMessage());
+            sessionManager.loggoutSession();
+            Toast.makeText(DashboardActivity.this,"Terjadi kesalahan pada server", Toast.LENGTH_LONG).show();
+            moveToNextPage(DashboardActivity.this,LoginActivity.class,true);
+        }
 
         //Hiden Bar
         HidenBar.WindowFlag(this, getWindow());
@@ -97,17 +108,11 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         rvTracker = findViewById(R.id.rvTracker);
         rlDashboard = findViewById(R.id.rlDashboard);
 
-        try {
-            curTimeCheck();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+//        int trackerDay = 12;
+//        int entry = 0;
+//        userTime = "night";
+//        Config.setPoint(true);
 
-        //set User detail Dashboard
-        PointTracker(
-            Integer.parseInt(sessionManager.getUserDetail().get(Config.USER_REPORT_ENTRY)),
-            Integer.parseInt(sessionManager.getUserDetail().get(Config.USER_DAY))
-        );
         txtUsername.setText("Halo "+sessionManager.getUserDetail().get(Config.USER_NAME)+"!");
 
         userTrackerDay = sessionManager.getUserDetail().get(Config.USER_DAY);
@@ -118,9 +123,20 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         userTime = sessionManager.getUserDetail().get("report_time");
         userReportStatus = sessionManager.getUserDetail().get("report_status");
 
-//        int trackerDay = 21;
-//        int entry = 4;
-//        userTime = "night";
+        try {
+            curTimeCheck(userTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        PointTracker(
+            entry,
+            trackerDay
+        );
+
+        if (Config.isPoint() && entry == 4 && sessionManager.getUserDetail().get(Config.USER_REPORT_STATUS).equalsIgnoreCase("ongoing")){
+            showPointDialog();
+        }
 
         //Video setter
         MediaController mediaController = new MediaController(this);
@@ -149,21 +165,40 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         ibFullScreen.setOnClickListener(this);
     }
 
+    private void showPointDialog() {
+        Dialog dialog = new Dialog(DashboardActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.custom_point_dialog);
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        Button btnOk = dialog.findViewById(R.id.btnOk);
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                Config.setPoint(false);
+            }
+        });
+        dialog.show();
+    }
+
     @SuppressLint("SetTextI18n")
     private void PointTracker(int Entry, int Day) {
         int Tier;
         if (Entry == 4){
             Tier = Day*100;
         } else {
-            Tier = 0;
+            Tier = (Day*100) - 100;
         }
         txtTier.setText(Tier + " Poin");
     }
 
 
     //    Check timer day or night
-    private void curTimeCheck() throws ParseException {
-        if (Objects.equals(sessionManager.getUserDetail().get(Config.USER_REPORT_TIME), Config.TIME_NIGHT)){
+    private void curTimeCheck(String time) throws ParseException {
+        if (Objects.equals(time,Config.TIME_NIGHT)){
             nightTheme();
         } else {
             dayTheme();
@@ -174,7 +209,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     private void nightTheme() {
         rlDashboard.setBackgroundColor(getResources().getColor(R.color.textPrimary));
         txtUsername.setTextColor(getResources().getColor(R.color.white));
-        txtTier.setTextColor(getResources().getColor(R.color.white));
+        txtTier.setTextColor(getResources().getColor(R.color.text));
     }
     //Day Theme
     private void dayTheme() {

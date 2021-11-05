@@ -38,6 +38,7 @@ public class Config {
     private static String categoryUpload;
     private static Uri fileBefore;
     private static Uri fileAfter;
+    private static boolean point;
 
     public static String getVidePath() {
         return videPath;
@@ -77,5 +78,13 @@ public class Config {
 
     public static void setMessageTracker(String messageTracker) {
         Config.messageTracker = messageTracker;
+    }
+
+    public static boolean isPoint() {
+        return point;
+    }
+
+    public static void setPoint(boolean point) {
+        Config.point = point;
     }
 }

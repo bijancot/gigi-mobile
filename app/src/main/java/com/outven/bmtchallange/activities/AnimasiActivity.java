@@ -85,7 +85,7 @@ public class AnimasiActivity extends AppCompatActivity implements View.OnClickLi
             } else if (dayTracker >= 11 && dayTracker <= 20){
                 videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.co_lvl1120;
             } else {
-                videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.cwk_lvl1120;
+                videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.cwk_lvl21;
             }
         } else {
             if (dayTracker <= 1){
@@ -95,7 +95,7 @@ public class AnimasiActivity extends AppCompatActivity implements View.OnClickLi
             } else if (dayTracker >= 11 && dayTracker <= 20){
                 videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.cwk_lvl1120;
             } else {
-                videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.cwk_lvl1120;
+                videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.cwk_lvl21;
             }
         }
         Config.setVidePath(videoPathAnimasi);

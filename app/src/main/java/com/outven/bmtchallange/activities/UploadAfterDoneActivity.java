@@ -103,8 +103,10 @@ public class UploadAfterDoneActivity extends AppCompatActivity {
                 try {
                     if (response.body() != null && response.isSuccessful() && response.body().isStatus()){
                         Toast.makeText(getApplicationContext(),""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        Config.setPoint(true);
                     } else {
                         Toast.makeText(getApplicationContext(), "Gagal upload, "+response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        Config.setPoint(false);
                     }
                     doneUploadTracker++;
                 } catch (Exception e){

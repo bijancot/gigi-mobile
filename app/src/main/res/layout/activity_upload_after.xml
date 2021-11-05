@@ -40,11 +40,6 @@
             android:layout_height="match_parent"
             android:background="@color/lightYellow"
             android:orientation="horizontal"/>
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="70dp"
-            android:src="@drawable/tedy_bear_purple"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -53,9 +48,7 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
-            android:padding="15dp"
-            android:background="@drawable/custom_button"
-            android:src="@drawable/ic_addphoto"/>
+            android:src="@drawable/photo_upload"/>
     </androidx.cardview.widget.CardView>
 
     <Button

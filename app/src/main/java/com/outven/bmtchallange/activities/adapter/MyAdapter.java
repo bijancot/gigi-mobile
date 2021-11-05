@@ -165,7 +165,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> imp
                 return;
             }
             mLastClickTime = SystemClock.elapsedRealtime();
-            String text = "Kamu tidak bisa upload karena pagi hari kamu belum upload sikat gigimu!";
+            String text = "Maaf kamu gagal untuk upload hari ini\nSilahkan ulangi dari hari pertama";
             showMessageAlert(text,R.drawable.custom_border_tracker_danger,R.drawable.tracker_soon_logo);
         }
     }

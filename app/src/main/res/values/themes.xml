@@ -24,8 +24,8 @@
     </style>
 
     <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
-        <item name="boxStrokeColor">@color/blueDarkButton</item>
-        <item name="boxStrokeErrorColor">@color/blueDarkButton</item>
+        <item name="boxStrokeColor">@color/purpleButton</item>
+        <item name="boxStrokeErrorColor">@color/purpleButton</item>
         <item name="boxBackgroundColor">@color/white</item>
         <item name="boxCornerRadiusBottomEnd">40dp</item>
         <item name="boxCornerRadiusBottomStart">40dp</item>

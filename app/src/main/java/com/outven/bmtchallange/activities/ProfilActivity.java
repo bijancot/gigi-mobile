@@ -1,12 +1,16 @@
 package com.outven.bmtchallange.activities;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,7 +30,19 @@ public class ProfilActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil);
         sessionManager = new SessionManager(ProfilActivity.this);
+        try {
+            refreshProfil();
+        } catch (Exception e){
+            Log.e("Error, ", e.getLocalizedMessage());
+            sessionManager.loggoutSession();
+            Toast.makeText(ProfilActivity.this,"Terjadi kesalahan pada server", Toast.LENGTH_LONG).show();
+            moveToNextPage(ProfilActivity.this,LoginActivity.class,true);
+        }
 
+        HidenBar.WindowFlag(this, getWindow());
+    }
+
+    private void refreshProfil() {
         btnLogout = findViewById(R.id.btnLogout);
         btnEdit = findViewById(R.id.btnEdit);
         etEmail = findViewById(R.id.etEmail);
@@ -47,8 +63,6 @@ public class ProfilActivity extends AppCompatActivity implements View.OnClickLis
 
         btnLogout.setOnClickListener(this);
         btnEdit.setOnClickListener(this);
-
-        HidenBar.WindowFlag(this, getWindow());
     }
 
     private String radioGenderChecked(String gender) {
@@ -57,6 +71,14 @@ public class ProfilActivity extends AppCompatActivity implements View.OnClickLis
         } else {
             return  "Perempuan";
         }
+    }
+
+    private void moveToNextPage(Context context, Class<? extends Activity> activityClass, boolean setFlags){
+        Intent intent = new Intent(context, activityClass);
+        if (setFlags){
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        }
+        startActivity(intent);
     }
 
     @SuppressLint("NonConstantResourceId")
