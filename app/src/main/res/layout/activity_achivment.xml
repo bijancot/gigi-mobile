@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.AchivmentActivity">
+    <TextView
+        android:id="@+id/txtAchivment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center_horizontal"
+        android:text="Luar Biasa!"
+        android:textSize="35sp"
+        android:textColor="@color/purpleButton"
+        android:fontFamily="@font/nunito_black"/>
+    <ImageView
+        android:id="@+id/ivAchivment"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:layout_below="@+id/txtAchivment"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/achivment"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Selamat kamu sudah rajin menggosok gigi selama 21 hari"
+        android:layout_margin="20dp"
+        android:layout_below="@+id/ivAchivment"
+        android:textSize="20sp"
+        android:textColor="@color/text"
+        android:fontFamily="@font/nunito_bold"/>
+
+    <Button
+        android:id="@+id/btnOk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:padding="10dp"
+        android:fontFamily="@font/nunito_bold"
+        android:text="OK"
+        android:background="@drawable/custom_button"
+        app:backgroundTint="@null"
+        android:textAllCaps="false"
+        android:textSize="20sp"/>
+</RelativeLayout>

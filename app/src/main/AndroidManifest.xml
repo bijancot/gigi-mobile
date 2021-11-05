@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.BrushMyTeethChallange">
-        <activity android:name=".activities.EditProfileActivity"></activity>
+        <activity android:name=".activities.AchivmentActivity"></activity>
+        <activity android:name=".activities.EditProfileActivity" />
         <activity android:name=".activities.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -17,7 +17,7 @@
         android:layout_marginTop="50dp"
         android:text="Upload Foto"
         android:textSize="30sp"
-        android:textColor="@color/blueButton"
+        android:textColor="@color/purpleButton"
         android:fontFamily="@font/nunito_black"/>
     <TextView
         android:layout_width="match_parent"

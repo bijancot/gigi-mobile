@@ -1,5 +1,7 @@
 package com.outven.bmtchallange.activities;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,6 +22,8 @@ import com.outven.bmtchallange.helper.SessionManager;
 import com.outven.bmtchallange.models.upload.UploadResponse;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -89,7 +93,13 @@ public class UploadAfterDoneActivity extends AppCompatActivity {
             public void run() {
                 if (doneUploadTracker == 2) {
                     loadingDialog.dismissDialog();
-                    moveToDashboard();
+                    if (Objects.requireNonNull(sessionManager.getUserDetail().get(Config.USER_REPORT_ENTRY)).equalsIgnoreCase("2") &&
+                            Objects.requireNonNull(sessionManager.getUserDetail().get(Config.USER_DAY)).equalsIgnoreCase("21") &&
+                            Config.isPoint() ){
+                        moveToNextPage(UploadAfterDoneActivity.this, AchivmentActivity.class,true);
+                    } else {
+                        moveToDashboard();
+                    }
                 }
             }
         },10000);
@@ -131,6 +141,14 @@ public class UploadAfterDoneActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.from_left, R.anim.to_right);
         doneUploadTracker = 0;
         finish();
+    }
+
+    private void moveToNextPage(Context context, Class<? extends Activity> activityClass, boolean setFlags){
+        Intent intent = new Intent(context, activityClass);
+        if (setFlags){
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        }
+        startActivity(intent);
     }
     private long mLastClickTime = 0;
 }

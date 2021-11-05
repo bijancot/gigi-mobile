@@ -39,6 +39,7 @@ public class Config {
     private static Uri fileBefore;
     private static Uri fileAfter;
     private static boolean point;
+    private static boolean finished;
 
     public static String getVidePath() {
         return videPath;
@@ -86,5 +87,13 @@ public class Config {
 
     public static void setPoint(boolean point) {
         Config.point = point;
+    }
+
+    public static boolean isFinished() {
+        return finished;
+    }
+
+    public static void setFinished(boolean finished) {
+        Config.finished = finished;
     }
 }
