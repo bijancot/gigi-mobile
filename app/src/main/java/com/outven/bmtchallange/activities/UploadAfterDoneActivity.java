@@ -95,9 +95,9 @@ public class UploadAfterDoneActivity extends AppCompatActivity {
                     if (Objects.requireNonNull(sessionManager.getUserDetail().get(Config.USER_REPORT_ENTRY)).equalsIgnoreCase("2") &&
                             Objects.requireNonNull(sessionManager.getUserDetail().get(Config.USER_DAY)).equalsIgnoreCase("21") &&
                             Config.isPoint() ){
-                        moveToDashboard();
-                    } else {
                         moveToNextPage(UploadAfterDoneActivity.this);
+                    } else {
+                        moveToDashboard();
                     }
                 }
             }

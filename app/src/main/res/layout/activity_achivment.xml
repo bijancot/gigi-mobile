@@ -18,8 +18,8 @@
         android:fontFamily="@font/nunito_black"/>
     <ImageView
         android:id="@+id/ivAchivment"
-        android:layout_width="350dp"
-        android:layout_height="350dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:layout_below="@+id/txtAchivment"
         android:layout_centerHorizontal="true"
         android:src="@drawable/achivment"/>
@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:text="-Drg. Poppy Hidayat-"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:layout_below="@+id/txtAchivment1"
         android:textSize="18sp"
         android:textColor="@color/purpleButton"
