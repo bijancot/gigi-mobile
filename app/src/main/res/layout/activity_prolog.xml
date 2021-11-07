@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:background="@color/lightYellow"
+    tools:context=".activities.PrologActivity">
+
+    <TextView
+        android:id="@+id/txtPrologTittle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/nunito_black"
+        android:text="Brush My Teeth\nChallenge"
+        android:gravity="center"
+        android:textColor="@color/textPrimary"
+        android:textSize="30sp"
+        android:layout_centerHorizontal="true"/>
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_below="@+id/txtPrologTittle"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/prolog"
+        android:transitionName="example_transition"/>
+
+    <TextView
+        android:id="@+id/txtProlog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Brush My Teeth Challenge (BMTC adalah permainan kegiatan sikat gigi yang baik dan benar selama 21 hari dengan didampingi orang tua atau pendamping.\nDengan BMTC diharapkan kamu bisa melakukan kebiasaan sikat gigi yang baik dan benar secara mandiri. "
+        android:layout_below="@+id/imgLogo"
+        android:textSize="18sp"
+        android:textColor="@color/text"
+        android:fontFamily="@font/nunito_bold"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="-Drg. Poppy Hidayat-"
+        android:layout_below="@+id/txtProlog"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:textSize="18sp"
+        android:textColor="@color/purpleButton"
+        android:fontFamily="@font/nunito_bold"/>
+    <Button
+        android:id="@+id/btnSplashMulai"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/nunito_black"
+        android:background="@drawable/custom_button"
+        app:backgroundTint="@null"
+        android:text="Ayo Mulai"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

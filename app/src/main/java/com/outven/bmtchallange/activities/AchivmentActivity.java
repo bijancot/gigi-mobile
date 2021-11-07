@@ -1,6 +1,5 @@
 package com.outven.bmtchallange.activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,16 +25,16 @@ public class AchivmentActivity extends AppCompatActivity {
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                moveToNextPage(AchivmentActivity.this, DashboardActivity.class,true);
+                moveToNextPage(AchivmentActivity.this);
             }
         });
 
         HidenBar.WindowFlag(this, getWindow());
     }
 
-    private void moveToNextPage(Context context, Class<? extends Activity> activityClass, boolean setFlags){
-        Intent intent = new Intent(context, activityClass);
-        if (setFlags){
+    private void moveToNextPage(Context context){
+        Intent intent = new Intent(context, DashboardActivity.class);
+        if (true){
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         }
         startActivity(intent);

@@ -64,10 +64,8 @@ public class LupaPasswordActivity extends AppCompatActivity implements View.OnCl
                 try {
                     if (response.body() != null && response.isSuccessful() && response.body().isStatus()){
                         moveToLogin();
-                        Toast.makeText(getApplicationContext(), ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
+                    Toast.makeText(getApplicationContext(), ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 } catch (Exception e){
                     Toast.makeText(LupaPasswordActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
                 }

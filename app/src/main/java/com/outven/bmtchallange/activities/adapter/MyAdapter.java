@@ -158,7 +158,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> imp
                 }
                 mLastClickTime = SystemClock.elapsedRealtime();
                 String text = Config.getMessageTracker();
-                showMessageAlert(text,R.drawable.custom_border_tracker,R.drawable.tracker_now_logo);
+                showMessageAlert(text);
             }
         } else if (view.getId() == R.id.btnTrackerDanger){
             if (SystemClock.elapsedRealtime() - mLastClickTime < 1000){
@@ -166,12 +166,12 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> imp
             }
             mLastClickTime = SystemClock.elapsedRealtime();
             String text = "Maaf kamu gagal untuk upload hari ini\nSilahkan ulangi dari hari pertama";
-            showMessageAlert(text,R.drawable.custom_border_tracker_danger,R.drawable.tracker_soon_logo);
+            showMessageAlert(text);
         }
     }
 
     @SuppressLint("SetTextI18n")
-    private void showMessageAlert(String message, int bgLogo, int imgLogo) {
+    private void showMessageAlert(String message) {
         Dialog dialog = new Dialog(_context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.custom_message_dialog);

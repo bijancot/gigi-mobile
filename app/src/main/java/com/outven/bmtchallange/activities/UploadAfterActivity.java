@@ -95,6 +95,7 @@ public class UploadAfterActivity extends AppCompatActivity implements View.OnCli
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
+            assert data != null;
             Uri uri = data.getData();
 
             File imageFile = new File(uri.getPath());

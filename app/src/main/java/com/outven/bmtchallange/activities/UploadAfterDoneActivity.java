@@ -1,6 +1,5 @@
 package com.outven.bmtchallange.activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -96,9 +95,9 @@ public class UploadAfterDoneActivity extends AppCompatActivity {
                     if (Objects.requireNonNull(sessionManager.getUserDetail().get(Config.USER_REPORT_ENTRY)).equalsIgnoreCase("2") &&
                             Objects.requireNonNull(sessionManager.getUserDetail().get(Config.USER_DAY)).equalsIgnoreCase("21") &&
                             Config.isPoint() ){
-                        moveToNextPage(UploadAfterDoneActivity.this, AchivmentActivity.class,true);
-                    } else {
                         moveToDashboard();
+                    } else {
+                        moveToNextPage(UploadAfterDoneActivity.this);
                     }
                 }
             }
@@ -143,11 +142,9 @@ public class UploadAfterDoneActivity extends AppCompatActivity {
         finish();
     }
 
-    private void moveToNextPage(Context context, Class<? extends Activity> activityClass, boolean setFlags){
-        Intent intent = new Intent(context, activityClass);
-        if (setFlags){
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        }
+    private void moveToNextPage(Context context){
+        Intent intent = new Intent(context, AchivmentActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
     private long mLastClickTime = 0;

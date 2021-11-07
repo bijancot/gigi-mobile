@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -37,7 +38,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     int hari, bulan, tahun;
     int gender;
-    String email,password,name,birth_date,phone_number,school_class;
+    String email,password,name,birth_date,phone_number,school_class,tgender;
 
     AutoCompleteTextView etKelas;
     EditText etEmail,etPassword, etName, etPhone, etTanggalLahir;
@@ -63,7 +64,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         btnSignUp = findViewById(R.id.btnSignUp);
         txtSignIn = findViewById(R.id.txtSignIn);
 
-        String[] optionKelas = {"1","2","3","4","5","6","7","8","9","10","11","12"};
+        String[] optionKelas = {"1","2","3","4","5","6"};
         ArrayAdapter<String> arrayAdapterKelas = new ArrayAdapter<>(RegisterActivity.this, R.layout.dropdown_kelas, optionKelas);
         etKelas.setAdapter(arrayAdapterKelas);
 
@@ -106,53 +107,43 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void createSignUp() {
-        if (!isRegisterFieldEmpety()){
-            Toast.makeText(getApplicationContext(),"Semua input harus diisi!", Toast.LENGTH_SHORT).show();
-        } else {
-            email = etEmail.getText().toString();
-            password = etPassword.getText().toString();
-            name = etName.getText().toString();
-
-//                gender = genderCheck(autoCompleteTextView);
+        email = etEmail.getText().toString();
+        password = etPassword.getText().toString();
+        name = etName.getText().toString();
+        try {
             int checkId = rgGender.getCheckedRadioButtonId();
             selectGender = rgGender.findViewById(checkId);
-            String tgender =selectGender.getText().toString();
+            tgender = selectGender.getText().toString();
             if (tgender.equalsIgnoreCase("Laki - laki")){
                 gender = 1;
             } else {
                 gender = 2;
             }
+        } catch (Exception e){
+            Log.e("Error Gender, ", e.getMessage());
+        }
 
-            birth_date = etTanggalLahir.getText().toString();
-            phone_number = etPhone.getText().toString();
-            school_class = etKelas.getText().toString();
+        birth_date = etTanggalLahir.getText().toString();
+        phone_number = etPhone.getText().toString();
+        school_class = etKelas.getText().toString();
+
+        if (!isRegisterFieldEmpety()){
+            Toast.makeText(getApplicationContext(),"Semua input harus diisi!", Toast.LENGTH_SHORT).show();
+        } else {
 
             saveUser(email,password,name,gender,birth_date,phone_number,school_class);
         }
     }
 
     private boolean isRegisterFieldEmpety(){
-        return !etEmail.getText().toString().isEmpty() ||
-            !etPassword.getText().toString().isEmpty() ||
-                !etName.getText().toString().isEmpty() ||
-                !etTanggalLahir.getText().toString().isEmpty() ||
-                !etPhone.getText().toString().isEmpty() ||
+        return !etEmail.getText().toString().isEmpty() &&
+            !etPassword.getText().toString().isEmpty() &&
+                !etName.getText().toString().isEmpty() &&
+                !etTanggalLahir.getText().toString().isEmpty() &&
+                !(rgGender.getCheckedRadioButtonId() == -1) &&
+                !etPhone.getText().toString().isEmpty() &&
                 !etKelas.getText().toString().isEmpty();
     }
-
-    private int genderCheck(AutoCompleteTextView Tgender) {
-        String valueGender = Tgender.getText().toString();
-        if (valueGender.equalsIgnoreCase("Perempuan")){
-            return 2;
-        } else {
-            return 1;
-        }
-    }
-
-//    public boolean validationEmail(EditText etEmail){
-//        String email = etEmail.getText().toString().trim();
-//        return email.matches(emailPattern);
-//    }
 
     public void saveUser(String email, String password, String name, int gender, String birth_date, String phone_number, String school_class){
         Call<UserResponse> userResponseCall = ApiClient.getUserService().saveUser(email,password,name,gender,birth_date,phone_number,school_class);
@@ -161,11 +152,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             public void onResponse(@NotNull Call<UserResponse> call, @NotNull Response<UserResponse> response) {
                 try {
                     if (response.body() != null && response.isSuccessful() && response.body().isStatus()){
-                        Toast.makeText(RegisterActivity.this, ""+response.body().getMessage() ,Toast.LENGTH_SHORT).show();
                         moveToLogin(true);
-                    } else {
-                        Toast.makeText(RegisterActivity.this, ""+response.body().getMessage(),Toast.LENGTH_SHORT).show();
                     }
+                    Toast.makeText(RegisterActivity.this, ""+response.body().getMessage() ,Toast.LENGTH_SHORT).show();
                 } catch (Exception e){
                     Toast.makeText(RegisterActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
                 }

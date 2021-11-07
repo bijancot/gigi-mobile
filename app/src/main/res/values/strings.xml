@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Survey Gigi Mobile</string>
+    <string name="app_name">Brush My Teeth Challenge</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>

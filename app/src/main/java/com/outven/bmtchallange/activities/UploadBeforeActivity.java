@@ -95,6 +95,7 @@ public class UploadBeforeActivity extends AppCompatActivity implements View.OnCl
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
+            assert data != null;
             Uri uri = data.getData();
 
             File imageFileBefore = new File(uri.getPath());

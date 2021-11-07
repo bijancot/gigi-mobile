@@ -27,6 +27,7 @@
         <item name="boxStrokeColor">@color/purpleButton</item>
         <item name="boxStrokeErrorColor">@color/purpleButton</item>
         <item name="boxBackgroundColor">@color/white</item>
+        <item name="hintTextColor">@color/disable_text</item>
         <item name="boxCornerRadiusBottomEnd">40dp</item>
         <item name="boxCornerRadiusBottomStart">40dp</item>
         <item name="boxCornerRadiusTopEnd">40dp</item>

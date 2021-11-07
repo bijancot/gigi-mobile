@@ -18,6 +18,8 @@ import com.outven.bmtchallange.helper.Config;
 import com.outven.bmtchallange.helper.HidenBar;
 import com.outven.bmtchallange.helper.SessionManager;
 
+import java.util.Objects;
+
 public class AnimasiActivity extends AppCompatActivity implements View.OnClickListener {
 
     String videoPathAnimasi;
@@ -77,25 +79,26 @@ public class AnimasiActivity extends AppCompatActivity implements View.OnClickLi
 
     private void videoAnimasiSetter() {
         int dayTracker = Integer.parseInt(String.valueOf(sessionManager.getUserDetail().get(Config.USER_DAY)));
-        if (isMale(sessionManager.getUserDetail().get(Config.USER_GENDER))){
+//        int dayTracker = 21;
+        if (isMale(Objects.requireNonNull(sessionManager.getUserDetail().get(Config.USER_GENDER)))){
             if (dayTracker <= 1){
-                videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.co_lvl1;
-            } else if (dayTracker >= 2 && dayTracker <= 10){
-                videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.co_lvl210;
-            } else if (dayTracker >= 11 && dayTracker <= 20){
-                videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.co_lvl1120;
+                videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.cowok_level_1;
+            } else if (dayTracker <= 10){
+                videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.cowok_level_2_10;
+            } else if (dayTracker <= 20){
+                videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.cowok_level_11_20;
             } else {
-                videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.cwk_lvl21;
+                videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.cowok_level_21;
             }
         } else {
             if (dayTracker <= 1){
-                videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.cwk_lvl1;
-            } else if (dayTracker >= 2 && dayTracker <= 10){
-                videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.cwk_lvl210;
-            } else if (dayTracker >= 11 && dayTracker <= 20){
-                videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.cwk_lvl1120;
+                videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.cewek_level_1;
+            } else if (dayTracker <= 10){
+                videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.cewek_level_2_10;
+            } else if (dayTracker <= 20){
+                videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.cewek_level_11_20;
             } else {
-                videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.cwk_lvl21;
+                videoPathAnimasi = "android.resource://" + getPackageName() + "/" + R.raw.cewek_level_21;
             }
         }
         Config.setVidePath(videoPathAnimasi);

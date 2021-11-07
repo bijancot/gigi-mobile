@@ -102,7 +102,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="E:\Kuliah\Semester 5\BMC PROJECT\Asset\icon\icon.png" />
+                                                <entry key="imagePath" value="E:\Kuliah\Semester 5\BMC PROJECT\Asset\icon\figma\png\logo_aplikasi.png" />
                                                 <entry key="scalingPercent" value="42" />
                                               </map>
                                             </option>
@@ -136,9 +136,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="000000" />
-                                      <entry key="foregroundAssetType" value="CLIP_ART" />
-                                      <entry key="outputName" value="ic_fullscreen" />
+                                      <entry key="backgroundColor" value="8661c1" />
+                                      <entry key="outputName" value="ic_aplikasi" />
                                     </map>
                                   </option>
                                 </PersistentState>

@@ -1,7 +1,6 @@
 package com.outven.bmtchallange.activities;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -66,7 +65,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             Log.e("Error, ", e.getLocalizedMessage());
             sessionManager.loggoutSession();
             Toast.makeText(EditProfileActivity.this,"Terjadi kesalahan pada server", Toast.LENGTH_LONG).show();
-            moveToNextPage(EditProfileActivity.this,LoginActivity.class,true);
+            moveToNextPage(EditProfileActivity.this);
         }
 
 
@@ -96,10 +95,11 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         etTanggalLahir.setText(sessionManager.getUserDetail().get(Config.USER_LAHIR));
         etHp.setText(sessionManager.getUserDetail().get(Config.USER_PHONE));
         strGender = sessionManager.getUserDetail().get(Config.USER_GENDER);
+        assert strGender != null;
         radioGenderChecked(strGender);
         etKelas.setText(sessionManager.getUserDetail().get(Config.USER_CLASS));
 
-        String[] optionKelas = {"1","2","3","4","5","6","7","8","9","10","11","12"};
+        String[] optionKelas = {"1","2","3","4","5","6"};
         ArrayAdapter<String> arrayAdapterKelas = new ArrayAdapter<>(EditProfileActivity.this, R.layout.dropdown_kelas, optionKelas);
         etKelas.setAdapter(arrayAdapterKelas);
 
@@ -116,11 +116,9 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         btnSimpan.setOnClickListener(this);
     }
 
-    private void moveToNextPage(Context context, Class<? extends Activity> activityClass, boolean setFlags){
-        Intent intent = new Intent(context, activityClass);
-        if (setFlags){
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        }
+    private void moveToNextPage(Context context){
+        Intent intent = new Intent(context, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
@@ -144,26 +142,25 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void UpdateProfile() {
+        email = etEmail.getText().toString();
+        name = etName.getText().toString();
+
+        int checkId = rgGender.getCheckedRadioButtonId();
+        selectGender = rgGender.findViewById(checkId);
+        String tgender =selectGender.getText().toString();
+        if (tgender.equalsIgnoreCase("Laki - laki")){
+            gender = 1;
+        } else {
+            gender = 2;
+        }
+
+        birth_date = etTanggalLahir.getText().toString();
+        phone_number = etPhone.getText().toString();
+        school_class = etKelas.getText().toString();
+
         if (!isUpdateFieldEmpety()){
             Toast.makeText(getApplicationContext(),"Semua input harus diisi!", Toast.LENGTH_SHORT).show();
         } else {
-            email = etEmail.getText().toString();
-            name = etName.getText().toString();
-
-//                gender = genderCheck(autoCompleteTextView);
-            int checkId = rgGender.getCheckedRadioButtonId();
-            selectGender = rgGender.findViewById(checkId);
-            String tgender =selectGender.getText().toString();
-            if (tgender.equalsIgnoreCase("Laki - laki")){
-                gender = 1;
-            } else {
-                gender = 2;
-            }
-
-            birth_date = etTanggalLahir.getText().toString();
-            phone_number = etPhone.getText().toString();
-            school_class = etKelas.getText().toString();
-
             UpdateUserProfile(email,name,gender,birth_date,phone_number,school_class);
         }
     }
@@ -177,8 +174,9 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                     if (response.body() != null && response.isSuccessful() && response.body().isStatus()){
                         Toast.makeText(EditProfileActivity.this, ""+response.body().getMessage() ,Toast.LENGTH_SHORT).show();
                         sessionManager.UpdateProfileSession(email, name,String.valueOf(gender),birth_date,phone_number,school_class);
-                        moveToLogin(true);
+                        moveToLogin();
                     } else {
+                        assert response.body() != null;
                         Toast.makeText(EditProfileActivity.this, ""+response.body().getMessage(),Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e){
@@ -187,7 +185,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             }
 
             @Override
-            public void onFailure(@NotNull Call<UpdateProfileResponse> call, Throwable t) {
+            public void onFailure(@NotNull Call<UpdateProfileResponse> call, @NotNull Throwable t) {
                 try {
                     Toast.makeText(EditProfileActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
                 } catch (Exception e){
@@ -197,7 +195,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         });
     }
 
-    private void moveToLogin(boolean setFlag) {
+    private void moveToLogin() {
         Intent intent = new Intent(EditProfileActivity.this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
@@ -206,11 +204,18 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     }
 
     private boolean isUpdateFieldEmpety(){
-        return !etName.getText().toString().isEmpty() ||
-                !etTanggalLahir.getText().toString().isEmpty() ||
-                !rbLaki.isChecked() || !rbPerempuan.isChecked() ||
-                !etPhone.getText().toString().isEmpty() ||
-                !etKelas.getText().toString().isEmpty();
+        return (!etEmail.getText().toString().isEmpty() &&
+                !etName.getText().toString().isEmpty() &&
+                !etTanggalLahir.getText().toString().isEmpty() &&
+                !(rgGender.getCheckedRadioButtonId() == -1) &&
+                !etPhone.getText().toString().isEmpty() &&
+                !etKelas.getText().toString().isEmpty()) ||
+                (!etEmail.getText().toString().equalsIgnoreCase("") &&
+                        !etName.getText().toString().equalsIgnoreCase("") &&
+                        !etTanggalLahir.getText().toString().equalsIgnoreCase("") &&
+                        !(rgGender.getCheckedRadioButtonId() == -1) &&
+                        !etPhone.getText().toString().equalsIgnoreCase("") &&
+                        !etKelas.getText().toString().equalsIgnoreCase(""));
     }
 
     public Dialog onCreateDialog(int id) {

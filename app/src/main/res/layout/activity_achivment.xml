@@ -9,10 +9,10 @@
         android:id="@+id/txtAchivment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="50dp"
         android:layout_marginBottom="20dp"
         android:gravity="center_horizontal"
-        android:text="Luar Biasa!"
+        android:text="Selamat!"
         android:textSize="35sp"
         android:textColor="@color/purpleButton"
         android:fontFamily="@font/nunito_black"/>
@@ -24,14 +24,27 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/achivment"/>
     <TextView
+        android:id="@+id/txtAchivment1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="Selamat kamu sudah rajin menggosok gigi selama 21 hari"
-        android:layout_margin="20dp"
+        android:text="Lanjut kebiasaan sikat gigimu dengan baik dan benar untuk mendapatkan gigi bersih,sehat dan kuat."
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/ivAchivment"
         android:textSize="20sp"
         android:textColor="@color/text"
+        android:fontFamily="@font/nunito_bold"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="-Drg. Poppy Hidayat-"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/txtAchivment1"
+        android:textSize="18sp"
+        android:textColor="@color/purpleButton"
         android:fontFamily="@font/nunito_bold"/>
 
     <Button

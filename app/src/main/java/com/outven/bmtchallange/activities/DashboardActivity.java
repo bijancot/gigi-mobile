@@ -125,7 +125,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
         try {
             curTimeCheck(userTime);
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -134,7 +134,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             trackerDay
         );
 
-        if (Config.isPoint() && entry == 4 && sessionManager.getUserDetail().get(Config.USER_REPORT_STATUS).equalsIgnoreCase("ongoing")){
+        if (Config.isPoint() && entry == 4 && Objects.requireNonNull(sessionManager.getUserDetail().get(Config.USER_REPORT_STATUS)).equalsIgnoreCase("ongoing")){
             showPointDialog();
         }
 
@@ -197,7 +197,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
 
     //    Check timer day or night
-    private void curTimeCheck(String time) throws ParseException {
+    private void curTimeCheck(String time){
         if (Objects.equals(time,Config.TIME_NIGHT)){
             nightTheme();
         } else {

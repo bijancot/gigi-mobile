@@ -40,6 +40,8 @@ public class Config {
     private static Uri fileAfter;
     private static boolean point;
     private static boolean finished;
+    private static boolean starter;
+    private static boolean prolog;
 
     public static String getVidePath() {
         return videPath;
@@ -95,5 +97,21 @@ public class Config {
 
     public static void setFinished(boolean finished) {
         Config.finished = finished;
+    }
+
+    public static boolean isStarter() {
+        return starter;
+    }
+
+    public static void setStarter(boolean starter) {
+        Config.starter = starter;
+    }
+
+    public static boolean isProlog() {
+        return prolog;
+    }
+
+    public static void setProlog(boolean prolog) {
+        Config.prolog = prolog;
     }
 }

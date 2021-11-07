@@ -1,7 +1,6 @@
 package com.outven.bmtchallange.activities;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +17,8 @@ import com.outven.bmtchallange.R;
 import com.outven.bmtchallange.helper.Config;
 import com.outven.bmtchallange.helper.HidenBar;
 import com.outven.bmtchallange.helper.SessionManager;
+
+import java.util.Objects;
 
 public class ProfilActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -36,7 +37,7 @@ public class ProfilActivity extends AppCompatActivity implements View.OnClickLis
             Log.e("Error, ", e.getLocalizedMessage());
             sessionManager.loggoutSession();
             Toast.makeText(ProfilActivity.this,"Terjadi kesalahan pada server", Toast.LENGTH_LONG).show();
-            moveToNextPage(ProfilActivity.this,LoginActivity.class,true);
+            moveToNextPage(ProfilActivity.this);
         }
 
         HidenBar.WindowFlag(this, getWindow());
@@ -58,7 +59,7 @@ public class ProfilActivity extends AppCompatActivity implements View.OnClickLis
         etName.setText(sessionManager.getUserDetail().get(Config.USER_NAME));
         etTanggalLahir.setText(sessionManager.getUserDetail().get(Config.USER_LAHIR));
         etHp.setText(sessionManager.getUserDetail().get(Config.USER_PHONE));
-        etGender.setText(radioGenderChecked(sessionManager.getUserDetail().get(Config.USER_GENDER)));
+        etGender.setText(radioGenderChecked(Objects.requireNonNull(sessionManager.getUserDetail().get(Config.USER_GENDER))));
         etKelas.setText(sessionManager.getUserDetail().get(Config.USER_CLASS));
 
         btnLogout.setOnClickListener(this);
@@ -73,9 +74,9 @@ public class ProfilActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    private void moveToNextPage(Context context, Class<? extends Activity> activityClass, boolean setFlags){
-        Intent intent = new Intent(context, activityClass);
-        if (setFlags){
+    private void moveToNextPage(Context context){
+        Intent intent = new Intent(context, LoginActivity.class);
+        if (true){
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         }
         startActivity(intent);
