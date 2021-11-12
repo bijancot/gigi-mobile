@@ -20,6 +20,8 @@ import com.outven.bmtchallange.helper.SessionManager;
 
 import java.util.Objects;
 
+import io.sentry.Sentry;
+
 public class ProfilActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView etName, etPhone, etTanggalLahir,etKelas,etGender, etHp, etEmail;
@@ -38,6 +40,7 @@ public class ProfilActivity extends AppCompatActivity implements View.OnClickLis
             sessionManager.loggoutSession();
             Toast.makeText(ProfilActivity.this,"Terjadi kesalahan pada server", Toast.LENGTH_LONG).show();
             moveToNextPage(ProfilActivity.this);
+            Sentry.captureException(e);
         }
 
         HidenBar.WindowFlag(this, getWindow());

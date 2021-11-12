@@ -39,9 +39,9 @@ import com.outven.bmtchallange.models.report.response.ReportResponse;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.text.ParseException;
 import java.util.Objects;
 
+import io.sentry.Sentry;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -88,6 +88,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             sessionManager.loggoutSession();
             Toast.makeText(DashboardActivity.this,"Terjadi kesalahan pada server", Toast.LENGTH_LONG).show();
             moveToNextPage(DashboardActivity.this,LoginActivity.class,true);
+            Sentry.captureException(e);
         }
 
         //Hiden Bar
@@ -127,6 +128,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             curTimeCheck(userTime);
         } catch (Exception e) {
             e.printStackTrace();
+            Sentry.captureException(e);
         }
 
         PointTracker(
@@ -256,9 +258,16 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
                         loadingDialog.dismissDialog();
                     } else {
                         Toast.makeText(DashboardActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
+                        sessionManager.loggoutSession();
+                        loadingDialog.dismissDialog();
+                        moveToNextPage(DashboardActivity.this, LoginActivity.class,true);
                     }
                 } catch (Exception e){
                     Toast.makeText(DashboardActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
+                    sessionManager.loggoutSession();
+                    loadingDialog.dismissDialog();
+                    moveToNextPage(DashboardActivity.this, LoginActivity.class,true);
+                    Sentry.captureException(e);
                 }
             }
 
@@ -266,8 +275,15 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             public void onFailure(@NotNull Call<ReportResponse> call, @NotNull Throwable t) {
                 try {
                     Toast.makeText(DashboardActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
+                    sessionManager.loggoutSession();
+                    loadingDialog.dismissDialog();
+                    moveToNextPage(DashboardActivity.this, LoginActivity.class,true);
                 } catch (Exception e){
                     Toast.makeText(DashboardActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
+                    sessionManager.loggoutSession();
+                    loadingDialog.dismissDialog();
+                    moveToNextPage(DashboardActivity.this, LoginActivity.class,true);
+                    Sentry.captureException(e);
                 }
             }
         });

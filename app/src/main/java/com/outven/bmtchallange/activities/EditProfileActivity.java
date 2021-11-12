@@ -31,6 +31,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Calendar;
 
+import io.sentry.Sentry;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,6 +67,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             sessionManager.loggoutSession();
             Toast.makeText(EditProfileActivity.this,"Terjadi kesalahan pada server", Toast.LENGTH_LONG).show();
             moveToNextPage(EditProfileActivity.this);
+            Sentry.captureException(e);
         }
 
 
@@ -181,6 +183,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                     }
                 } catch (Exception e){
                     Toast.makeText(EditProfileActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
+                    Sentry.captureException(e);
                 }
             }
 
@@ -190,6 +193,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                     Toast.makeText(EditProfileActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
                 } catch (Exception e){
                     Toast.makeText(EditProfileActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
+                    Sentry.captureException(e);
                 }
             }
         });

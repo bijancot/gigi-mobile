@@ -17,6 +17,7 @@ import com.outven.bmtchallange.models.forgot.ForgotResponse;
 
 import org.jetbrains.annotations.NotNull;
 
+import io.sentry.Sentry;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -68,6 +69,7 @@ public class LupaPasswordActivity extends AppCompatActivity implements View.OnCl
                     Toast.makeText(getApplicationContext(), ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 } catch (Exception e){
                     Toast.makeText(LupaPasswordActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
+                    Sentry.captureException(e);
                 }
             }
 
@@ -77,6 +79,7 @@ public class LupaPasswordActivity extends AppCompatActivity implements View.OnCl
                     Toast.makeText(LupaPasswordActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
                 } catch (Exception e){
                     Toast.makeText(LupaPasswordActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
+                    Sentry.captureException(e);
                 }
             }
         });

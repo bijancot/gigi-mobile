@@ -30,6 +30,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Calendar;
 
+import io.sentry.Sentry;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -121,6 +122,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
         } catch (Exception e){
             Log.e("Error Gender, ", e.getMessage());
+            Sentry.captureException(e);
         }
 
         birth_date = etTanggalLahir.getText().toString();
@@ -130,7 +132,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         if (!isRegisterFieldEmpety()){
             Toast.makeText(getApplicationContext(),"Semua input harus diisi!", Toast.LENGTH_SHORT).show();
         } else {
-
             saveUser(email,password,name,gender,birth_date,phone_number,school_class);
         }
     }
@@ -157,6 +158,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     Toast.makeText(RegisterActivity.this, ""+response.body().getMessage() ,Toast.LENGTH_SHORT).show();
                 } catch (Exception e){
                     Toast.makeText(RegisterActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
+                    Sentry.captureException(e);
                 }
             }
 
@@ -166,6 +168,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     Toast.makeText(RegisterActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
                 } catch (Exception e){
                     Toast.makeText(RegisterActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
+                    Sentry.captureException(e);
                 }
             }
         });

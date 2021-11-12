@@ -24,6 +24,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
+import io.sentry.Sentry;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -120,6 +121,7 @@ public class UploadAfterDoneActivity extends AppCompatActivity {
                     doneUploadTracker++;
                 } catch (Exception e){
                     Toast.makeText(UploadAfterDoneActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
+                    Sentry.captureException(e);
                 }
             }
             @Override
@@ -128,6 +130,7 @@ public class UploadAfterDoneActivity extends AppCompatActivity {
                     Toast.makeText(UploadAfterDoneActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
                 } catch (Exception e){
                     Toast.makeText(UploadAfterDoneActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
+                    Sentry.captureException(e);
                 }
             }
         });

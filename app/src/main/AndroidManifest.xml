@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BrushMyTeethChallange"
         android:fullBackupContent="@xml/backup_descriptor">
+        <meta-data android:name="io.sentry.dsn" android:value="https://1c7ad4e0d2e445b599768e3c53d0d8b1@app.glitchtip.com/633" />
         <activity android:name=".activities.PrologActivity"/>
         <activity android:name=".activities.AchivmentActivity" />
         <activity android:name=".activities.EditProfileActivity" />

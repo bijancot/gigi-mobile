@@ -23,6 +23,7 @@ import com.outven.bmtchallange.models.login.Response.LoginDataResponse;
 
 import org.jetbrains.annotations.NotNull;
 
+import io.sentry.Sentry;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -109,6 +110,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                 }catch (Exception e){
                     Toast.makeText(getApplicationContext(), "Server sedang bermasalah, coba beberapa saat lagi!" , Toast.LENGTH_SHORT).show();
+                    Sentry.captureException(e);
                 }
             }
 
@@ -118,6 +120,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Toast.makeText(getApplicationContext(), "Server sedang bermasalah, coba login nanti!" , Toast.LENGTH_SHORT).show();
                 } catch (Exception e){
                     Toast.makeText(getApplicationContext(), "Server sedang bermasalah, coba login nanti!" , Toast.LENGTH_SHORT).show();
+                    Sentry.captureException(e);
                 }
             }
         });
