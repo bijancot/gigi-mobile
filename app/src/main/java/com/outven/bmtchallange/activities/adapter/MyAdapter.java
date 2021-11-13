@@ -91,7 +91,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> imp
             if (time.equals(Config.TIME_DAY) && entry == 0 ){
                 return 1;
             } else if (time.equals(Config.TIME_DAY) && entry == 2){
-                Config.setMessageTracker("Kamu sudah mengupload foto sikat gigi pagi!");
+                Config.setMessageTracker("Kamu sudah upload di pagi ini. Silakan tunggu untuk bisa upload untuk malam ini!");
                 return 3;
             } else {
                 if (time.equals(Config.TIME_NIGHT) && entry == 2) {
@@ -158,7 +158,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> imp
                 }
                 mLastClickTime = SystemClock.elapsedRealtime();
                 String text = Config.getMessageTracker();
-                showMessageAlert(text);
+                showAlertIfHaveEat(text);
             }
         } else if (view.getId() == R.id.btnTrackerDanger){
             if (SystemClock.elapsedRealtime() - mLastClickTime < 1000){
@@ -214,7 +214,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> imp
         btnUploadDialogBelum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showAlertIfHaveEat();
+                showAlertIfHaveEat("Silahkan makan terlebih dahulu sebelum upload!");
                 dialog.dismiss();
             }
         });
@@ -229,13 +229,15 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> imp
     }
 
     @SuppressLint("SetTextI18n")
-    private void showAlertIfHaveEat() {
+    private void showAlertIfHaveEat(String message) {
         Dialog dialog = new Dialog(_context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.custom_upload_makan);
         dialog.setCancelable(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         Button btnUplaodMakanOk = dialog.findViewById(R.id.btnUplaodMakanOk);
+        TextView txtUploadDialogMessage = dialog.findViewById(R.id.txtUploadDialogMessage);
+        txtUploadDialogMessage.setText(message);
 
         btnUplaodMakanOk.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -9,18 +9,29 @@
         android:id="@+id/txtAchivment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:gravity="center_horizontal"
         android:text="Selamat!"
         android:textSize="35sp"
         android:textColor="@color/purpleButton"
         android:fontFamily="@font/nunito_black"/>
+    <TextView
+        android:id="@+id/txtSelamatMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_below="@+id/txtAchivment"
+        android:text="Kamu berhasil memenangkan\nBrush My Teeth Challenge"
+        android:gravity="center_horizontal"
+        android:textSize="20sp"
+        android:textColor="@color/text"
+        android:fontFamily="@font/nunito_bold"/>
     <ImageView
         android:id="@+id/ivAchivment"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_below="@+id/txtAchivment"
+        android:layout_below="@+id/txtSelamatMessage"
         android:layout_centerHorizontal="true"
         android:src="@drawable/achivment"/>
     <TextView

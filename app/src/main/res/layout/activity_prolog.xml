@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="Brush My Teeth Challenge (BMTC adalah permainan kegiatan sikat gigi yang baik dan benar selama 21 hari dengan didampingi orang tua atau pendamping.\nDengan BMTC diharapkan kamu bisa melakukan kebiasaan sikat gigi yang baik dan benar secara mandiri. "
+        android:text="Brush My Teeth Challenge (BMTC) adalah permainan kegiatan sikat gigi yang baik dan benar selama 21 hari dengan didampingi orang tua atau pendamping.\nDengan BMTC diharapkan kamu bisa melakukan kebiasaan sikat gigi yang baik dan benar secara mandiri. "
         android:layout_below="@+id/imgLogo"
         android:textSize="18sp"
         android:textColor="@color/text"
