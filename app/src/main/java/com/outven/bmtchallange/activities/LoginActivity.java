@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Toast.makeText(getApplicationContext(), ""+loginDataResponse.getMessage() , Toast.LENGTH_SHORT).show();
                         moveToNextPage(LoginActivity.this, DashboardActivity.class);
                     } else {
-                        Toast.makeText(getApplicationContext(), response.body().getMessage() , Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Server sedang bermasalah, coba beberapa saat lagi!" , Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){
                     Toast.makeText(getApplicationContext(), "Server sedang bermasalah, coba beberapa saat lagi!" , Toast.LENGTH_SHORT).show();

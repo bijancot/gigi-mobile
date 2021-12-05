@@ -38,7 +38,7 @@ import retrofit2.Response;
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
 
     int hari, bulan, tahun;
-    int gender;
+    int gender = 1;
     String email,password,name,birth_date,phone_number,school_class,tgender;
 
     AutoCompleteTextView etKelas;
@@ -112,14 +112,27 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         password = etPassword.getText().toString();
         name = etName.getText().toString();
         try {
-            int checkId = rgGender.getCheckedRadioButtonId();
-            selectGender = rgGender.findViewById(checkId);
-            tgender = selectGender.getText().toString();
-            if (tgender.equalsIgnoreCase("Laki - laki")){
-                gender = 1;
-            } else {
-                gender = 2;
-            }
+            rgGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                    switch (radioGroup.getId()) {
+                        case R.id.rbLaki:
+                            gender = 1;
+                            break;
+                        case R.id.rbPerempuan:
+                            gender = 2;
+                            break;
+                    }
+                }
+            });
+//            int checkId = rgGender.getCheckedRadioButtonId();
+//            selectGender = rgGender.findViewById(checkId);
+//            tgender = selectGender.getText().toString();
+//            if (tgender.equalsIgnoreCase("Laki - laki")){
+//                gender = 1;
+//            } else {
+//                gender = 2;
+//            }
         } catch (Exception e){
             Log.e("Error Gender, ", e.getMessage());
             Sentry.captureException(e);
@@ -141,7 +154,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             !etPassword.getText().toString().isEmpty() &&
                 !etName.getText().toString().isEmpty() &&
                 !etTanggalLahir.getText().toString().isEmpty() &&
-                !(rgGender.getCheckedRadioButtonId() == -1) &&
                 !etPhone.getText().toString().isEmpty() &&
                 !etKelas.getText().toString().isEmpty();
     }
@@ -154,8 +166,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 try {
                     if (response.body() != null && response.isSuccessful() && response.body().isStatus()){
                         moveToLogin(true);
+                        Toast.makeText(RegisterActivity.this, ""+response.body().getMessage() ,Toast.LENGTH_SHORT).show();
                     }
-                    Toast.makeText(RegisterActivity.this, ""+response.body().getMessage() ,Toast.LENGTH_SHORT).show();
                 } catch (Exception e){
                     Toast.makeText(RegisterActivity.this, "Server sedang bermaslah, silahkan coba beberapa saat lagi!", Toast.LENGTH_SHORT).show();
                     Sentry.captureException(e);

@@ -22,6 +22,7 @@ import com.outven.bmtchallange.models.upload.UploadResponse;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.util.Objects;
 
 import io.sentry.Sentry;
@@ -58,11 +59,26 @@ public class UploadAfterDoneActivity extends AppCompatActivity {
                     return;
                 }
                 mLastClickTime = SystemClock.elapsedRealtime();
-                doUpload();
+
+                if (checkFilesNotNull(Config.files)) {
+                    doUpload();
+                } else {
+                    Toast.makeText(view.getContext(), "Terdapat kesalahan pada gambar, silahkan ulangi proses upload gambar", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
         HidenBar.WindowFlag(this, getWindow());
+    }
+
+    public boolean checkFilesNotNull(File[] files) {
+        for (File file : files) {
+            if (file == null) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void doUpload() {
@@ -115,7 +131,7 @@ public class UploadAfterDoneActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
                         Config.setPoint(true);
                     } else {
-                        Toast.makeText(getApplicationContext(), "Gagal upload, "+response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Gagal upload, terjadi kesalahan pada server", Toast.LENGTH_LONG).show();
                         Config.setPoint(false);
                     }
                     doneUploadTracker++;
