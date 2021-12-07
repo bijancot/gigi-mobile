@@ -4,9 +4,12 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.SystemClock;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -23,7 +26,12 @@ import com.outven.bmtchallange.R;
 import com.outven.bmtchallange.helper.Config;
 import com.outven.bmtchallange.helper.HidenBar;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import id.zelory.compressor.Compressor;
 
 public class UploadAfterActivity extends AppCompatActivity implements View.OnClickListener {
     CardView imgUploadAfter;
@@ -71,7 +79,7 @@ public class UploadAfterActivity extends AppCompatActivity implements View.OnCli
         ImagePicker.with(this)
                 .cameraOnly()
                 .crop()	    			//Crop image(Optional), Check Customization for more option
-                .compress(1024)			//Final image size will be less than 1 MB(Optional)
+                .compress(512)			//Final image size will be less than 1 MB(Optional)
                 .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
                 .start();
     }

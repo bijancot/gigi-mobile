@@ -57,4 +57,5 @@ dependencies {
 
     implementation 'io.sentry:sentry-android:4.2.0'
 
+    implementation 'id.zelory:compressor:2.1.0'
 }
